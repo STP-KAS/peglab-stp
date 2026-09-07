@@ -1,6 +1,6 @@
 // Review (default) or submit PegLab CONTROL genesis on Testnet-10.
-// Never reads a wallet file. --submit requires PEGLAB_SPONSOR_KEY in the
-// environment and refuses to run if the key is not the documented sponsor.
+// --submit uses PEGLAB_SPONSOR_KEY, or gitignored .local/sponsor.json.
+// The key must derive SPONSOR_ADDRESS. Never commit that file.
 import {mkdtemp, writeFile, readFile, rm, mkdir} from 'node:fs/promises';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
@@ -15,6 +15,7 @@ import {
   SERIES_ID,
   GENESIS_POOL_SOMPI,
   MAX_GENESIS_FEE,
+  MINING_ADDRESS,
 } from '../src/network.mjs';
 import {DEFAULT_ORACLE, DEFAULT_POOL_TPEG, MAX_FEE, MAX_TPEG} from '../src/engine.mjs';
 import {silvercPath} from './peglab.mjs';
@@ -81,8 +82,28 @@ function selectFunding(entries, scriptHex, need) {
       const d = BigInt(a.amount) - BigInt(b.amount);
       return d < 0n ? -1 : d > 0n ? 1 : 0;
     });
-  if (!enough.length) throw new Error('No plain UTXO covers the 2 tKAS pool plus fee cap.');
+  if (!enough.length) {
+    throw new Error(
+      `Sponsor ${SPONSOR_ADDRESS} has no UTXO covering 2 tKAS + fee. Send at least 2.01 tKAS from ${MINING_ADDRESS}, then retry.`,
+    );
+  }
   return enough[0];
+}
+
+async function loadSponsorKey() {
+  if (process.env.PEGLAB_SPONSOR_KEY) return process.env.PEGLAB_SPONSOR_KEY.trim();
+  try {
+    const saved = JSON.parse(await readFile(resolve(ROOT, '.local/sponsor.json'), 'utf8'));
+    if (saved.network !== NETWORK) throw new Error('Local sponsor file is not Testnet-10.');
+    if (saved.address !== SPONSOR_ADDRESS) throw new Error('Local sponsor file address mismatch.');
+    if (!saved.key) throw new Error('Local sponsor file has no key.');
+    return saved.key;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error('Set PEGLAB_SPONSOR_KEY or create gitignored .local/sponsor.json.');
+    }
+    throw error;
+  }
 }
 
 function placeholderSig(sdk, tx, index) {
@@ -169,9 +190,7 @@ export async function planGenesis({submit = false} = {}) {
     };
     if (!submit) return review;
 
-    const keyHex = process.env.PEGLAB_SPONSOR_KEY;
-    if (!keyHex) throw new Error('Set PEGLAB_SPONSOR_KEY to submit. Do not paste it into chat or the repo.');
-    const key = new sdk.PrivateKey(keyHex);
+    const key = new sdk.PrivateKey(await loadSponsorKey());
     const address = key.toAddress(NETWORK).toString();
     if (address !== SPONSOR_ADDRESS) throw new Error('PEGLAB_SPONSOR_KEY does not match the documented sponsor address.');
     tx.inputs[0].signatureScript = sdk.createInputSignature(tx, 0, key);
