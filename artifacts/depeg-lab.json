@@ -1,0 +1,127 @@
+{
+  "network": "testnet-10",
+  "unfunded": true,
+  "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+  "seriesIsNotIdentity": "Anybody can compile a similarly named series. Verify genesis outpoint, template hash, series bytes, and backing.",
+  "genesis": {
+    "oraclePrice": "100000",
+    "poolTkas": "200000000",
+    "poolTpeg": "2000",
+    "capRemaining": "8000",
+    "cannotDefendPeg": true
+  },
+  "demo": {
+    "network": "testnet-10",
+    "unfunded": true,
+    "steps": [
+      {
+        "title": "1. Genesis: 2 tKAS + 2,000 tPEG tiny pool, oracle 100,000 sompi/tPEG",
+        "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+        "network": "testnet-10",
+        "seriesId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "admin": "1111111111111111111111111111111111111111111111111111111111111111",
+        "paused": false,
+        "oracleLive": true,
+        "oraclePrice": "100000",
+        "poolTkas": "200000000",
+        "poolTpeg": "2000",
+        "capRemaining": "8000",
+        "circulating": "0",
+        "tpegBudget": "10000",
+        "poolPrice": "100000",
+        "poolPriceRemainder": "0",
+        "depegBps": "0",
+        "cannotDefendPeg": true,
+        "units": []
+      },
+      {
+        "title": "2. Alice mints 100 tPEG at the oracle (locks 10,000,000 sompi)",
+        "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+        "network": "testnet-10",
+        "seriesId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "admin": "1111111111111111111111111111111111111111111111111111111111111111",
+        "paused": false,
+        "oracleLive": true,
+        "oraclePrice": "100000",
+        "poolTkas": "210000000",
+        "poolTpeg": "2000",
+        "capRemaining": "7900",
+        "circulating": "100",
+        "tpegBudget": "10000",
+        "poolPrice": "105000",
+        "poolPriceRemainder": "0",
+        "depegBps": "500",
+        "cannotDefendPeg": true,
+        "units": [
+          {
+            "owner": "2222222222222222222222222222222222222222222222222222222222222222",
+            "quantity": "100"
+          }
+        ],
+        "minted": "100",
+        "tkasIn": "10000000"
+      },
+      {
+        "title": "3. Admin posts oracle 125,000 (+25%). Target moved; pool did not.",
+        "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+        "network": "testnet-10",
+        "seriesId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "admin": "1111111111111111111111111111111111111111111111111111111111111111",
+        "paused": false,
+        "oracleLive": true,
+        "oraclePrice": "125000",
+        "poolTkas": "210000000",
+        "poolTpeg": "2000",
+        "capRemaining": "7900",
+        "circulating": "100",
+        "tpegBudget": "10000",
+        "poolPrice": "105000",
+        "poolPriceRemainder": "0",
+        "depegBps": "1600",
+        "cannotDefendPeg": true,
+        "units": [
+          {
+            "owner": "2222222222222222222222222222222222222222222222222222222222222222",
+            "quantity": "100"
+          }
+        ]
+      },
+      {
+        "title": "4. Alice sells 20,000,000 sompi through the tiny pool. Price moves.",
+        "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+        "network": "testnet-10",
+        "seriesId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "admin": "1111111111111111111111111111111111111111111111111111111111111111",
+        "paused": false,
+        "oracleLive": true,
+        "oraclePrice": "125000",
+        "poolTkas": "230000000",
+        "poolTpeg": "1826",
+        "capRemaining": "7900",
+        "circulating": "274",
+        "tpegBudget": "10000",
+        "poolPrice": "125958",
+        "poolPriceRemainder": "692",
+        "depegBps": "76",
+        "cannotDefendPeg": true,
+        "units": [
+          {
+            "owner": "2222222222222222222222222222222222222222222222222222222222222222",
+            "quantity": "274"
+          }
+        ],
+        "tkasIn": "20000000",
+        "tpegOut": "174"
+      },
+      {
+        "title": "5. Read the break",
+        "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+        "targetSompiPerTpeg": "125000",
+        "poolSompiPerTpeg": "125958",
+        "redeemSompiPerTpeg": "125000",
+        "depegBps": "76",
+        "lesson": "Three numbers, none of them a dollar: the admin price, the pool price, and the redeem price. A 2 tKAS pool cannot pull them together. That is the $50k–$300k rung."
+      }
+    ]
+  }
+}

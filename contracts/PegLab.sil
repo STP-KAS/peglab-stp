@@ -1,0 +1,308 @@
+pragma silverscript ^0.1.0;
+
+// PegLab — Kaspa Testnet-10 community toy.
+// Not USD. Not an issuer. Not redeemable for dollars. Will depeg.
+// Budget rung: code + audit-lite + tiny pool ($50k–$300k fiction).
+//
+// kind 1 = CONTROL (pool tKAS lives in the UTXO value; AMM tPEG in poolTpeg)
+// kind 2 = UNIT (circulating tPEG; cell value is 1000 sompi)
+//
+// Global tPEG budget: capRemaining + circulating + poolTpeg <= 10000
+// Backing cap: CONTROL value <= 1000000000 sompi (10 tKAS)
+contract PegLab(
+    byte[32] series,
+    int maxFee,
+    byte[32] initialOwner,
+    int initialKind,
+    int initialQuantity,
+    int initialOraclePrice,
+    int initialOracleLive,
+    int initialPaused,
+    int initialCapRemaining,
+    int initialPoolTpeg
+) {
+    byte[32] owner = initialOwner;
+    int kind = initialKind;
+    int quantity = initialQuantity;
+    int oraclePrice = initialOraclePrice;
+    int oracleLive = initialOracleLive;
+    int paused = initialPaused;
+    int capRemaining = initialCapRemaining;
+    int poolTpeg = initialPoolTpeg;
+    byte[32] seriesId = series;
+
+    function requireUnit(State s) {
+        require(s.seriesId == series);
+        require(s.kind == 2);
+        require(s.quantity > 0 && s.quantity <= 10000);
+        require(s.oraclePrice == 0);
+        require(s.oracleLive == 0);
+        require(s.paused == 0);
+        require(s.capRemaining == 0);
+        require(s.poolTpeg == 0);
+    }
+
+    function requireControl(State s) {
+        require(s.seriesId == series);
+        require(s.kind == 1);
+        require(s.quantity == 0);
+        require(s.oraclePrice >= 0 && s.oraclePrice <= 1000000000);
+        require(s.oracleLive == 0 || s.oracleLive == 1);
+        require(s.paused == 0 || s.paused == 1);
+        require(s.capRemaining >= 0 && s.capRemaining <= 10000);
+        require(s.poolTpeg >= 0 && s.poolTpeg <= 10000);
+        require(s.capRemaining + s.poolTpeg <= 10000);
+    }
+
+    function sameAdmin(State a, State b) {
+        require(a.owner == b.owner);
+        require(a.kind == 1 && b.kind == 1);
+    }
+
+    #[covenant(binding = cov, from = 3, to = 3)]
+    function act(State[] prevStates, State[] newStates, int operation, int amount, pubkey sponsor, sig authorization) {
+        require(maxFee > 0 && maxFee <= 3000000);
+        require(prevStates.length >= 1 && prevStates.length <= 3);
+        require(newStates.length <= 3);
+
+        byte[32] covId = OpInputCovenantId(this.activeInputIndex);
+        for(inIdx, 0, prevStates.length, 3) {
+            require(prevStates[inIdx].seriesId == series);
+            require(OpCovInputIdx(covId, inIdx) == inIdx);
+        }
+        for(outIdx, 0, newStates.length, 3) {
+            require(newStates[outIdx].seriesId == series);
+            require(OpCovOutputIdx(covId, outIdx) == outIdx);
+            if(newStates[outIdx].kind == 2) {
+                requireUnit(newStates[outIdx]);
+                require(tx.outputs[outIdx].value == 1000);
+            }
+        }
+
+        require(tx.inputs.length == prevStates.length + 1);
+        byte[36] sponsorScript = new ScriptPubKeyP2PK(sponsor);
+        require(tx.inputs[prevStates.length].scriptPubKey == byte[](sponsorScript));
+
+        int changeIndex = newStates.length;
+        int payout = 0;
+
+        if(operation == 0) {
+            // Transfer / split / merge circulating units. No CONTROL.
+            require(checkSig(authorization, pubkey(owner)));
+            require(kind == 2);
+            require(newStates.length >= 1);
+            int previousTotal = 0;
+            int nextTotal = 0;
+            for(fromIdx, 0, prevStates.length, 3) {
+                requireUnit(prevStates[fromIdx]);
+                require(tx.inputs[fromIdx].value == 1000);
+                previousTotal = previousTotal + prevStates[fromIdx].quantity;
+            }
+            for(toIdx, 0, newStates.length, 3) {
+                nextTotal = nextTotal + newStates[toIdx].quantity;
+            }
+            require(previousTotal == nextTotal);
+            require(previousTotal <= 10000);
+        } else if(operation == 1) {
+            // Mint: user (sponsor) locks tKAS into CONTROL, receives UNIT.
+            require(checkSig(authorization, sponsor));
+            require(kind == 1);
+            require(prevStates.length == 1);
+            require(newStates.length == 2);
+            requireControl(prevStates[0]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(prevStates[0].paused == 0);
+            require(prevStates[0].oracleLive == 1);
+            require(prevStates[0].oraclePrice > 0);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].oracleLive == 1);
+            require(newStates[0].paused == 0);
+            require(newStates[0].poolTpeg == prevStates[0].poolTpeg);
+            require(amount > 0 && amount <= 1000000000);
+            require(amount % prevStates[0].oraclePrice == 0);
+            int minted = amount / prevStates[0].oraclePrice;
+            require(minted >= 1 && minted <= prevStates[0].capRemaining);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining - minted);
+            require(newStates[1].kind == 2);
+            require(newStates[1].quantity == minted);
+            require(tx.inputs[0].value + amount == tx.outputs[0].value);
+            require(tx.outputs[0].value > 0 && tx.outputs[0].value <= 1000000000);
+            require(newStates[0].capRemaining + newStates[0].poolTpeg + minted <= 10000);
+        } else if(operation == 2) {
+            // Redeem: burn UNIT, unlock tKAS from CONTROL at current oracle.
+            require(checkSig(authorization, pubkey(prevStates[1].owner)));
+            require(kind == 1);
+            require(prevStates.length == 2);
+            requireControl(prevStates[0]);
+            requireUnit(prevStates[1]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(prevStates[0].oracleLive == 1);
+            require(prevStates[0].oraclePrice > 0);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].oracleLive == 1);
+            require(newStates[0].paused == prevStates[0].paused);
+            require(newStates[0].poolTpeg == prevStates[0].poolTpeg);
+            require(tx.inputs[1].value == 1000);
+            int burned = prevStates[1].quantity;
+            int remain = 0;
+            if(newStates.length == 2) {
+                requireUnit(newStates[1]);
+                require(newStates[1].owner == prevStates[1].owner);
+                require(newStates[1].quantity < burned);
+                remain = newStates[1].quantity;
+                burned = burned - remain;
+            } else {
+                require(newStates.length == 1);
+            }
+            require(burned >= 1);
+            int released = burned * prevStates[0].oraclePrice;
+            require(released > 0);
+            require(tx.inputs[0].value == tx.outputs[0].value + released);
+            require(tx.outputs[0].value >= 1000000);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining + burned);
+            byte[36] recipient = new ScriptPubKeyP2PK(pubkey(prevStates[1].owner));
+            require(tx.outputs[newStates.length].scriptPubKey == byte[](recipient));
+            require(tx.outputs[newStates.length].value == released + 1000);
+            payout = 1;
+        } else if(operation == 3) {
+            // Swap tKAS -> tPEG against the tiny constant-product pool.
+            require(checkSig(authorization, sponsor));
+            require(kind == 1);
+            require(prevStates.length == 1);
+            require(newStates.length == 2);
+            requireControl(prevStates[0]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(prevStates[0].paused == 0);
+            require(prevStates[0].oracleLive == 1);
+            require(prevStates[0].oraclePrice > 0);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].oracleLive == 1);
+            require(newStates[0].paused == 0);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining);
+            require(amount > 0);
+            int oldKas = tx.inputs[0].value;
+            int newKas = oldKas + amount;
+            require(newKas <= 1000000000);
+            require(tx.outputs[0].value == newKas);
+            require(oldKas >= 1000000);
+            require(prevStates[0].poolTpeg >= 1);
+            int newTpeg = (oldKas * prevStates[0].poolTpeg) / newKas;
+            require(newTpeg >= 1);
+            int tpegOut = prevStates[0].poolTpeg - newTpeg;
+            require(tpegOut >= 1);
+            require(newStates[0].poolTpeg == newTpeg);
+            require(newStates[1].quantity == tpegOut);
+        } else if(operation == 4) {
+            // Swap tPEG -> tKAS against the tiny constant-product pool.
+            require(checkSig(authorization, pubkey(prevStates[1].owner)));
+            require(kind == 1);
+            require(prevStates.length == 2);
+            requireControl(prevStates[0]);
+            requireUnit(prevStates[1]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(prevStates[0].paused == 0);
+            require(prevStates[0].oracleLive == 1);
+            require(prevStates[0].oraclePrice > 0);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].paused == 0);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining);
+            require(tx.inputs[1].value == 1000);
+            int sold = prevStates[1].quantity;
+            int remain = 0;
+            if(newStates.length == 2) {
+                requireUnit(newStates[1]);
+                require(newStates[1].owner == prevStates[1].owner);
+                require(newStates[1].quantity < sold);
+                remain = newStates[1].quantity;
+                sold = sold - remain;
+            } else {
+                require(newStates.length == 1);
+            }
+            require(sold >= 1);
+            int oldKas = tx.inputs[0].value;
+            int oldTpeg = prevStates[0].poolTpeg;
+            int newTpeg = oldTpeg + sold;
+            require(newTpeg <= 10000);
+            int newKas = (oldKas * oldTpeg) / newTpeg;
+            require(newKas >= 1000000);
+            int kasOut = oldKas - newKas;
+            require(kasOut >= 1);
+            require(tx.outputs[0].value == newKas);
+            require(newStates[0].poolTpeg == newTpeg);
+            byte[36] trader = new ScriptPubKeyP2PK(pubkey(prevStates[1].owner));
+            require(tx.outputs[newStates.length].scriptPubKey == byte[](trader));
+            require(tx.outputs[newStates.length].value == kasOut + 1000);
+            payout = 1;
+        } else if(operation == 5) {
+            // Admin posts oracle price. amount is the new price; live flag in new state.
+            require(checkSig(authorization, pubkey(owner)));
+            require(kind == 1);
+            require(prevStates.length == 1 && newStates.length == 1);
+            requireControl(prevStates[0]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(newStates[0].paused == prevStates[0].paused);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining);
+            require(newStates[0].poolTpeg == prevStates[0].poolTpeg);
+            require(newStates[0].oraclePrice == amount);
+            require(tx.inputs[0].value == tx.outputs[0].value);
+        } else if(operation == 6) {
+            // Admin pause / unpause. amount 0 or 1.
+            require(checkSig(authorization, pubkey(owner)));
+            require(kind == 1);
+            require(prevStates.length == 1 && newStates.length == 1);
+            requireControl(prevStates[0]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(amount == 0 || amount == 1);
+            require(newStates[0].paused == amount);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].oracleLive == prevStates[0].oracleLive);
+            require(newStates[0].capRemaining == prevStates[0].capRemaining);
+            require(newStates[0].poolTpeg == prevStates[0].poolTpeg);
+            require(tx.inputs[0].value == tx.outputs[0].value);
+        } else {
+            // operation 7: admin seeds or withdraws pool tKAS. amount = new CONTROL value.
+            require(operation == 7);
+            require(checkSig(authorization, pubkey(owner)));
+            require(kind == 1);
+            require(prevStates.length == 1 && newStates.length == 1);
+            requireControl(prevStates[0]);
+            requireControl(newStates[0]);
+            sameAdmin(prevStates[0], newStates[0]);
+            require(newStates[0].paused == prevStates[0].paused);
+            require(newStates[0].oraclePrice == prevStates[0].oraclePrice);
+            require(newStates[0].oracleLive == prevStates[0].oracleLive);
+            require(newStates[0].capRemaining + newStates[0].poolTpeg == prevStates[0].capRemaining + prevStates[0].poolTpeg);
+            require(newStates[0].capRemaining + newStates[0].poolTpeg <= 10000);
+            require(amount >= 1000000 && amount <= 200000000);
+            require(tx.outputs[0].value == amount);
+            require(tx.outputs[0].value <= 1000000000);
+        }
+
+        changeIndex = newStates.length + payout;
+        require(tx.outputs.length == changeIndex + 1);
+        require(tx.outputs[changeIndex].scriptPubKey == byte[](sponsorScript));
+        require(tx.outputs[changeIndex].value > 0);
+        int fee = tx.inputs[prevStates.length].value - tx.outputs[changeIndex].value;
+        if(operation == 1 || operation == 3) {
+            fee = fee - amount;
+            if(operation == 1) { fee = fee - 1000; }
+            if(operation == 3) { fee = fee - 1000; }
+        }
+        if(operation == 7) {
+            int delta = tx.outputs[0].value - tx.inputs[0].value;
+            if(delta > 0) { fee = fee - delta; }
+        }
+        require(fee > 0 && fee <= maxFee);
+    }
+
+    #[covenant.delegate]
+    function authorizeDelegate(sig authorization) {
+        require(checkSig(authorization, pubkey(owner)));
+    }
+}
