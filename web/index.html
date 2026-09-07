@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PegLab — Testnet toy. Will depeg.</title>
+  <meta name="description" content="Kaspa Testnet-10 community-toy stable. Not USD. Tiny pool. Will depeg.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="banner">TESTNET TOY · NOT USD · NOT AN ISSUER · WILL DEPEG</div>
+  <header>
+    <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
+    <h1>A dollar-shaped object<br>with a 2 tKAS pool.</h1>
+    <p class="lead">This is the $50k–$300k rung: code, an audit-lite, and a pool too small to defend a peg. tPEG is a covenant claim on locked tKAS, priced by one admin key. It is not money.</p>
+    <div class="rung">
+      <span>Code</span>
+      <span>Audit-lite</span>
+      <span>Tiny pool</span>
+      <span>Will depeg</span>
+      <span>No mainnet</span>
+    </div>
+  </header>
+  <main>
+    <section class="board">
+      <article class="card">
+        <h2>Live state</h2>
+        <div class="metrics" id="metrics"></div>
+        <div class="holders" id="holders"></div>
+        <div class="controls">
+          <button id="mint" class="primary">Mint 100 tPEG</button>
+          <button id="swap">Swap 0.2 tKAS through pool</button>
+          <button id="redeem">Redeem 40 tPEG</button>
+          <button id="oracle" class="danger">Post oracle +25%</button>
+          <button id="stale">Expire oracle</button>
+          <button id="pause">Pause</button>
+          <button id="reset">Reset genesis</button>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Wallet prompt</h2>
+        <pre class="prompt" id="prompt"></pre>
+      </article>
+    </section>
+    <section class="lab card">
+      <h2>Depeg lab</h2>
+      <p class="note">Five scripted steps. The last one is the product: target, pool, and redeem disagree, and a 2 tKAS pool cannot pull them together.</p>
+      <div class="controls">
+        <button id="demo" class="primary">Run depeg lab</button>
+      </div>
+      <div class="steps" id="steps"></div>
+    </section>
+  </main>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Verify genesis outpoint, template hash, series bytes, and backing. Redeem is tKAS at an admin price, not dollars. Pause blocks new risk; it does not create a peg.</p>
+  </footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

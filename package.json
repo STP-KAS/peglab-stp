@@ -1,0 +1,17 @@
+{
+  "name": "peglab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Kaspa Testnet-10 community-toy stable. Not USD. Tiny pool. Will depeg.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/peglab.test.mjs",
+    "fixtures": "node server/peglab.mjs --fixtures",
+    "compile": "node server/peglab.mjs --compile",
+    "serve": "node server/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
