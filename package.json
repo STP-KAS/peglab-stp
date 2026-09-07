@@ -9,6 +9,8 @@
     "test": "node --test tests/peglab.test.mjs",
     "fixtures": "node server/peglab.mjs --fixtures",
     "compile": "node server/peglab.mjs --compile",
+    "genesis": "node server/submit-genesis.mjs",
+    "genesis:submit": "node server/submit-genesis.mjs --submit",
     "serve": "node server/serve.mjs"
   },
   "engines": {
