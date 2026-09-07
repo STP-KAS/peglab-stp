@@ -20,6 +20,7 @@ import {
   DEFAULT_POOL_KAS,
   DEFAULT_POOL_TPEG,
 } from '../src/engine.mjs';
+import {NETWORK, SPONSOR_ADDRESS, SPONSOR_XONLY, SERIES_ID, GENESIS_POOL_SOMPI} from '../src/network.mjs';
 
 const admin = '11'.repeat(32);
 const alice = '22'.repeat(32);
@@ -150,6 +151,16 @@ describe('name is not identity', () => {
     const minted = mint(a, {tkasIn: 100_000n, minter: alice}).state;
     assert.equal(inspect(b).circulating, 0n);
     assert.equal(inspect(minted).circulating, 1n);
+  });
+});
+
+describe('testnet sponsor', () => {
+  it('pins the documented Testnet-10 address and 2 tKAS genesis pool', () => {
+    assert.equal(NETWORK, 'testnet-10');
+    assert.match(SPONSOR_ADDRESS, /^kaspatest:/);
+    assert.equal(SPONSOR_XONLY.length, 64);
+    assert.equal(SERIES_ID.length, 64);
+    assert.equal(GENESIS_POOL_SOMPI, 200_000_000n);
   });
 });
 

@@ -35,6 +35,27 @@ npm run serve
 
 Then open `http://127.0.0.1:8765/` and click **Run depeg lab**.
 
+## Testnet-10 sponsor
+
+Documented funding address (public, no key in this repo):
+
+`kaspatest:qqup3k4ru5uhj9swa05afa3zqcwkyhtv9vz9dme68cglza73mc5yk4r7an5cj`
+
+Review a 2 tKAS CONTROL genesis against live UTXOs (does not sign or broadcast):
+
+```bash
+npm run genesis
+```
+
+Broadcast only if you hold the key for that address. Put it in the environment, never in git or chat:
+
+```bash
+set PEGLAB_SPONSOR_KEY=<hex>
+npm run genesis:submit
+```
+
+The key must derive that exact `kaspatest:` address. Genesis takes **2 tKAS** plus a fee cap of **0.01 tKAS**. Change returns to the same address. A journal lands in `artifacts/testnet-genesis.json` before the node call.
+
 ## Layout
 
 ```
