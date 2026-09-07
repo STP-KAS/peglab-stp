@@ -37,7 +37,7 @@ Then open `http://127.0.0.1:8765/` and click **Run depeg lab**.
 
 ## Testnet-10 sponsor
 
-Documented funding address (public, no key in this repo):
+Operator mining address on Testnet-10 (payouts land here; the private key stays in Kaspa NG, not in this repo):
 
 `kaspatest:qqup3k4ru5uhj9swa05afa3zqcwkyhtv9vz9dme68cglza73mc5yk4r7an5cj`
 

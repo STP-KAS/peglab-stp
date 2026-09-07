@@ -1,4 +1,5 @@
 // Public Testnet-10 facts. No keys.
+// SPONSOR_ADDRESS is the operator's TN10 mining payout address.
 export const NETWORK = 'testnet-10';
 export const RPC_URL = 'wss://muon-10.kaspa.blue/kaspa/testnet-10/wrpc/borsh';
 export const SPONSOR_ADDRESS = 'kaspatest:qqup3k4ru5uhj9swa05afa3zqcwkyhtv9vz9dme68cglza73mc5yk4r7an5cj';
