@@ -37,24 +37,22 @@ Then open `http://127.0.0.1:8765/` and click **Run depeg lab**.
 
 ## Testnet-10 sponsor
 
-Operator mining address on Testnet-10 (payouts land here; the private key stays in Kaspa NG, not in this repo):
+Dedicated PegLab wallet (receive index 0). The seed/key is **not** in git.
+
+`kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0`
+
+Mining payouts still land on:
 
 `kaspatest:qqup3k4ru5uhj9swa05afa3zqcwkyhtv9vz9dme68cglza73mc5yk4r7an5cj`
 
-Review a 2 tKAS CONTROL genesis against live UTXOs (does not sign or broadcast):
+Send **at least 2.01 tKAS** from the miner to the PegLab wallet, then:
 
 ```bash
 npm run genesis
-```
-
-Broadcast only if you hold the key for that address. Put it in the environment, never in git or chat:
-
-```bash
-set PEGLAB_SPONSOR_KEY=<hex>
 npm run genesis:submit
 ```
 
-The key must derive that exact `kaspatest:` address. Genesis takes **2 tKAS** plus a fee cap of **0.01 tKAS**. Change returns to the same address. A journal lands in `artifacts/testnet-genesis.json` before the node call.
+`--submit` reads gitignored `.local/sponsor.json` or `PEGLAB_SPONSOR_KEY`. Genesis locks **2 tKAS** in CONTROL, fee cap **0.01 tKAS**, change back to the PegLab address. Journal: `artifacts/testnet-genesis.json`.
 
 ## Layout
 
