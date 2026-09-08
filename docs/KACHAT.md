@@ -131,3 +131,17 @@ If KaChat ever shows **USD**, the issuer is named, freeze is disclosed, and PegL
 - Do not wait for Circle before shipping timeout-KAS pay (`KaChatPayTimeout` can go live on **KAS** now).
 
 **Short version:** KaChat is the conversation. PegLab is the unit the conversation can settle in without USDT. Real means a receipt (or a hosted real USD), a KaChat signer for that covenant, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.
+
+---
+
+## Phone: Open KaChat from this site
+
+PegLab’s **Open KaChat** button on a phone tries the installed app first, then the store.
+
+| Device | If installed | If not |
+| --- | --- | --- |
+| iPhone / iPad | `kachat://` (registered in KaChat iOS) | [App Store id 6759102359](https://apps.apple.com/us/app/kachat/id6759102359) |
+| Android | Chrome `intent://kapost` + package `com.kachat.app` (BROWSABLE host `kapost`; empty path just opens the app) | [Play `com.kachat.app`](https://play.google.com/store/apps/details?id=com.kachat.app) |
+| Desktop | [kachat.org](https://www.kachat.org/) | same |
+
+`kachat.org` has no Apple App Site Association file, so Universal Links on that domain cannot open the app. The custom scheme is what works. Android does not accept a bare `kachat://` with no host.
