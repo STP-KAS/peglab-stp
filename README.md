@@ -62,6 +62,7 @@ src/engine.mjs           Executable economic spec (browser + Node)
 server/peglab.mjs        Fixtures + silverc wrapper
 web/                     Depeg-lab UI
 tests/                   Reject paths, conservation, depeg reproduction
+STABLES-GUIDE.md         Alternative to PegLab-as-money: other-chain practice, capital ladder, fundraising pushback
 AUDIT-LITE.md            What was checked; what a real audit would still do
 KNOWN-BREAKS.md          Required failure reproductions
 ```
@@ -89,6 +90,8 @@ npm run compile
 The covenant uses `#[covenant(binding = cov, from = 3, to = 3)]`. It does not `readInputState` of a foreign covenant.
 
 ## What this is not
+
+Want a Kaspa dollar instead of this toy? Read [STABLES-GUIDE.md](STABLES-GUIDE.md). Short version: do not raise money against tPEG; host a real USD when it exists; or ship KAS receipts that never claim $1.
 
 Not [1kUSD](https://github.com/NeaBouli/1kUSD). That is a larger research program. PegLab does not import Solidity and does not claim that track’s product objective.
 
