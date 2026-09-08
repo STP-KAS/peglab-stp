@@ -118,6 +118,8 @@ Build the **settlement app** that becomes useful the day a real stable lands:
 
 That is the Kaspa edge. The dollar token is someone else’s licensed inventory.
 
+The human product (phones, KaChat, postage, agents, what never to ship) is [VISION.md](VISION.md). This file is the capital and peg ladder. Do not mix them: a receipt is not a raise.
+
 ### If you still want a Kaspa-native unit
 
 Pick **one** and say it in the first sentence:

@@ -132,6 +132,8 @@ If KaChat ever shows **USD**, the issuer is named, freeze is disclosed, and PegL
 
 **Short version:** KaChat is the conversation. PegLab is the unit the conversation can settle in without USDT. Real means a receipt (or a hosted real USD), a KaChat signer for that covenant, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.
 
+The rest of the product — phones vs PC, copy, support, agents, merchants, what never to do — is [VISION.md](VISION.md).
+
 ---
 
 ## Open KaChat from this site

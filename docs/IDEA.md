@@ -34,3 +34,5 @@ Never paste a seed into the page. Mainnet `kaspa:` addresses are refused.
 See [STABLES-GUIDE.md](STABLES-GUIDE.md). Short version: do not raise money against tPEG. Host a named USD when it exists, or ship KAS receipts that never claim $1.
 
 KaChat (chat + native KAS pay) is the first dapp that would feel this. How it would use PegLab, and the work to make that real: [KACHAT.md](KACHAT.md).
+
+The product is a finished conversation on a phone, not a coin page. Full vision and the detailed to-do (people, postage, law, ops, agents — not only the covenant): [VISION.md](VISION.md).
