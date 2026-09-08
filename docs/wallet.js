@@ -85,38 +85,52 @@ function shortAddr(address) {
 }
 
 function paintTopKasware() {
-  const top = $('kw-top-label');
-  const chip = $('kasware-top');
-  if (!top || !chip) return;
+  const login = $('kasware-top');
+  const logout = $('kasware-out');
+  const balBox = $('kw-top-bal');
+  const who = $('kw-top-who');
+  const kas = $('kw-top-kas');
+  const addr = $('kw-top-addr');
+  if (!login) return;
   const state = $('kw-state')?.textContent || 'Not connected';
   const address = $('kw-address')?.textContent || '';
-  const bal = $('kw-balance')?.textContent || '';
-  chip.classList.remove('on', 'warn');
-  chip.removeAttribute('title');
-  if (state === 'Connected' && address.startsWith('kaspatest:')) {
-    top.textContent = `${shortAddr(address)} · ${bal}`;
-    chip.classList.add('on');
-    chip.title = address;
+  const amount = $('kw-balance')?.textContent || '';
+  const connected = state === 'Connected' && address.startsWith('kaspatest:');
+  if (logout) logout.hidden = !connected;
+  if (balBox) balBox.hidden = !connected;
+  if (who) who.hidden = !connected;
+  if (connected) {
+    login.hidden = true;
+    if (kas) kas.textContent = amount.includes('tKAS') ? amount : `tKAS ${amount}`;
+    if (addr) {
+      addr.textContent = shortAddr(address);
+      addr.title = address;
+    }
     return;
   }
-  if (state === 'Wrong network') {
-    top.textContent = 'Switch to Testnet 10';
-    chip.classList.add('warn');
-    return;
+  login.hidden = false;
+  if (state === 'Connecting') login.textContent = 'Connecting…';
+  else if (state === 'Wrong network') login.textContent = 'Switch to Testnet 10';
+  else if (state === 'Not installed') login.textContent = 'Install KasWare';
+  else if (state === 'No account') login.textContent = 'No account';
+  else login.textContent = 'Log in';
+}
+
+async function disconnectKasware() {
+  try {
+    if (window.kasware?.disconnect) await window.kasware.disconnect(location.origin);
+  } catch {
+    // still clear the page
   }
-  if (state === 'Not installed') {
-    top.textContent = 'Install';
-    return;
-  }
-  if (state === 'Connecting') {
-    top.textContent = 'Connecting…';
-    return;
-  }
-  if (state === 'No account') {
-    top.textContent = 'No account';
-    return;
-  }
-  top.textContent = 'Connect';
+  $('kw-state').textContent = 'Not connected';
+  $('kw-address').textContent = '—';
+  $('kw-network').textContent = '—';
+  $('kw-balance').textContent = '—';
+  if ($('fund-kasware')) $('fund-kasware').hidden = true;
+  if ($('kw-warn')) $('kw-warn').hidden = true;
+  setActive('none yet');
+  paintTopKasware();
+  say('KasWare disconnected.');
 }
 
 function paintHostAddress(address) {
@@ -260,7 +274,20 @@ async function restoreLocal() {
 }
 
 $('connect-kasware').onclick = () => connectKasware().catch((err) => say(err.message, true));
-$('kasware-top').onclick = () => connectKasware().catch((err) => say(err.message, true));
+if ($('kasware-top')) $('kasware-top').onclick = () => connectKasware().catch((err) => say(err.message, true));
+if ($('kasware-out')) $('kasware-out').onclick = () => disconnectKasware().catch((err) => say(err.message, true));
+if ($('kw-top-addr')) {
+  $('kw-top-addr').onclick = async () => {
+    const address = $('kw-address')?.textContent || '';
+    if (!address.startsWith('kaspatest:')) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      say('Copied KasWare address.');
+    } catch {
+      say(address);
+    }
+  };
+}
 $('fund-kasware').onclick = () => {
   const address = $('kw-address').textContent;
   fund(address, 'KasWare').then(() => refreshAddress(address, $('kw-balance')).then(paintTopKasware)).catch((err) => say(err.message, true));
