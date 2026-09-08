@@ -9,6 +9,18 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <div class="welcome" data-welcome role="dialog" aria-modal="true" aria-label="Lunatic left has an opinion">
+    <div class="welcome-card">
+      <p class="eyebrow">Take note</p>
+      <div class="welcome-stage">
+        <video class="welcome-film" muted autoplay playsinline loop preload="auto" src="/media/lunatic-left.mp4" disablepictureinpicture>
+          Your browser cannot play this film. <a href="/media/lunatic-left.mp4">Open the file</a>.
+        </video>
+      </div>
+      <p class="welcome-copy">Lunatic left has an opinion, take note.</p>
+      <button class="primary" type="button" data-welcome-close>Continue</button>
+    </div>
+  </div>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
     <a class="brand" href="/" title="Home">PegLab</a>
@@ -253,6 +265,58 @@
   <script src="./wallets.js"></script>
   <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
+  <script>
+    (function () {
+      var welcome = document.querySelector('.welcome[data-welcome]');
+      if (!welcome) return;
+      var key = 'peglab-welcome-seen';
+      var video = welcome.querySelector('video');
+      function closed() { return welcome.hidden; }
+      function remember() { try { sessionStorage.setItem(key, '1'); } catch (e) {} }
+      function start() {
+        if (!video || closed() || !video.paused || video.ended) return;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.play().catch(function () {});
+      }
+      function soundOn() {
+        if (!video || closed()) return;
+        video.muted = false;
+        video.defaultMuted = false;
+        video.volume = 1;
+      }
+      function hide() {
+        if (video) video.pause();
+        welcome.hidden = true;
+        remember();
+        document.documentElement.dataset.welcomeSeen = '1';
+      }
+      try {
+        if (sessionStorage.getItem(key)) hide();
+        else remember();
+      } catch (e) {}
+      var closeBtn = welcome.querySelector('[data-welcome-close]');
+      if (closeBtn) closeBtn.addEventListener('click', hide);
+      welcome.addEventListener('pointerdown', function (event) {
+        if (closed()) return;
+        if (event.target.closest('[data-welcome-close]')) return;
+        if (event.target.closest('.welcome-card')) {
+          soundOn();
+          return;
+        }
+        hide();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !closed()) hide();
+      });
+      if (video) {
+        video.addEventListener('playing', function () { video.classList.add('is-ready'); });
+        video.addEventListener('canplay', start);
+      }
+      start();
+    })();
+  </script>
   <script>
     (function () {
       var section = document.getElementById('kachat');
