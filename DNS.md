@@ -35,3 +35,20 @@ Then in the GitHub repo **Settings → Pages**, confirm:
 - Check **Enforce HTTPS** once the certificate appears.
 
 Do not put `.local/sponsor.json` or the seed on this domain.
+
+## Let Grok apply DNS (API)
+
+I cannot log into GoDaddy SSO from this machine. A **production API key** is enough.
+
+1. Open https://developer.godaddy.com/keys while logged into the same GoDaddy account that owns the domain.
+2. Create a **production** key (not OTE/test).
+3. Either paste the key and secret in chat, or in PowerShell:
+
+```powershell
+$env:GODADDY_API_KEY = "..."
+$env:GODADDY_API_SECRET = "..."
+cd C:\Users\Remco\peglab
+node scripts/point-godaddy-dns.mjs
+```
+
+That script replaces `@` A records with GitHub Pages IPs and sets `www` → `stp-kas.github.io`. Do not commit the key.
