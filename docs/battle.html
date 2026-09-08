@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Battle — PegLab</title>
+  <meta name="description" content="PegLab scored against Parker’s GitHub receipt PoC.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="/" title="Home">PegLab</a>
+    <nav>
+      <a href="/best.html">Best of both</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/mainnet.html">Mainnet</a>
+      <a href="/battle.html" class="on">Battle</a>
+      <a href="/kachat.html">KaChat</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  
+  <article class="doc">
+<h1>Battle test: PegLab vs Parker’s GitHub PoC</h1>
+<p>Parker’s public model is not a dollar printer. It is <strong><a href="https://github.com/parker2017code/kaspa-explained">kaspa-explained</a></strong> (Testnet-10 receipts, wrap lab, Sprout Harbor) plus <strong><a href="https://github.com/parker2017code/tn12-covenant-vault-demo">tn12-covenant-vault-demo</a></strong> (accepted TN12 vault/escrow/assurance proofs).</p>
+<p>This file scores <strong>this PegLab checkout</strong> against that model. PegLab is allowed to lose. If a row says Parker wins, do not “fix” it by calling tPEG USD.</p>
+<p><strong>TESTNET TOY. NOT USD. DO NOT RAISE AGAINST tPEG.</strong></p>
+<p>Sources dated September 2026: Parker README + <code>docs/wrap-poc.md</code> + <code>docs/backed-receipt.md</code>; PegLab <code>src/engine.mjs</code>, <a href="/mainnet.html">MAINNET.md</a>, <a href="/vision.html">VISION.md</a>.</p>
+<hr>
+<h2>1. What Parker actually proved</h2>
+<h3>Native receipt (the object PegLab should become)</h3>
+<p>From <code>backed-receipt.md</code> / wrap lab:</p>
+<ul><li>One receipt unit <strong>equals one locked sompi</strong>. Not USD.</li><li>Transfer / split / merge conserve quantity and backing.</li><li>Redeem pays the holder’s P2PK. No mint refill.</li><li><strong>Sponsor input pays fees.</strong> Principal cannot be skimmed.</li><li>Identity is genesis outpoint + covenant ID + template + series. <strong>A name is not authenticity.</strong></li><li>Live TN10 evidence exists for create, split, merge, move, partial and full redeem (accepted txids in Parker’s public review docs).</li></ul>
+<h3>Wrap / “stable” path (explicitly not money)</h3>
+<ul><li>Lock 100 <strong>pUSD</strong> (freely minted Sepolia test token) → issue Kaspa units → burn → release.</li><li><strong>Trusted local oracle.</strong> Kaspa does <strong>not</strong> verify Ethereum consensus.</li><li><strong>wTestUSD cannot buy the town’s crops.</strong> Written in the README.</li><li>Round trip recorded 7 September 2026; vault and claim balances ended at zero.</li></ul>
+<h3>Economy (Sprout Harbor)</h3>
+<ul><li>Real tKAS spends with rules: wage UTXO, vouchers, pledges, schedule check.</li><li>21 accepted TN10 txs for one order; reload verified 7 September 2026.</li><li>Game art is interpretation; signatures and spend limits are on-chain.</li></ul>
+<h3>TN12 covenant lab</h3>
+<ul><li>Accepted: delayed vault, pledge release/refund, buyer escrow, batch-assurance, payload receipts, adversarial rejects.</li><li>Vocabulary: <code>SCRIPT_ENFORCED</code> vs <code>PLANNER_ONLY</code> vs <code>INDEXER_DERIVED</code> vs <code>WALLET_POLICY</code>.</li><li>Honest gaps: no AMM, no lending, no production oracle, no user-wallet signing on the accepted proofs (local keys), no independent audit, mainnet out of scope.</li></ul>
+<p>Parker’s model in one sentence: <strong>lock real tKAS (or a named test wrap), prove the spend rule, journal the txid, never call it a bank dollar.</strong></p>
+<hr>
+<h2>2. Scorecard</h2>
+<div class="table-wrap"><table><thead><tr><th>Test</th><th>Parker PoC</th><th>PegLab (this repo)</th><th>Winner</th></tr></thead><tbody><tr><td>What the unit *is*</td><td>1 receipt = 1 sompi locked in the output</td><td>tPEG minted at an <strong>admin oracle</strong> (default 100_000 sompi/tPEG) plus a 2 tKAS constant-product pool</td><td><strong>Parker</strong> for money. PegLab is a *different object*: a depeg toy.</td></tr><tr><td>Dollar claim</td><td>Forbidden. wTestUSD cannot buy crops. pUSD is freely minted test.</td><td>Forbidden in copy (WILL DEPEG). Engine still *has* a USD-shaped oracle + pool</td><td><strong>Tie on copy.</strong> Parker wins on *mechanism* (no dollar feed).</td></tr><tr><td>Redemption</td><td>Holder spends backing; no oracle</td><td>Redeem tPEG for tKAS at <strong>admin price</strong></td><td><strong>Parker</strong></td></tr><tr><td>Fees</td><td>Sponsor input; no skim of principal</td><td>Lab UI does not yet enforce sponsor-fee on a live UNIT tx</td><td><strong>Parker</strong></td></tr><tr><td>On-chain evidence</td><td>Accepted TN10/TN12 txids, JSON journals, explorer links</td><td>Engine + tests + optional genesis submit; <strong>no public accepted UNIT transfer/redeem journal</strong></td><td><strong>Parker</strong></td></tr><tr><td>Caps</td><td>10 tKAS teaching bound on receipts</td><td>10 tKAS backing, 10k tPEG, 2 tKAS pool — same teaching scale</td><td>Tie</td></tr><tr><td>Identity</td><td>Genesis / template / series; name ≠ authenticity</td><td>Same sentence in PegLab copy</td><td>Tie</td></tr><tr><td>Fail closed</td><td>Wrong signer/amount/skim rejected; wrap rejects duplicate deposit/burn</td><td>Engine rejects ALIGN, OVER_CAP, PAUSED, STALE_ORACLE, BAD_ADMIN, TINY_POOL</td><td>Tie on *intent*. Parker has VM + node rejects on record.</td></tr><tr><td>Oracle honesty</td><td>Wrap oracle is <strong>named as trust</strong>. Native receipt has <strong>none</strong>.</td><td>Admin key *is* the price. Lab shows the depeg on purpose</td><td><strong>PegLab</strong> as a *lesson*. <strong>Parker</strong> as a *product*.</td></tr><tr><td>AMM / “peg defense”</td><td>Explicitly <strong>no AMM</strong> on TN12 (“current gaps”)</td><td>Tiny pool <strong>is</strong> the depeg demo</td><td><strong>PegLab</strong> for teaching. <strong>Parker</strong> for not pretending a pool is a peg.</td></tr><tr><td>Timeout / escrow</td><td>TN12 buyer escrow, delayed vault, pledge refund — accepted</td><td>Documented for KaChat (<code>KaChatPayTimeout</code>); <strong>not live</strong></td><td><strong>Parker</strong></td></tr><tr><td>Indexer / replay</td><td>Payload receipts, replay guards, claim classes</td><td>No UNIT indexer row yet</td><td><strong>Parker</strong></td></tr><tr><td>Wallets</td><td>Encrypted browser journal; wrap keys stay <code>.local/</code>; Kaspa does not get a public signing server</td><td>KasWare header (Gramlane <code>getBalance</code>) + localhost faucet; public site has no host key</td><td><strong>Tie</strong> (different surfaces). Parker is ahead on <strong>recorded</strong> independent-role txs.</td></tr><tr><td>Product scene</td><td>Town that spends tKAS with rules</td><td>KaChat-on-phone vision; PC told KaChat is mobile-only</td><td><strong>PegLab</strong> on *consumer story*. <strong>Parker</strong> on *executed economy*.</td></tr><tr><td>Funding / law map</td><td>Wrap-poc “from here to real capital” table (asset, oracle, users, supply, finality, recovery, assurance, obligations)</td><td><a href="/mainnet.html">MAINNET.md</a> + <a href="STABLES-GUIDE.md">STABLES-GUIDE.md</a>: Maker/Circle/Liquity funding, GENIUS, never raise tPEG</td><td><strong>PegLab</strong> on *capital honesty*. Parker’s table is tighter on *ops*.</td></tr><tr><td>Mainnet</td><td>Out of scope; readiness doc is gaps</td><td>Out of scope as money; successor A = Parker’s receipt</td><td>**Parker already *is* successor A**</td></tr></tbody></table></div>
+<p><strong>Verdict:</strong> PegLab does <strong>not</strong> beat Parker as a Kaspa unit. Parker’s backed receipt is the thing MAINNET.md calls successor <strong>A</strong>. PegLab wins only as the <strong>public depeg classroom</strong> and the <strong>fundraising/KaChat map</strong>. If you deploy PegLab’s pool+oracle on <code>kaspa:</code>, you lose the battle Parker already won in copy: *do not let a test wrap buy the town.*</p>
+<hr>
+<h2>3. Battle on Parker’s own tests</h2>
+<p>Run PegLab’s engine against Parker’s receipt rules. Failures are expected where PegLab is a different machine.</p>
+<div class="table-wrap"><table><thead><tr><th>Parker rule</th><th>PegLab today</th><th>Result</th></tr></thead><tbody><tr><td>Quantity = backing sompi</td><td>Mint: tKAS in must be a multiple of <strong>oracle</strong> price, not 1:1 sompi</td><td><strong>FAIL as receipt.</strong> PASS as “toy mint.”</td></tr><tr><td>No price oracle on the unit</td><td><code>DEFAULT_ORACLE = 100_000n</code> sompi/tPEG; mint/swap require <code>oracleLive</code></td><td><strong>FAIL as receipt.</strong> PASS as depeg lab.</td></tr><tr><td>Sponsor pays fees; no skim</td><td>Not encoded in the live UNIT path</td><td><strong>FAIL</strong> until successor copies Parker’s sponsor pattern</td></tr><tr><td>Transfer conserves units</td><td><code>transfer</code> conserves tPEG quantities</td><td><strong>PASS</strong> (tPEG, not sompi)</td></tr><tr><td>Redeem to holder P2PK</td><td>Redeem burns tPEG, pays tKAS at oracle</td><td><strong>FAIL as 1:1 sompi redeem.</strong> Different payout.</td></tr><tr><td>Tiny pool cannot defend $1</td><td><code>cannotDefendPeg</code> true at seed; depeg lab moves pool &gt;5%</td><td><strong>PASS</strong> — this is PegLab’s job</td></tr><tr><td>Name ≠ authenticity</td><td>Copy + series id</td><td><strong>PASS</strong> in docs</td></tr><tr><td>Accepted txid journal</td><td>Missing for UNIT</td><td><strong>FAIL</strong></td></tr><tr><td>wTestUSD cannot buy crops</td><td>tPEG must not sit in KaChat as money</td><td><strong>PASS</strong> in <a href="/kachat.html">KACHAT.md</a>; <strong>FAIL</strong> if anyone lists lab tPEG in 4.x</td></tr></tbody></table></div>
+<hr>
+<h2>4. What PegLab should steal from Parker (copy-paste)</h2>
+<p>Not the town art. The <strong>enforcement</strong>.</p>
+<ol><li><strong>Successor A = Parker’s receipt.</strong> Kill the admin USD oracle on any asset KaChat would show. 1 unit = 1 sompi.</li><li><strong>Sponsor fee input.</strong> Parker already wrote it. MAINNET.md already requires it for 0-KAS receivers.</li><li><strong>Evidence pack.</strong> Every “done” is an accepted txid JSON like Parker’s wrap verification record — not a screenshot of the depeg UI.</li><li><strong>Claim vocabulary.</strong> Label PegLab engine rows <code>ENGINE_SPEC</code>, SilverScript <code>SCRIPT_ENFORCED</code>, homepage copy <code>COPY_ONLY</code>. Do not mix.</li><li><strong>Wrap honesty.</strong> If you ever host USDC, say “trusted issuer/bridge” the way Parker says “trusted test oracle.” <strong>wTestUSD cannot buy crops</strong> becomes <strong>tPEG cannot pay KaChat.</strong></li><li><strong>TN12 primitives for KaChat.</strong> Timeout pay = Parker’s delayed vault + escrow + pledge refund. Do not invent a third covenant family.</li><li><strong><code>.local/</code> never on the public host.</strong> Parker’s wrap signing server is loopback-only. PegLab faucet already is. Keep it.</li></ol>
+<hr>
+<h2>5. What Parker should steal from PegLab (if anything)</h2>
+<ul><li><strong>Depeg as a first-class demo.</strong> Parker refuses a fake peg. PegLab *shows* why a 2 tKAS pool dies. That lesson belongs next to wrap lab, not instead of receipts.</li><li><strong>KaChat / phone / “Log in”.</strong> Parker’s proofs still used local keys; TN12 defers user-wallet signing. PegLab wired Gramlane KasWare <code>getBalance</code> on the public page.</li><li><strong>Capital instruments.</strong> Parker’s “from here to real capital” is ops. PegLab’s Maker (MKR private sales, no DAI ICO), Circle (equity → IPO, GENIUS), Liquity (company + immutable core) table is how you *pay* for successor C/D without a sister token.</li></ul>
+<p>Do not merge the labs into one ticker.</p>
+<hr>
+<h2>6. Outcome</h2>
+<div class="table-wrap"><table><thead><tr><th>If you wanted…</th><th>Winner</th><th>Next move</th></tr></thead><tbody><tr><td>A Kaspa-native <strong>unit</strong> people can transfer and redeem</td><td><strong>Parker receipt</strong></td><td>Stop minting tPEG at an oracle. Implement successor A on TN10 with Parker’s sponsor-fee rules. Journal txids.</td></tr><tr><td>A <strong>dollar</strong></td><td><strong>Neither</strong></td><td>Circle/Tether or a licensed company. Parker already refused. PegLab MAINNET.md same.</td></tr><tr><td>A <strong>teaching depeg</strong></td><td><strong>PegLab</strong></td><td>Keep WILL DEPEG. Do not mainnet the pool.</td></tr><tr><td><strong>Chat settlement</strong></td><td><strong>Neither live</strong></td><td>Parker has escrow/timeout on TN12. PegLab has the KaChat story. Combine: Parker primitive + KaChat signer.</td></tr><tr><td><strong>Something to raise money against</strong></td><td><strong>Neither</strong></td><td>Grants for indexer/signer. Equity only if you are an issuer.</td></tr></tbody></table></div>
+<p><strong>Short version:</strong> Parker’s GitHub PoC already *is* the honest Kaspa unit. PegLab is the honest warning that a pool is not a peg. Battle-test score: <strong>receipts 1–0 Parker; classroom 1–0 PegLab; dollars 0–0.</strong> Deploy the receipt. Keep the lab. Do not put PegLab’s oracle on mainnet.</p>
+<p>Parker: https://github.com/parker2017code/kaspa-explained · https://github.com/parker2017code/tn12-covenant-vault-demo   PegLab: this repo · <a href="/mainnet.html">MAINNET.md</a></p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
+  </footer>
+  <script src="./wallets.js"></script>
+</body>
+</html>
