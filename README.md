@@ -76,6 +76,7 @@ server/peglab.mjs        Fixtures + silverc wrapper
 web/                     Depeg-lab UI
 tests/                   Reject paths, conservation, depeg reproduction
 IDEA.md                  What PegLab is: dapp unit on Kaspa, not a bank dollar
+KACHAT.md                How KaChat could use that unit, and what must be built first
 STABLES-GUIDE.md         Capital ladder, other-chain practice, fundraising pushback
 AUDIT-LITE.md            What was checked; what a real audit would still do
 KNOWN-BREAKS.md          Required failure reproductions
