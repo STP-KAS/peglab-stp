@@ -108,12 +108,10 @@ function shortAddr(address) {
 
 function paintBalance(sompi, address) {
   const unit = unitFor(address);
-  if ($('kw-balance')) {
-    $('kw-balance').textContent = sompi == null ? '—' : `${fmtAmount(sompi, 8)} ${unit}`;
-  }
-  if ($('kw-top-kas')) {
-    $('kw-top-kas').textContent = sompi == null ? `${unit} —` : `${fmtAmount(sompi, 1)} ${unit}`;
-  }
+  const n = Number(sompi);
+  const ok = Number.isFinite(n) && n >= 0;
+  if ($('kw-balance')) $('kw-balance').textContent = ok ? `${fmtAmount(n, 8)} ${unit}` : `0.00000000 ${unit}`;
+  if ($('kw-top-kas')) $('kw-top-kas').textContent = ok ? `${fmtAmount(n, 1)} ${unit}` : `0.0 ${unit}`;
 }
 
 function paintTopKasware() {
@@ -187,15 +185,33 @@ async function refreshHost() {
   return status;
 }
 
+function explorerHost(address) {
+  return isTestnet(address) ? 'https://api-tn10.kaspa.org' : 'https://api.kaspa.org';
+}
+
+async function explorerBalance(address) {
+  if (!isKasAddress(address)) return null;
+  const url = `${explorerHost(address)}/addresses/${encodeURIComponent(address)}/balance`;
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const body = await res.json().catch(() => null);
+  const n = Number(body?.balance);
+  return Number.isFinite(n) ? n : null;
+}
+
 async function refreshAddress(address, target) {
-  if (!isLocalHost() || !isTestnet(address)) return;
+  if (target === $('kw-balance')) return;
+  if (!isLocalHost() || !isTestnet(address) || !target) return;
   try {
     const bal = await api(`/api/balance?address=${encodeURIComponent(address)}`);
-    const sompi = Number(bal.confirmedSompi);
-    if (target === $('kw-balance')) paintBalance(Number.isFinite(sompi) ? sompi : null, address);
-    else if (target) target.textContent = `${bal.confirmedTkas} tKAS`;
+    target.textContent = `${bal.confirmedTkas} tKAS`;
   } catch {
-    // Keep the KasWare figure if the local node route is down.
+    try {
+      const sompi = await explorerBalance(address);
+      if (sompi != null) target.textContent = `${fmtAmount(sompi, 8)} tKAS`;
+    } catch {
+      target.textContent = '—';
+    }
   }
 }
 
@@ -206,6 +222,18 @@ async function readKaswareBalance(wallet) {
   } catch {
     return null;
   }
+}
+
+async function loadKaswareBalance(wallet, address) {
+  const fromWallet = await readKaswareBalance(wallet);
+  if (fromWallet != null) return fromWallet;
+  try {
+    const fromExplorer = await explorerBalance(address);
+    if (fromExplorer != null) return fromExplorer;
+  } catch {
+    // fall through
+  }
+  return 0;
 }
 
 async function connectKasware() {
@@ -245,9 +273,9 @@ async function connectKasware() {
   } else {
     $('kw-warn').hidden = true;
   }
-  paintBalance(await readKaswareBalance(wallet), address);
+  paintBalance(0, address);
   paintTopKasware();
-  await refreshAddress(address, $('kw-balance'));
+  paintBalance(await loadKaswareBalance(wallet, address), address);
   paintTopKasware();
   setActive(`KasWare ${address}`);
   say(testnet
@@ -319,7 +347,10 @@ if ($('kw-top-addr')) {
 }
 $('fund-kasware').onclick = () => {
   const address = $('kw-address').textContent;
-  fund(address, 'KasWare').then(() => refreshAddress(address, $('kw-balance')).then(paintTopKasware)).catch((err) => say(err.message, true));
+  fund(address, 'KasWare').then(async () => {
+    paintBalance(await loadKaswareBalance(window.kasware, address), address);
+    paintTopKasware();
+  }).catch((err) => say(err.message, true));
 };
 $('make-local').onclick = () => makeLocal().catch((err) => say(err.message, true));
 $('fund-local').onclick = () => {
