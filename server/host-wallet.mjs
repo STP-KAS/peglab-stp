@@ -8,8 +8,68 @@ import {NETWORK, RPC_URL, SPONSOR_ADDRESS} from '../src/network.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
 export const FAUCET_AMOUNT = 100_000_000n; // 1 tKAS
-export const FAUCET_FEE = 100_000n;
+export const MIN_RELAY_RATE = 100; // sompi / gram, Toccata node policy
+export const MAX_FAUCET_FEE = 1_000_000n;
 export const MIN_CHANGE = 1_000n;
+const PLACEHOLDER_SIG = '41' + '00'.repeat(64) + '01';
+
+function integer(value, min, max) {
+  const n = Number(value);
+  if (!Number.isInteger(n) || n < min || n > max) throw new Error('Invalid mass integer.');
+  return n;
+}
+
+function sompi(value) {
+  const n = BigInt(value);
+  if (n <= 0n) throw new Error('Zero-value input or output.');
+  return n;
+}
+
+// Native v1 mass, same Toccata rules as kaspa-explained publicTransactionMass.
+export function nativeMass(transaction, {feeRate = MIN_RELAY_RATE} = {}) {
+  if (!Number.isFinite(feeRate) || feeRate < MIN_RELAY_RATE || feeRate > 100000) {
+    throw new Error('Invalid relay fee rate.');
+  }
+  const inputs = transaction.inputs;
+  const outputs = transaction.outputs;
+  const size = 94 + inputs.reduce((s, i) => s + 54 + (i.signatureScript?.length ?? 0) / 2, 0)
+    + outputs.reduce((s, o) => s + 18 + o.scriptPublicKey.script.length / 2, 0);
+  const computeMass = size
+    + outputs.reduce((s, o) => s + (2 + o.scriptPublicKey.script.length / 2) * 10, 0)
+    + inputs.reduce((s, i) => s + integer(i.computeBudget, 0, 65535) * 100, 0);
+  const C = 1_000_000_000_000n;
+  const plurality = (scriptLen, extra = 0) => BigInt(Math.ceil((63 + scriptLen / 2 + extra) / 100));
+  const inputCells = inputs.map((i) => {
+    const entry = i.utxo?.entry ?? i.utxo;
+    const script = entry?.scriptPublicKey?.script ?? '';
+    return {value: sompi(i.utxo.amount), plurality: plurality(script.length)};
+  });
+  const outputCells = outputs.map((o) => ({
+    value: sompi(o.value),
+    plurality: plurality(o.scriptPublicKey.script.length),
+  }));
+  const pOut = outputCells.reduce((s, c) => s + c.plurality, 0n);
+  const pIn = inputCells.reduce((s, c) => s + c.plurality, 0n);
+  const harmonic = (cells) => cells.reduce((s, c) => s + C * c.plurality * c.plurality / c.value, 0n);
+  let inTerm;
+  if (pOut === 1n || pIn === 1n || (pOut === 2n && pIn === 2n)) inTerm = harmonic(inputCells);
+  else {
+    const sum = inputCells.reduce((s, c) => s + c.value, 0n);
+    const mean = sum / pIn;
+    inTerm = pIn * (C / (mean > 0n ? mean : 1n));
+  }
+  const hOut = harmonic(outputCells);
+  const storageMass = hOut > inTerm ? hOut - inTerm : 0n;
+  const normalizedTransientMass = size * 2;
+  const minimumFee = BigInt(Math.ceil(Math.max(computeMass, normalizedTransientMass) * feeRate));
+  return {
+    computeMass,
+    storageMass: String(storageMass),
+    feeRate,
+    minimumFee: String(minimumFee),
+    withinBlockLimits: computeMass <= 500000 && storageMass <= 500000n,
+  };
+}
 
 export function requireTestnetAddress(address) {
   if (typeof address !== 'string' || !address.startsWith('kaspatest:') || address.length < 20 || address.length > 128) {
@@ -99,31 +159,56 @@ export async function sendFromHost({destination, amount = FAUCET_AMOUNT}) {
     if (from !== sponsor.address) throw new Error('Sponsor key does not match the host address.');
     const own = sdk.payToAddressScript(new sdk.Address(from));
     const dest = sdk.payToAddressScript(new sdk.Address(destination));
+    const estimate = await rpc.getFeeEstimate();
+    const feeRate = Math.max(MIN_RELAY_RATE, Math.ceil(estimate.estimate.priorityBucket.feerate || MIN_RELAY_RATE));
     const {entries} = await rpc.getUtxosByAddresses([from]);
-    const {selected, total} = selectInputs(entries, own.script, amount + FAUCET_FEE + MIN_CHANGE);
-    const change = total - amount - FAUCET_FEE;
-    const tx = new sdk.Transaction({
-      version: 1,
-      inputs: selected.map((e) => ({
-        previousOutpoint: e.outpoint,
-        utxo: e,
-        signatureScript: '',
-        sequence: 0n,
-        sigOpCount: 0,
-        computeBudget: 16,
-      })),
-      outputs: [
-        {value: amount, scriptPublicKey: dest},
-        {value: change, scriptPublicKey: own},
-      ],
-      lockTime: 0n,
-      subnetworkId: '00'.repeat(20),
-      gas: 0n,
-      payload: '',
-    });
+    let fee = 1_000n;
+    let selected;
+    let total;
+    let tx;
+    let mass;
+    for (let attempt = 0; attempt < 8; attempt++) {
+      if (fee > MAX_FAUCET_FEE) throw new Error('Faucet fee would exceed 0.01 tKAS.');
+      ({selected, total} = selectInputs(entries, own.script, amount + fee + MIN_CHANGE));
+      const change = total - amount - fee;
+      tx = new sdk.Transaction({
+        version: 1,
+        inputs: selected.map((e) => ({
+          previousOutpoint: e.outpoint,
+          utxo: e,
+          signatureScript: PLACEHOLDER_SIG,
+          sequence: 0n,
+          sigOpCount: 0,
+          computeBudget: 16,
+        })),
+        outputs: [
+          {value: amount, scriptPublicKey: dest},
+          {value: change, scriptPublicKey: own},
+        ],
+        lockTime: 0n,
+        subnetworkId: '00'.repeat(20),
+        gas: 0n,
+        payload: '',
+      });
+      mass = nativeMass(tx, {feeRate});
+      if (!mass.withinBlockLimits) throw new Error('Faucet transaction exceeds block mass limits.');
+      const need = BigInt(mass.minimumFee);
+      if (fee < need) {
+        fee = need;
+        continue;
+      }
+      tx.storageMass = BigInt(mass.storageMass);
+      break;
+    }
+    if (!mass || fee < BigInt(mass.minimumFee)) throw new Error('Could not meet the node fee for this faucet payment.');
     for (let i = 0; i < tx.inputs.length; i++) {
       tx.inputs[i].signatureScript = sdk.createInputSignature(tx, i, key);
     }
+    const checked = nativeMass(tx, {feeRate});
+    if (fee < BigInt(checked.minimumFee) || !checked.withinBlockLimits) {
+      throw new Error('Signed faucet payment failed mass verification.');
+    }
+    tx.storageMass = BigInt(checked.storageMass);
     tx.finalize();
     const result = await rpc.submitTransaction({transaction: tx, allowOrphan: false});
     if (result.transactionId !== tx.id) throw new Error('Unexpected faucet transaction ID.');
@@ -133,7 +218,8 @@ export async function sendFromHost({destination, amount = FAUCET_AMOUNT}) {
       to: destination,
       amountSompi: amount.toString(),
       amountTkas: (Number(amount) / 1e8).toFixed(8),
-      feeSompi: FAUCET_FEE.toString(),
+      feeSompi: fee.toString(),
+      computeMass: checked.computeMass,
       transactionId: tx.id,
     };
   });
