@@ -9,6 +9,11 @@
 </head>
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <nav class="sites" aria-label="PegLab locations">
+    <a href="http://127.0.0.1:8765/">Local · 127.0.0.1:8765</a>
+    <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">Public · peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a>
+    <a href="/KACHAT.md">KaChat brief</a>
+  </nav>
   <header>
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
     <h1>A unit for dapps on Kaspa.<br>Not a bank stablecoin.</h1>
@@ -107,6 +112,35 @@
         <pre class="prompt" id="prompt"></pre>
       </article>
     </section>
+    <section class="kachat card" id="kachat">
+      <p class="eyebrow">First dapp · KaChat</p>
+      <h2>How KaChat would use this unit</h2>
+      <p class="note">KaChat is already encrypted chat plus native KAS pay. PegLab is the unit so a price in a thread is not an FX trade. This lab is not money inside KaChat 4.x.</p>
+      <div class="idea-grid">
+        <article>
+          <h3>In the chat</h3>
+          <ul class="how">
+            <li>Quote and pay “20 units” so the number does not move with KAS.</li>
+            <li>Timeout pay: they claim, or you reclaim — same shape as <code>KaChatPayTimeout</code>.</li>
+            <li>Tips, splits, stakes: lock / release / refund on L1. Chat is only the talk.</li>
+            <li>KAS stays postage (sponsor fee or grams). The pay button is the unit.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>To make it real</h3>
+          <ol class="how">
+            <li>Live Testnet-10 series: transfer + redeem on chain, indexer sees balances.</li>
+            <li>KaChat’s wallet signs those covenants (not only KasWare on the web).</li>
+            <li>Pay payload next to <code>kchat:1:pay</code>. No <code>$</code> on tPEG.</li>
+            <li>Mainnet only as a KAS receipt — or a named USD later. Not this tiny pool.</li>
+          </ol>
+        </article>
+      </div>
+      <div class="controls">
+        <a class="primary" href="https://www.kachat.org/" target="_blank" rel="noopener">Open KaChat</a>
+        <a class="quiet-link" href="/KACHAT.md">Full brief</a>
+      </div>
+    </section>
     <section class="lab card">
       <h2>Depeg lab</h2>
       <p class="note">Five scripted steps. A tiny pool and an admin price cannot hold $1. That is the warning for any dapp that wants a “Kaspa stable” without reserves. Target, pool, and redeem will disagree.</p>
@@ -118,7 +152,7 @@
   </main>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. The seed is not in this repository. Longer write-up: <a href="/IDEA.md">IDEA.md</a> · <a href="/STABLES-GUIDE.md">STABLES-GUIDE.md</a></p>
+    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/IDEA.md">IDEA.md</a> · <a href="/KACHAT.md">KACHAT.md</a> · <a href="/STABLES-GUIDE.md">STABLES-GUIDE.md</a></p>
   </footer>
   <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
