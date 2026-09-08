@@ -1,8 +1,12 @@
 # PegLab
 
-**TESTNET TOY. NOT USD. NOT AN ISSUER. WILL DEPEG.**
+**Dapps need a unit to run on. That unit does not have to be USDT or USDC.**
 
-PegLab is the $50k–$300k rung of a Kaspa stablecoin capital ladder: **code, an audit-lite, and a tiny pool**. It is a Testnet-10 teaching covenant that *looks* like a dollar and then fails in public.
+PegLab is a Kaspa-native **alternative for stablecoins** so apps can invoice, escrow, and pay on Kaspa without a bank issuer. tPEG is a covenant claim on locked tKAS, not a US dollar.
+
+This repo is the **Testnet-10 lab**. If you treat tPEG as USD it **will depeg**. That is shown on purpose. Read [IDEA.md](IDEA.md) for the one-page story.
+
+**TESTNET-10 · NOT USD · NOT AN ISSUER · NOT A TOKEN SALE**
 
 | What you get | What you do not get |
 | --- | --- |
@@ -33,7 +37,16 @@ npm run fixtures
 npm run serve
 ```
 
-Then open `http://127.0.0.1:8765/`. At the top: connect **KasWare** (own Testnet-10 tKAS) or **make a local wallet** funded with 1 tKAS from the host address. Then click **Run depeg lab**.
+Then open `http://127.0.0.1:8765/`.
+
+How to try it:
+
+1. **A** — Connect KasWare on **Testnet 10**, see tKAS.  
+   **B** — No wallet? **Make local wallet + fund from host** (1 tKAS).
+2. Click **Run depeg lab**.
+3. Three prices (admin, pool, redeem) will disagree. That is why this is not a bank stable.
+
+The page never asks for a seed. Mainnet `kaspa:` is refused.
 
 ## Testnet-10 sponsor
 
@@ -62,7 +75,8 @@ src/engine.mjs           Executable economic spec (browser + Node)
 server/peglab.mjs        Fixtures + silverc wrapper
 web/                     Depeg-lab UI
 tests/                   Reject paths, conservation, depeg reproduction
-STABLES-GUIDE.md         Alternative to PegLab-as-money: other-chain practice, capital ladder, fundraising pushback
+IDEA.md                  What PegLab is: dapp unit on Kaspa, not a bank dollar
+STABLES-GUIDE.md         Capital ladder, other-chain practice, fundraising pushback
 AUDIT-LITE.md            What was checked; what a real audit would still do
 KNOWN-BREAKS.md          Required failure reproductions
 ```
