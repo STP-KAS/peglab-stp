@@ -13,10 +13,10 @@
   <header class="nav">
     <a class="brand" href="/" title="Home">PegLab</a>
     <nav>
+      <a href="#best" class="on">Best of both</a>
       <a href="/VISION.md">Vision</a>
       <a href="/MAINNET.md">Mainnet</a>
       <a href="/BATTLE.md">Battle</a>
-      <a href="/BEST.md">Best</a>
       <a href="/KACHAT.md">KaChat</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
@@ -33,7 +33,75 @@
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
     <h1>A unit for dapps on Kaspa.<br>Not a bank stablecoin.</h1>
     <p class="lead">Dapps need something stable enough to invoice, escrow, and pay fees. They should not have to wait on Circle or Tether. PegLab is that alternative <em>idea</em>: a covenant unit sequenced on Kaspa, backed by locked tKAS. This page is the teaching build. If you call tPEG a US dollar, it will depeg. We show that on purpose.</p>
+    <p class="rung"><a class="primary" href="#best">Best of both · receipt PoC</a></p>
   </div>
+  <section class="best card" id="best">
+    <p class="eyebrow">Best of both</p>
+    <h2>Best of both</h2>
+    <p class="note">Parker’s GitHub PoC: one unit equals one locked sompi, sponsor pays fees, name is not authenticity. PegLab: the tiny pool will depeg, KaChat lives on a phone, do not raise against tPEG. This tab runs the receipt. The other tab keeps the depeg warning.</p>
+    <div class="lab-tabs" role="tablist" aria-label="Proof of concept labs">
+      <button type="button" class="on" id="tab-receipt" role="tab" aria-selected="true" data-lab="receipt">Receipt PoC</button>
+      <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Depeg warning</button>
+    </div>
+    <p><a class="quiet-link" href="/BEST.md">Best-practice spec</a> · <a class="quiet-link" href="/BATTLE.md">Battle scorecard</a></p>
+  </section>
+  <section class="board lab-pane" id="lab-receipt">
+    <article class="card">
+      <h2>Receipt state</h2>
+      <p class="note">ENGINE_SPEC. One claim sompi per locked sompi. No oracle. Not USD.</p>
+      <div class="metrics" id="r-metrics"></div>
+      <div class="holders" id="r-holders"></div>
+      <div class="controls">
+        <button id="r-lock" class="primary" type="button">Lock 0.5 tKAS</button>
+        <button id="r-move" type="button">Transfer to Bob</button>
+        <button id="r-cash" type="button">Redeem 0.2 tKAS</button>
+        <button id="r-skim" class="danger" type="button">Try skim 1 sompi</button>
+        <button id="r-reset" type="button">Reset receipt</button>
+      </div>
+    </article>
+    <article class="card">
+      <h2>Receipt prompt</h2>
+      <pre class="prompt" id="r-prompt"></pre>
+    </article>
+  </section>
+  <section class="lab card lab-pane" id="r-walk">
+    <h2>Receipt walk</h2>
+    <p class="note">Lock, move, redeem, refuse skim. Backing and claims stay 1:1. That is the unit KaChat can settle.</p>
+    <div class="controls">
+      <button id="r-demo" class="primary" type="button">Run receipt PoC</button>
+    </div>
+    <div class="steps" id="r-steps"></div>
+  </section>
+  <div id="lab-depeg" hidden>
+    <section class="board">
+      <article class="card">
+        <h2>Live state</h2>
+        <div class="metrics" id="metrics"></div>
+        <div class="holders" id="holders"></div>
+        <div class="controls">
+          <button id="mint" class="primary">Mint 100 tPEG</button>
+          <button id="swap">Swap 0.2 tKAS through pool</button>
+          <button id="redeem">Redeem 40 tPEG</button>
+          <button id="oracle" class="danger">Post oracle +25%</button>
+          <button id="stale">Expire oracle</button>
+          <button id="pause">Pause</button>
+          <button id="reset">Reset genesis</button>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Wallet prompt</h2>
+        <pre class="prompt" id="prompt"></pre>
+      </article>
+    </section>
+  </div>
+  <section class="lab card" id="depeg-walk" hidden>
+    <h2>Depeg lab</h2>
+    <p class="note">Five scripted steps. A tiny pool and an admin price cannot hold $1. That is the warning for any dapp that wants a “Kaspa stable” without reserves. Target, pool, and redeem will disagree.</p>
+    <div class="controls">
+      <button id="demo" class="primary">Run depeg lab</button>
+    </div>
+    <div class="steps" id="steps"></div>
+  </section>
   <section class="idea" id="what">
     <div class="idea-grid">
       <article>
@@ -47,7 +115,7 @@
         <ol class="how">
           <li>Stay on this page. Testnet-10 only. No seed goes in the box.</li>
           <li><strong>A</strong> — Connect <strong>KasWare</strong>, switch it to Testnet 10, see your tKAS balance.<br><strong>B</strong> — No wallet? <strong>Make local wallet + fund from host</strong> (1 tKAS from the host address).</li>
-          <li>Click <strong>Run depeg lab</strong> below.</li>
+          <li>Open <strong>Best of both</strong> at the top. Run the receipt PoC. The depeg tab is the warning.</li>
           <li>Read three numbers: admin price, pool price, redeem price. They will not match. That is why this is not USDT.</li>
         </ol>
       </article>
@@ -107,65 +175,6 @@
     <p class="active-line">Using for this page: <strong id="active-wallet">none yet</strong></p>
   </section>
   <main>
-    <section class="best card" id="best">
-      <p class="eyebrow">Best of both</p>
-      <h2>A real proof of concept is a receipt, not a pool.</h2>
-      <p class="note">Parker’s GitHub PoC: one unit equals one locked sompi, sponsor pays fees, name is not authenticity. PegLab: the tiny pool will depeg, KaChat lives on a phone, do not raise against tPEG. This tab runs the receipt. The other tab keeps the depeg warning.</p>
-      <div class="lab-tabs" role="tablist" aria-label="Proof of concept labs">
-        <button type="button" class="on" id="tab-receipt" role="tab" aria-selected="true" data-lab="receipt">Receipt PoC</button>
-        <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Depeg warning</button>
-      </div>
-      <p><a class="quiet-link" href="/BEST.md">Best-practice spec</a> · <a class="quiet-link" href="/BATTLE.md">Battle scorecard</a></p>
-    </section>
-    <section class="board lab-pane" id="lab-receipt">
-      <article class="card">
-        <h2>Receipt state</h2>
-        <p class="note">ENGINE_SPEC. One claim sompi per locked sompi. No oracle. Not USD.</p>
-        <div class="metrics" id="r-metrics"></div>
-        <div class="holders" id="r-holders"></div>
-        <div class="controls">
-          <button id="r-lock" class="primary" type="button">Lock 0.5 tKAS</button>
-          <button id="r-move" type="button">Transfer to Bob</button>
-          <button id="r-cash" type="button">Redeem 0.2 tKAS</button>
-          <button id="r-skim" class="danger" type="button">Try skim 1 sompi</button>
-          <button id="r-reset" type="button">Reset receipt</button>
-        </div>
-      </article>
-      <article class="card">
-        <h2>Receipt prompt</h2>
-        <pre class="prompt" id="r-prompt"></pre>
-      </article>
-    </section>
-    <section class="lab card lab-pane" id="r-walk">
-      <h2>Receipt walk</h2>
-      <p class="note">Lock, move, redeem, refuse skim. Backing and claims stay 1:1. That is the unit KaChat can settle.</p>
-      <div class="controls">
-        <button id="r-demo" class="primary" type="button">Run receipt PoC</button>
-      </div>
-      <div class="steps" id="r-steps"></div>
-    </section>
-    <div id="lab-depeg" hidden>
-    <section class="board">
-      <article class="card">
-        <h2>Live state</h2>
-        <div class="metrics" id="metrics"></div>
-        <div class="holders" id="holders"></div>
-        <div class="controls">
-          <button id="mint" class="primary">Mint 100 tPEG</button>
-          <button id="swap">Swap 0.2 tKAS through pool</button>
-          <button id="redeem">Redeem 40 tPEG</button>
-          <button id="oracle" class="danger">Post oracle +25%</button>
-          <button id="stale">Expire oracle</button>
-          <button id="pause">Pause</button>
-          <button id="reset">Reset genesis</button>
-        </div>
-      </article>
-      <article class="card">
-        <h2>Wallet prompt</h2>
-        <pre class="prompt" id="prompt"></pre>
-      </article>
-    </section>
-    </div>
     <section class="kachat card" id="kachat">
       <p class="eyebrow">First dapp · KaChat</p>
       <h2>How KaChat would use this unit</h2>
@@ -235,14 +244,6 @@
         <a class="quiet-link" href="/MAINNET.md">What mainnet would take</a>
         <a class="quiet-link" href="/STABLES-GUIDE.md">Capital ladder</a>
       </div>
-    </section>
-    <section class="lab card" id="depeg-walk" hidden>
-      <h2>Depeg lab</h2>
-      <p class="note">Five scripted steps. A tiny pool and an admin price cannot hold $1. That is the warning for any dapp that wants a “Kaspa stable” without reserves. Target, pool, and redeem will disagree.</p>
-      <div class="controls">
-        <button id="demo" class="primary">Run depeg lab</button>
-      </div>
-      <div class="steps" id="steps"></div>
     </section>
   </main>
   <footer>
