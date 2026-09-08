@@ -77,6 +77,7 @@ web/                     Depeg-lab UI
 tests/                   Reject paths, conservation, depeg reproduction
 IDEA.md                  What PegLab is: dapp unit on Kaspa, not a bank dollar
 VISION.md                Finished conversation on a phone: full vision and to-do beyond the chain
+MAINNET.md               What a successor would need to leave the lab; other-chain PoCs and how they were funded
 KACHAT.md                How KaChat could use that unit, and what must be built first
 STABLES-GUIDE.md         Capital ladder, other-chain practice, fundraising pushback
 AUDIT-LITE.md            What was checked; what a real audit would still do

@@ -6,7 +6,7 @@ The job is still real: **two people agree on a number, then one of them gets pai
 
 This file is the product vision and the to-do for *everything around the chain*: phones, copy, postage, identity, law, ops, education, other apps. The chain is the court. It is not the product.
 
-Related: [IDEA.md](IDEA.md) (what this lab is), [KACHAT.md](KACHAT.md) (chat + pay), [STABLES-GUIDE.md](STABLES-GUIDE.md) (capital and pegs). This file does not replace those. It says what “done” looks like for a human.
+Related: [IDEA.md](IDEA.md) (what this lab is), [KACHAT.md](KACHAT.md) (chat + pay), [STABLES-GUIDE.md](STABLES-GUIDE.md) (capital and pegs), [MAINNET.md](MAINNET.md) (other-chain PoCs, funding, what mainnet would take). This file does not replace those. It says what “done” looks like for a human.
 
 **TESTNET-10 LAB. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.**
 
