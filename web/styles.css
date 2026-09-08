@@ -38,6 +38,20 @@ header, main, footer, .wallet-bar, .idea, .sites { width: min(1080px, calc(100% 
 .kachat h2 { margin: 0 0 0.4rem; }
 .kachat h3 { margin: 0 0 0.45rem; font-size: 1.05rem; }
 .kachat .how { margin: 0; padding-left: 1.15rem; }
+.kachat-pc {
+  background: var(--soft);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1rem 1.05rem 1.05rem;
+  margin: 1rem 0 0;
+}
+.kachat-pc h3 { margin: 0 0 0.45rem; }
+.kachat-pc p { color: var(--muted); margin: 0 0 0.55rem; line-height: 1.5; max-width: 42rem; }
+.kachat-pc p:last-child { margin-bottom: 0; }
+.kachat-mobile { margin-top: 1rem; }
+.kachat-pc .quiet-link { padding-left: 0; }
+.kachat.on-pc .kachat-mobile { display: none; }
+.kachat.on-phone .kachat-pc { display: none; }
 header { padding: 2.4rem 0 0.4rem; }
 
 .idea { margin-top: 0.4rem; margin-bottom: 1.2rem; }

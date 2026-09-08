@@ -137,11 +137,20 @@
           </ol>
         </article>
       </div>
-      <div class="controls">
-        <a class="primary" id="open-kachat" href="https://www.kachat.org/" target="_blank" rel="noopener">Open KaChat</a>
-        <a class="quiet-link" href="/KACHAT.md">Full brief</a>
+      <aside class="kachat-pc" id="kachat-pc">
+        <p class="path-kicker">Desktop</p>
+        <h3>KaChat does not support PC</h3>
+        <p>KaChat is published for iOS and Android only. There is no supported client for Windows, macOS, or Linux, and a desktop browser cannot open the app.</p>
+        <p>To use KaChat, open this page on an iPhone, iPad, or Android device. If the app is installed, it will launch. If it is not, you will be directed to the App Store or Google Play.</p>
+        <p><a class="quiet-link" href="/KACHAT.md">Full brief</a></p>
+      </aside>
+      <div class="kachat-mobile" id="kachat-mobile">
+        <div class="controls">
+          <a class="primary" id="open-kachat" href="https://apps.apple.com/us/app/kachat/id6759102359">Open KaChat</a>
+          <a class="quiet-link" href="/KACHAT.md">Full brief</a>
+        </div>
+        <p class="note">This button opens the KaChat app if it is installed. Otherwise it goes to the App Store or Google Play.</p>
       </div>
-      <p class="note">On a phone, Open KaChat launches the app if it is installed. Otherwise it goes to the App Store, Play Store, or kachat.org.</p>
     </section>
     <section class="lab card">
       <h2>Depeg lab</h2>
@@ -160,8 +169,8 @@
   <script type="module" src="./app.js"></script>
   <script>
     (function () {
+      var section = document.getElementById('kachat');
       var link = document.getElementById('open-kachat');
-      if (!link) return;
       var iosStore = 'https://apps.apple.com/us/app/kachat/id6759102359';
       var play = 'https://play.google.com/store/apps/details?id=com.kachat.app';
       var androidIntent =
@@ -174,6 +183,9 @@
         if (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1) return 'ios';
         return '';
       }
+      var kind = phoneKind(navigator.userAgent || '');
+      if (section) section.classList.add(kind ? 'on-phone' : 'on-pc');
+      if (!link || !kind) return;
       function stillHere(started) {
         if (document.hidden || document.visibilityState === 'hidden') return false;
         if (Date.now() - started > 2500) return false;
@@ -188,8 +200,6 @@
         }, 1100);
       }
       link.addEventListener('click', function (event) {
-        var kind = phoneKind(navigator.userAgent || '');
-        if (!kind) return;
         event.preventDefault();
         if (kind === 'android') {
           var ua = navigator.userAgent || '';
