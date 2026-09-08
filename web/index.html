@@ -13,8 +13,8 @@
     <div class="welcome-card">
       <p class="eyebrow">Take note</p>
       <div class="welcome-stage">
-        <video class="welcome-film" muted autoplay playsinline loop preload="auto" src="/media/lunatic-left.mp4" disablepictureinpicture>
-          Your browser cannot play this film. <a href="/media/lunatic-left.mp4">Open the file</a>.
+        <video class="welcome-film is-ready" muted autoplay playsinline loop preload="auto" controls src="media/lunatic-left.mp4" disablepictureinpicture>
+          Your browser cannot play this film. <a href="media/lunatic-left.mp4">Open the file</a>.
         </video>
       </div>
       <p class="welcome-copy">Lunatic left has an opinion, take note.</p>
@@ -274,17 +274,21 @@
       function closed() { return welcome.hidden; }
       function remember() { try { sessionStorage.setItem(key, '1'); } catch (e) {} }
       function start() {
-        if (!video || closed() || !video.paused || video.ended) return;
+        if (!video || closed()) return;
         video.muted = true;
         video.defaultMuted = true;
         video.playsInline = true;
-        video.play().catch(function () {});
+        video.classList.add('is-ready');
+        var play = video.play();
+        if (play && play.catch) play.catch(function () {});
       }
       function soundOn() {
         if (!video || closed()) return;
         video.muted = false;
         video.defaultMuted = false;
         video.volume = 1;
+        var play = video.play();
+        if (play && play.catch) play.catch(function () {});
       }
       function hide() {
         if (video) video.pause();
@@ -293,8 +297,7 @@
         document.documentElement.dataset.welcomeSeen = '1';
       }
       try {
-        if (sessionStorage.getItem(key)) hide();
-        else remember();
+        sessionStorage.removeItem(key);
       } catch (e) {}
       var closeBtn = welcome.querySelector('[data-welcome-close]');
       if (closeBtn) closeBtn.addEventListener('click', hide);
