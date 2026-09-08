@@ -10,24 +10,27 @@
 </head>
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
-  <div class="nav">
-    <a class="brand" href="/">PegLab</a>
-    <nav aria-label="Docs">
+  <header class="nav">
+    <a class="brand" href="/" title="Home">PegLab</a>
+    <nav>
       <a href="/VISION.md">Vision</a>
       <a href="/KACHAT.md">KaChat</a>
     </nav>
-    <div class="kw-right">
-      <span class="bal" id="kw-top-bal" hidden><span id="kw-top-kas">tKAS —</span></span>
-      <span class="who" id="kw-top-who" hidden><span class="who-addr" id="kw-top-addr" title="Copy address">—</span></span>
-      <button class="ghost" type="button" id="kasware-top">Log in</button>
-      <button class="ghost" type="button" id="kasware-out" hidden>Log out</button>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
     </div>
-  </div>
-  <header>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  <div class="masthead">
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
     <h1>A unit for dapps on Kaspa.<br>Not a bank stablecoin.</h1>
     <p class="lead">Dapps need something stable enough to invoice, escrow, and pay fees. They should not have to wait on Circle or Tether. PegLab is that alternative <em>idea</em>: a covenant unit sequenced on Kaspa, backed by locked tKAS. This page is the teaching build. If you call tPEG a US dollar, it will depeg. We show that on purpose.</p>
-  </header>
+  </div>
   <section class="idea" id="what">
     <div class="idea-grid">
       <article>
@@ -202,7 +205,8 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/VISION.md">VISION.md</a> · <a href="/IDEA.md">IDEA.md</a> · <a href="/KACHAT.md">KACHAT.md</a> · <a href="/STABLES-GUIDE.md">STABLES-GUIDE.md</a></p>
   </footer>
-  <script type="module" src="./wallet.js?v=bal2"></script>
+  <script src="./wallets.js"></script>
+  <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
   <script>
     (function () {

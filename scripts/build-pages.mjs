@@ -11,6 +11,7 @@ await copyFile(resolve(ROOT, 'web/index.html'), resolve(DOCS, 'index.html'));
 await copyFile(resolve(ROOT, 'web/styles.css'), resolve(DOCS, 'styles.css'));
 await copyFile(resolve(ROOT, 'web/app.js'), resolve(DOCS, 'app.js'));
 await copyFile(resolve(ROOT, 'web/wallet.js'), resolve(DOCS, 'wallet.js'));
+await copyFile(resolve(ROOT, 'web/wallets.js'), resolve(DOCS, 'wallets.js'));
 await copyFile(resolve(ROOT, 'src/engine.mjs'), resolve(DOCS, 'src/engine.mjs'));
 await copyFile(resolve(ROOT, 'src/network.mjs'), resolve(DOCS, 'src/network.mjs'));
 await copyFile(resolve(ROOT, 'IDEA.md'), resolve(DOCS, 'IDEA.md'));
