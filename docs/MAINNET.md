@@ -4,7 +4,7 @@ PegLab, **as this repo**, cannot deploy on Kaspa mainnet as money. The pool is 2
 
 What *can* go to mainnet is a **successor** that copies working objects from other chains — not this toy’s ticker. This file is that map: existing proofs of concept, how they were actually funded, and the full list of what Kaspa still lacks. It is not legal advice and not a raise.
 
-Related: [STABLES-GUIDE.md](STABLES-GUIDE.md) (pegs and capital ladder), [VISION.md](VISION.md) (finished conversation on a phone), [KACHAT.md](KACHAT.md) (chat + pay).
+Related: [STABLES-GUIDE.md](STABLES-GUIDE.md) (pegs and capital ladder), [VISION.md](VISION.md) (finished conversation on a phone), [KACHAT.md](KACHAT.md) (chat + pay), [BATTLE.md](BATTLE.md) (PegLab vs Parker’s GitHub PoC).
 
 **TESTNET-10 LAB. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.**
 
