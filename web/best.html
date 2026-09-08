@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Best of both — PegLab</title>
+  <meta name="description" content="Parker’s receipt rules plus PegLab honesty: the real proof of concept.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="/" title="Home">PegLab</a>
+    <nav>
+      <a href="/best.html" class="on">Best of both</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/mainnet.html">Mainnet</a>
+      <a href="/battle.html">Battle</a>
+      <a href="/kachat.html">KaChat</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  <p class="rung doc-jump"><a class="primary" href="/#best">Run the receipt PoC on the home page</a></p>
+  <article class="doc">
+<h1>Best of both: the real proof of concept</h1>
+<p>Parker’s GitHub PoC already has the <strong>unit</strong>. PegLab already has the <strong>warning</strong> and the <strong>product scene</strong>. This tab is both, as one receipt lab.</p>
+<p><strong>Not USD. Not tPEG. Do not raise against this either — fund grants for the live TN10 series.</strong></p>
+<hr>
+<h2>Steal from Parker (kaspa-explained + TN12)</h2>
+<div class="table-wrap"><table><thead><tr><th>Rule</th><th>Why it survives a run</th></tr></thead><tbody><tr><td>1 unit = 1 locked sompi</td><td>Redemption is the product. No dollar feed.</td></tr><tr><td>Sponsor pays fees</td><td>Principal cannot skim mass. 0-KAS receivers can still settle.</td></tr><tr><td>Name ≠ authenticity</td><td>Wallets verify genesis / template / series.</td></tr><tr><td>SCRIPT_ENFORCED vs copy</td><td>The engine may demo; only accepted txids count.</td></tr><tr><td>Timeout / escrow already accepted on TN12</td><td>KaChat pay-with-timeout should reuse that family, not a third covenant.</td></tr><tr><td>wTestUSD cannot buy the town’s crops</td><td>A wrap or tPEG must not sit in KaChat as money.</td></tr></tbody></table></div>
+<h2>Steal from PegLab</h2>
+<div class="table-wrap"><table><thead><tr><th>Rule</th><th>Why it belongs</th></tr></thead><tbody><tr><td>WILL DEPEG classroom</td><td>A 2 tKAS pool is not a peg. Keep that demo <strong>next to</strong> the receipt, not instead of it.</td></tr><tr><td>KaChat on a phone</td><td>The job is a finished conversation, not a block explorer.</td></tr><tr><td>Capital instruments</td><td>Grants for receipts. Equity only if you are a licensed issuer. No sister token.</td></tr><tr><td>KasWare log-in</td><td>Gramlane <code>getBalance</code>. Public site never holds the host key.</td></tr></tbody></table></div>
+<h2>Do not mix</h2>
+<div class="table-wrap"><table><thead><tr><th>Object</th><th>Tab</th><th>Mainnet</th></tr></thead><tbody><tr><td>Receipt (this PoC)</td><td><strong>Receipt PoC</strong></td><td>Allowed after live TN10 txids + KaChat signer</td></tr><tr><td>tPEG + admin oracle + tiny pool</td><td><strong>Depeg warning</strong></td><td>Never as money</td></tr><tr><td>Named USDC/USDT</td><td>Later</td><td>Host it. PegLab is not the issuer.</td></tr></tbody></table></div>
+<hr>
+<h2>Executable spec</h2>
+<p><code>src/receipt.mjs</code> is the receipt engine (browser + Node). Tests in <code>tests/receipt.test.mjs</code>.</p>
+<ol><li><strong>Lock</strong> 0.5 tKAS → Alice holds 50_000_000 sompi of claim. Backing = claim.</li><li><strong>Transfer</strong> to Bob. Totals unchanged.</li><li><strong>Redeem</strong> 0.2 tKAS. Bob gets sompi. Sponsor pays 263_800 sompi (native 1-in 2-out floor).</li><li><strong>Skim</strong> refused (<code>SKIM</code>).</li><li><strong>Redeem the rest.</strong> Series empty. 1:1 the whole way.</li></ol>
+<p>That is Parker’s wrap-lab native tab, taught on PegLab’s page, with PegLab’s “not a dollar” banner.</p>
+<h2>Still missing (so it is a PoC, not production)</h2>
+<ul><li class="check">☐ Broadcast lock / transfer / redeem on Testnet-10; journal txids like Parker’s wrap record</li><li class="check">☐ Indexer row per address</li><li class="check">☐ KaChat signs the covenant (not only KasWare on the web)</li><li class="check">☐ Timeout pay using Parker’s TN12 escrow/vault shape</li><li class="check">☐ External review of the SilverScript, not only this JS spec</li></ul>
+<p>Until those boxes tick, this tab is <strong>ENGINE_SPEC</strong>. It is not <code>SCRIPT_ENFORCED</code> on mainnet.</p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
+  </footer>
+  <script src="./wallets.js"></script>
+</body>
+</html>

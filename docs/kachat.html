@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KaChat — PegLab</title>
+  <meta name="description" content="How KaChat would settle in a Kaspa unit. Mobile only.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="/" title="Home">PegLab</a>
+    <nav>
+      <a href="/best.html">Best of both</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/mainnet.html">Mainnet</a>
+      <a href="/battle.html">Battle</a>
+      <a href="/kachat.html" class="on">KaChat</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  
+  <article class="doc">
+<h1>How KaChat could use PegLab — and what “real” means</h1>
+<p>KaChat (<a href="https://www.kachat.org/">kachat.org</a>, <a href="https://github.com/vsmirn0v/KaChat">vsmirn0v/KaChat</a>) is encrypted chat <strong>plus native KAS payments</strong> on Kaspa (<code>kchat:1:pay</code> memos, timeout reclaim). It already runs. What it does not have is a unit that stays still while two people argue over a price in a thread.</p>
+<p>PegLab’s idea is that unit: a Kaspa-native alternative to USDT/USDC so a dapp can invoice, escrow, and tip <strong>on Kaspa</strong>, not on Circle.</p>
+<p><strong>PegLab today cannot sit in KaChat as money.</strong> This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. KaChat should not ship that.</p>
+<hr>
+<h2>What KaChat is today</h2>
+<div class="table-wrap"><table><thead><tr><th>Piece</th><th>Today</th></tr></thead><tbody><tr><td>Chat</td><td>E2E payloads on L1 (<code>kchat:1:comm</code>, groups, KaPosts)</td></tr><tr><td>Pay</td><td>Native <strong>KAS</strong> to a recipient, optional encrypted memo</td></tr><tr><td>Timeout pay</td><td>Sketch already exists: <code>KaChatPayTimeout.sil</code> — recipient claims now, sender reclaims after <code>tx.time</code></td></tr><tr><td>Identity</td><td>KNS names; aliases are not consensus uniqueness</td></tr><tr><td>Fees</td><td>Every message and pay still burns <strong>KAS mass</strong></td></tr><tr><td>FX</td><td>Portfolio uses CoinGecko; the payment itself is still sompi</td></tr></tbody></table></div>
+<p>The product freeze: people will chat, then refuse to <strong>send</strong> because KAS moved since the quote. That is the same merchant “don’t spend KAS” problem. A centralized stable on another chain does not fix in-chat Kaspa settlement.</p>
+<hr>
+<h2>Where PegLab would show up in KaChat</h2>
+<p>Not as “USDT in the bubble.” As <strong>chat actions that keep a number still</strong>:</p>
+<ol><li><strong>Quote in the unit, pay in the unit</strong>  </li></ol>
+<p>“20 tPEG for the logo” stays 20 until paid or the timeout fires. The thread is the invoice.</p>
+<ol><li><strong>Pay with timeout (compose, don’t rewrite chat)</strong>  </li></ol>
+<p>Lock the unit in a covenant. Recipient claims. If they ghost, sender reclaims after timeout. That is <code>KaChatPayTimeout</code> with PegLab UNIT as the asset instead of raw KAS.</p>
+<ol><li><strong>Group split / tip / chess stake</strong>  </li></ol>
+<p>Same covenant family: lock, split, release, or refund. Chat is coordination; L1 is the court.</p>
+<ol><li><strong>Bots and agents</strong>  </li></ol>
+<p>A bot quotes work in the unit, KaChat shows the 402 / pay button, sponsor pays KAS fees so the human is not told to go buy dust first.</p>
+<ol><li><strong>Display honesty</strong>  </li></ol>
+<p>If the unit is a <strong>KAS receipt</strong> (1 unit = 1 sompi), the UI says sompi, not dollars. If someone later hosts real USDC, that is a different asset id. Never show tPEG as <code>$</code>.</p>
+<p>KaChat does not need PegLab to encrypt. It needs PegLab (or a successor unit) so <strong>the pay button is not an FX trade</strong>.</p>
+<hr>
+<h2>Two honest units (pick one in the first sentence)</h2>
+<div class="table-wrap"><table><thead><tr><th>Unit</th><th>First sentence in KaChat</th><th>PegLab role</th></tr></thead><tbody><tr><td><strong>A. KAS receipt</strong></td><td>“This is locked tKAS. The number is sompi, not USD.”</td><td>Productionise receipt/covenant transfer + redeem. No oracle. Closest to <code>backed-receipt</code> + PegLab UNIT transfer.</td></tr><tr><td><strong>B. Hosted USD</strong></td><td>“This is USDC/USDT from *named issuer*. Freeze risk is theirs.”</td><td>PegLab is not the issuer. KaChat lists a foreign asset when it exists on Kaspa.</td></tr><tr><td><strong>C. Fake $1 tPEG</strong></td><td>Do not ship.</td><td>This lab only. Admin oracle + 2 tKAS pool.</td></tr></tbody></table></div>
+<p><strong>Default for KaChat: A now, B when a real dollar is on Kaspa.</strong> C stays the public depeg demo so nobody “just lists tPEG.”</p>
+<p>Work credits / grams (<code>WorkCredit.sil</code>) are a <strong>fee voucher</strong> (KIP-21 mass), not a chat dollar. Useful so messages have prepaid grams. Different button from “pay the designer.”</p>
+<hr>
+<h2>What must be built to make A real</h2>
+<p>Order matters. Skipping to mainnet chat-pay is how you mint a bridge IOU.</p>
+<h3>1. PegLab (or receipt) on Testnet-10 for real</h3>
+<ul><li>Broadcast genesis, mint, transfer, redeem — not only the JS engine.</li><li>Pin series / genesis outpoint / template hash. Wallets verify those, not the word “tPEG”.</li><li>Kill the admin USD oracle for the KaChat asset. Receipts do not need a dollar feed.</li><li>Indexer (or KaChat’s Kasia indexer) must see UNIT UTXOs and balances by address.</li></ul>
+<h3>2. A wallet KaChat already is</h3>
+<p>KaChat is a Swift wallet (Secure Enclave, node pool, UTXO subscribe). KasWare-on-the-web is not enough.</p>
+<ul><li>Sign covenant spends (<code>act</code> / transfer / redeem) from the iOS/desktop wallet.</li><li>Show UNIT balance next to KAS.</li><li>Refuse unknown series. A cloned ticker is not funds.</li></ul>
+<h3>3. Chat protocol</h3>
+<p>Extend pay, do not invent a second messenger:</p>
+<ul><li>Keep <code>kchat:1:pay</code> for KAS.</li><li>Add something like <code>kchat:1:payunit</code> (or a typed field): series id, covenant id, amount, timeout, memo ciphertext.</li><li>Handshake still E2E. Payment still a recipient-addressed (or covenant) tx the recipient’s watcher can see.</li><li>Timeout reclaim uses the same idea as <code>KaChatPayTimeout.sil</code>.</li></ul>
+<h3>4. Fees (“who pays the KAS”)</h3>
+<p>A “dollar-shaped” pay that first says “go get KAS for mass” is dead UX.</p>
+<ul><li>Sponsor-fee input on the pay tx, or</li><li>Prepaid <strong>grams</strong> (WorkCredit) consumed when sending chat+pay,</li><li>UI: user thinks in the unit; KAS is the postage.</li></ul>
+<h3>5. Product copy in the app</h3>
+<ul><li>Asset picker: KAS | PegLab receipt | (later) named USD.</li><li>No <code>$</code> glyph on tPEG.</li><li>Child Mode / gifts: receipts only, not a “stable”.</li><li>No in-app sale of tPEG.</li></ul>
+<h3>6. Still not a bank</h3>
+<p>If KaChat ever shows <strong>USD</strong>, the issuer is named, freeze is disclosed, and PegLab is not that issuer. Licensed payment stables are a company, not a chat feature.</p>
+<hr>
+<h2>Suggested build order</h2>
+<div class="table-wrap"><table><thead><tr><th>Step</th><th>Where</th><th>Done when</th></tr></thead><tbody><tr><td>0</td><td>PegLab lab</td><td>People can run the depeg demo and read this file</td></tr><tr><td>1</td><td>PegLab TN10</td><td>One live series, transfer+redeem accepted on Testnet-10, indexer row</td></tr><tr><td>2</td><td>KaChat testnet</td><td>Wallet shows that series balance; send 1 unit in a 1:1 chat with timeout</td></tr><tr><td>3</td><td>Fees</td><td>Pay tx does not fail because the receiver has 0 KAS</td></tr><tr><td>4</td><td>Groups</td><td>Split / tip using the same covenant, still testnet</td></tr><tr><td>5</td><td>Mainnet</td><td>Only for <strong>receipt (A)</strong> after audit-lite + KaChat review — still not called USD</td></tr><tr><td>6</td><td>USD in chat</td><td>Only if a <strong>named</strong> USDT/USDC exists on Kaspa</td></tr></tbody></table></div>
+<hr>
+<h2>What not to do</h2>
+<ul><li>Do not put current PegLab tPEG in KaChat 4.x as “stablechat”.</li><li>Do not raise money against a KaChat-PegLab token.</li><li>Do not use an admin oracle as the dollar in production.</li><li>Do not wait for Circle before shipping timeout-KAS pay (<code>KaChatPayTimeout</code> can go live on <strong>KAS</strong> now).</li></ul>
+<p><strong>Short version:</strong> KaChat is the conversation. PegLab is the unit the conversation can settle in without USDT. Real means a receipt (or a hosted real USD), a KaChat signer for that covenant, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.</p>
+<p>The rest of the product — phones vs PC, copy, support, agents, merchants, what never to do — is <a href="/vision.html">VISION.md</a>.</p>
+<hr>
+<h2>Open KaChat from this site</h2>
+<p>KaChat is a mobile app. It does not support PC.</p>
+<div class="table-wrap"><table><thead><tr><th>Device</th><th>What this site does</th></tr></thead><tbody><tr><td>Windows / macOS / Linux</td><td>Shows: <strong>KaChat does not support PC.</strong> No desktop client. Does not send the visitor to kachat.org as if the app will open.</td></tr><tr><td>iPhone / iPad</td><td><strong>Open KaChat</strong> uses <code>kachat://</code> (registered in KaChat iOS). If the app is missing: <a href="https://apps.apple.com/us/app/kachat/id6759102359">App Store id 6759102359</a>.</td></tr><tr><td>Android</td><td>Chrome <code>intent://kapost</code> + package <code>com.kachat.app</code> (BROWSABLE host <code>kapost</code>; empty path just opens the app). If missing: <a href="https://play.google.com/store/apps/details?id=com.kachat.app">Play <code>com.kachat.app</code></a>.</td></tr></tbody></table></div>
+<p><code>kachat.org</code> has no Apple App Site Association file, so Universal Links on that domain cannot open the app. The custom scheme is what works on a phone. Android does not accept a bare <code>kachat://</code> with no host.</p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
+  </footer>
+  <script src="./wallets.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mainnet — PegLab</title>
+  <meta name="description" content="What a successor would need to leave the PegLab toy.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="/" title="Home">PegLab</a>
+    <nav>
+      <a href="/best.html">Best of both</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/mainnet.html" class="on">Mainnet</a>
+      <a href="/battle.html">Battle</a>
+      <a href="/kachat.html">KaChat</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  
+  <article class="doc">
+<h1>What it would take to leave the lab</h1>
+<p>PegLab, <strong>as this repo</strong>, cannot deploy on Kaspa mainnet as money. The pool is 2 tKAS. The oracle is one key. If you treat tPEG as a dollar it depegs. That is the proof of concept. The name “PegLab” stays the teaching bench.</p>
+<p>What *can* go to mainnet is a <strong>successor</strong> that copies working objects from other chains — not this toy’s ticker. This file is that map: existing proofs of concept, how they were actually funded, and the full list of what Kaspa still lacks. It is not legal advice and not a raise.</p>
+<p>Related: <a href="STABLES-GUIDE.md">STABLES-GUIDE.md</a> (pegs and capital ladder), <a href="/vision.html">VISION.md</a> (finished conversation on a phone), <a href="/kachat.html">KACHAT.md</a> (chat + pay), <a href="/battle.html">BATTLE.md</a> (PegLab vs Parker’s GitHub PoC).</p>
+<p><strong>TESTNET-10 LAB. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.</strong></p>
+<hr>
+<h2>1. Call this lab what it is</h2>
+<div class="table-wrap"><table><thead><tr><th>Name</th><th>Honest sentence</th><th>Mainnet?</th></tr></thead><tbody><tr><td><strong>PegLab (this checkout)</strong></td><td>A Testnet-10 depeg demo. Tiny pool, admin price, will fail as $1.</td><td><strong>No.</strong> Keep it as the public lesson.</td></tr><tr><td><strong>Successor A — KAS receipt</strong></td><td>One unit is one sompi locked in a covenant. Not a dollar.</td><td>Yes, after audit-lite + indexer + wallet verify. Default.</td></tr><tr><td><strong>Successor B — hosted USD</strong></td><td>Circle / Tether / a *named* issuer. Freeze is theirs. PegLab is not the issuer.</td><td>Only when that asset exists on Kaspa.</td></tr><tr><td><strong>Successor C — overcollateral protocol</strong></td><td>Lock more KAS (or later other collateral) than you mint. Can gap.</td><td>Yes, at Maker/Liquity budget, not lab budget.</td></tr><tr><td><strong>Successor D — licensed payment stable</strong></td><td>We are an issuer. Reserves are cash and T-bills. Here is the entity.</td><td>Company + bank <strong>before</strong> SilverScript.</td></tr></tbody></table></div>
+<p>Shipping PegLab’s current covenant on <code>kaspa:</code> with a 2 KAS pool is how Chainge-class wraps taught Kaspa a depeg. Mainnet does not add reserves.</p>
+<hr>
+<h2>2. Copy existing proofs of concept (not their brands)</h2>
+<p>Steal the <strong>mechanism</strong>. Do not steal the claim “we are USDC.”</p>
+<h3>Fiat 1:1 (the market’s winner, ~95% of stable value)</h3>
+<p><strong>PoC:</strong> USDT, USDC, PYUSD.</p>
+<p><strong>What to copy</strong></p>
+<ul><li>Redemption at par for cash / T-bills is the product.</li><li>Segregated reserves, monthly examined composition (GENIUS), freeze disclosed in the UI.</li><li>The issuer is a <strong>company</strong> that can be sued.</li></ul>
+<p><strong>How they were funded</strong></p>
+<ul><li><strong>Tether:</strong> operating company; float on reserves; not a public-goods grant. Do not copy the opacity.</li><li><strong>Circle:</strong> ~$1.1B equity over a decade (Coinbase, BlackRock, Fidelity, …). NYSE IPO June 2025 (~$31, later a mania print). GENIUS Act 2025 is the legal floor they already lived by. 2026: OCC national trust path. That is <strong>$10M–$50M+ and lawyers first</strong>, then a token.</li><li><strong>PayPal PYUSD:</strong> a bank/fintech balance sheet, not a Discord raise.</li></ul>
+<p><strong>Kaspa takeaway:</strong> if the pitch says dollar, you are Circle’s competitor. You need a bank, not a 2 KAS pool. PegLab will never be this.</p>
+<h3>Crypto-overcollateral + liquidations</h3>
+<p><strong>PoC:</strong> Maker SAI (Dec 2017) → MCD DAI (2019) → Sky USDS; Liquity LUSD (2021) and BOLD (v2).</p>
+<p><strong>What to copy</strong></p>
+<ul><li>Lock more collateral than you mint.</li><li><strong>Redemption vs collateral</strong> (Liquity: 1 LUSD/BOLD → $1 of ETH) pulls the price up from below. No sister token.</li><li>Fail closed on stale oracles. Caps published. Surplus buffer.</li><li>Liquity v1: immutable core, no admin pause-as-peg. v2: user-set rates; governance only steers *liquidity incentives*, not the dollar.</li></ul>
+<p><strong>How they were funded</strong></p>
+<ul><li><strong>Maker:</strong> no retail ICO of DAI. MKR sold over time (forum, private, then market). Polychain / a16z ~$12M (Dec 2017) then a16z <strong>$15M for ~6% of MKR</strong> (Sep 2018). Maker Foundation in Copenhagen wrote code; later handed governance to the DAO. Trail of Bits / early audits *before* scale. Years of SAI on mainnet before multi-collateral.</li><li><strong>Liquity:</strong> protocol company (Liquity AG) + LQTY as a <strong>fee-claim / incentive</strong> token, not a sister-token that mints to defend $1. Security culture: multiple audits, immutability as the product. No “20% yield pays the peg.”</li></ul>
+<p><strong>Kaspa takeaway:</strong> this is successor <strong>C</strong>. Budget <strong>$2M–$15M</strong>: oracles that are not one key, liquidation path, audits, incident process, MM. Do not use PegLab’s admin oracle.</p>
+<h3>Peg Stability Module (import someone else’s dollar)</h3>
+<p><strong>PoC:</strong> Maker/Sky PSM — USDS ↔ USDC at $1 until the ceiling.</p>
+<p><strong>What to copy</strong></p>
+<ul><li>Arb against a <strong>redeemable</strong> upstream dollar.</li><li>Publish the cap. When the cap binds, the peg <strong>gaps</strong> (DAI ~$0.89 in March 2023 because the PSM *was* USDC, and SVB froze Circle).</li></ul>
+<p><strong>How it was funded</strong></p>
+<ul><li>Not a separate raise. It piggybacked Maker’s existing MKR/DAI machine and Circle’s reserves.</li></ul>
+<p><strong>Kaspa takeaway:</strong> successor <strong>B</strong> then a PSM. Do not raise to *be* the PSM until a named USDC/USDT (or licensed native) is on Kaspa. Chainge-class wraps are issuer <strong>plus</strong> bridge risk — show that in the UI.</p>
+<h3>Hard redemption, no PSM</h3>
+<p><strong>PoC:</strong> Liquity. Anyone can redeem the stable for $1 of ETH.</p>
+<p><strong>What to copy</strong></p>
+<ul><li>The arb is on-chain. No committee “defends” the peg with a new token.</li><li>Can <strong>overpeg</strong> in a flight to safety. That is honest.</li></ul>
+<p><strong>Kaspa takeaway:</strong> a KAS-receipt is even simpler: redeem for <strong>sompi</strong>, not for $1 of KAS. No oracle. That is successor <strong>A</strong>. Closest to what Toccata already is.</p>
+<h3>Receipts / programmable cash (not a dollar)</h3>
+<p><strong>PoC:</strong> Bitcoin DLCs and Taproot escrow; Ethereum “vesting / streaming” (Sablier, Superfluid) as *time-locked units*; local-settlement IOUs that never claim USD; Kaspa-explained <strong>backed-receipt</strong> (sponsor-fee, no skim of principal).</p>
+<p><strong>What to copy</strong></p>
+<ul><li>The unit is the locked asset. Display FX is a banner, not a peg.</li><li>Timeout reclaim (they claim now, or you reclaim after <code>tx.time</code>) — KaChat already sketched this as <code>KaChatPayTimeout.sil</code>.</li><li>Fees paid by a <strong>sponsor</strong>, not stolen from the receipt.</li></ul>
+<p><strong>How they were funded</strong></p>
+<ul><li>Protocol grants, company R&amp;D, or “sell software.” Not a stablecoin sale.</li></ul>
+<p><strong>Kaspa takeaway:</strong> this is the <strong>first</strong> mainnet that is allowed. PegLab’s teaching UI becomes a receipt explorer, not a dollar.</p>
+<h3>What not to copy (funded, then died)</h3>
+<div class="table-wrap"><table><thead><tr><th>PoC</th><th>How it was funded</th><th>Why it is forbidden here</th></tr></thead><tbody><tr><td>Terra UST–LUNA</td><td>Huge Foundation, Anchor ~20% yield, LUNA as sister token</td><td>Backing was confidence. Do Kwon sentenced 2025. Terminal depeg.</td></tr><tr><td>Iron / Titan, various 2021 “partial collateral”</td><td>Farm emissions</td><td>Illiquid “reserves.” Quantity was a slogan.</td></tr><tr><td>Algo / rebase / seigniorage stables</td><td>Token sales</td><td>GENIUS/MiCA froze or banned the corner. ~0% of working payment stables.</td></tr><tr><td>Ethena-class hedge as “the dollar”</td><td>VC + basis trade</td><td>CEX index ≠ redemption (Binance print ~$0.65 vs DEX near par, Oct 2025). Not cash.</td></tr><tr><td>Wrapped USDT on Kaspa (Chainge-class)</td><td>Bridge operator</td><td>Kaspa already saw a depeg. Speed without native redemption repeats it.</td></tr></tbody></table></div>
+<hr>
+<h2>3. How the ones that lived actually got money</h2>
+<p>Copy the <strong>instrument</strong>, not the tweet.</p>
+<div class="table-wrap"><table><thead><tr><th>Project</th><th>Instrument</th><th>What money bought</th><th>What money did *not* buy</th></tr></thead><tbody><tr><td>Circle</td><td>Equity → IPO</td><td>Bank relationships, exams, ops, lawyers</td><td>A smart contract that *is* the dollar</td></tr><tr><td>Maker</td><td>Private MKR sales to funds (a16z, Polychain) + Foundation payroll</td><td>Years of SAI, then MCD, audits, oracles</td><td>An ICO of DAI-as-shares</td></tr><tr><td>Liquity</td><td>Company + fee token</td><td>Audits, immutability, frontends run by others</td><td>A governance god-key</td></tr><tr><td>Ethereum public goods</td><td>EF grants, Gitcoin, Protocol Guild</td><td>Specs, clients, research</td><td>A peg</td></tr><tr><td>Kaspa Core / KIP work</td><td>Ecosystem grants, self-fund, companies</td><td>Nodes, KIPs, wallets</td><td>A Kaspa USDC</td></tr><tr><td>This PegLab repo</td><td><strong>$0 public raise</strong></td><td>A depeg demo</td><td>Nothing that holds $1</td></tr></tbody></table></div>
+<p><strong>Rules for PegLab / successor fundraising</strong></p>
+<ol><li><strong>Name matches backing.</strong> “Receipt” → grants / self-fund. “Dollar” → equity in a licensed company.</li><li><strong>No tPEG sale. No points. No sister token that mints to defend $1.</strong></li><li><strong>Grants pay infrastructure</strong> (indexer, SilverScript, KaChat signer, postage). They do not buy a peg.</li><li><strong>If a lawyer says you need a license, stop the token until that is true.</strong></li><li><strong>If the deck needs this lab’s UI without WILL DEPEG, the deck is the bug.</strong></li></ol>
+<p>Order-of-magnitude (same ladder as STABLES-GUIDE):</p>
+<ul><li>Lab: $0–$300k, already built, <strong>will depeg</strong></li><li>Receipt on mainnet: $100k–$1M (audit-lite, indexer, wallet copy, KaChat testnet pay)</li><li>Overcollateral protocol: $2M–$15M</li><li>Licensed USD: $10M–$50M+ <strong>company</strong></li></ul>
+<hr>
+<h2>4. Think bigger than the covenant</h2>
+<p>The chain is the court file. Mainnet fails if any of these are missing.</p>
+<h3>Product (the scene)</h3>
+<p>Two people on <strong>KaChat phones</strong> quote a still number, pay, claim or reclaim. Postage is KAS in the background. No PC KaChat. No <code>$</code> on a receipt. See <a href="/vision.html">VISION.md</a>.</p>
+<p>Without that scene, a mainnet series is a block explorer toy.</p>
+<h3>Protocol (what Toccata is for)</h3>
+<ul><li>Live <strong>series</strong> on Testnet-10 first: genesis outpoint, template hash, series bytes — wallets verify those, not the word tPEG.</li><li>Transfer + redeem accepted by the node, not only <code>src/engine.mjs</code>.</li><li>Kill the admin USD oracle on any asset KaChat would show. Receipts do not need a dollar feed.</li><li>Timeout reclaim (<code>KaChatPayTimeout</code> shape). Split / tip / stake as the same family.</li><li>Sponsor-fee or prepaid grams (KIP-21 mass) so a receiver with 0 KAS still works. Kaspa Core already flagged this.</li></ul>
+<h3>Wallets and indexers</h3>
+<ul><li>KaChat iOS/Android <strong>signs</strong> the covenant (KasWare-on-the-web is not enough).</li><li>KasWare / Kaspa NG / Kaspium: refuse unknown series.</li><li>Indexer row per address (Kasia or documented equivalent). If the wallet cannot see UNIT UTXOs, the balance is a lie.</li><li>Explorer page: genesis, cap, pause, redeem path.</li></ul>
+<h3>People, law, ops</h3>
+<ul><li>Entity that matches the claim (none for a receipt; company for a dollar).</li><li>GENIUS / MiCA if you say payment stable. Freeze UX named.</li><li>Incident: pause is a brake. Redeem stays open if backing remains. Public post-mortem habit (Liquity/Maker culture, not “trust us”).</li><li>Keys: never in git, never on the public site. Multi-person control if there is an admin at all.</li><li>Support: five failure sentences in the thread (stale, postage, unknown series, paused, timeout).</li></ul>
+<h3>Distribution</h3>
+<ul><li>Phone first (KaChat). Desktop is the lab and docs.</li><li>Merchant QR that opens KaChat with amount filled.</li><li>Agents: quote → 402 → pay. Human optional.</li><li>Other messengers may speak <code>kchat:1:payunit</code>. Do not wait for them.</li></ul>
+<h3>What Kaspa uniquely adds (so “bigger” is not “become Circle”)</h3>
+<ul><li>One-second sequencing, cheap settlement, public evidence.</li><li>Covenants: lock, timeout, split, prove the spend rule — <strong>programmable cash</strong>.</li><li>Native chat+pay already in a store app (KaChat). Ethereum never had that as a default consumer surface.</li></ul>
+<p>What Kaspa does <strong>not</strong> add: a Treasury, a banking charter, or a reason to ignore the law if you print “USD.”</p>
+<hr>
+<h2>5. Mainnet checklist (successor A first)</h2>
+<p>Do not tick “mainnet PegLab.” Tick a <strong>receipt</strong> (or later a named USD).</p>
+<h3>Must already be true on Testnet-10</h3>
+<ul><li class="check">☐ One live series; transfer and redeem on-chain</li><li class="check">☐ Indexer shows UNIT by address</li><li class="check">☐ KaChat (or a native signer) can pay 1 unit in a 1:1 thread with timeout</li><li class="check">☐ Postage: pay does not fail because the receiver has 0 KAS</li><li class="check">☐ Wallets verify genesis / template / series; unknown ticker rejected</li><li class="check">☐ Copy: no <code>$</code>; WILL DEPEG remains on *this* lab forever</li><li class="check">☐ AUDIT-LITE + KNOWN-BREAKS closed or accepted; at least one external review for the successor contract</li></ul>
+<h3>Then mainnet (receipt only)</h3>
+<ul><li class="check">☐ New genesis on <code>kaspa:</code> with published hashes</li><li class="check">☐ Caps published (backing, supply, dust) — not “infinite”</li><li class="check">☐ No admin USD oracle on this asset</li><li class="check">☐ Incident channel and pause policy written *before* first user</li><li class="check">☐ KaChat review: asset picker KAS | receipt, Child Mode receipts only</li><li class="check">☐ Still not called USD. Still not a token sale.</li></ul>
+<h3>Only if you later host a dollar</h3>
+<ul><li class="check">☐ Named issuer in the first sentence</li><li class="check">☐ Separate asset id from the receipt</li><li class="check">☐ Freeze / redemption / exam story is *theirs*</li><li class="check">☐ Company raise if *you* are the issuer — not a PegLab meme round</li></ul>
+<h3>Never</h3>
+<ul><li class="check">☐ Mainnet this 2 tKAS pool as money</li><li class="check">☐ List lab tPEG in KaChat 4.x as stablechat</li><li class="check">☐ Sister token / algo / 20% yield to hold $1</li><li class="check">☐ Raise against tPEG</li><li class="check">☐ Remove WILL DEPEG from the lab to please a deck</li></ul>
+<hr>
+<h2>6. Suggested build order (so “bigger” has a sequence)</h2>
+<pre><code>PegLab lab (done: depeg, honesty, KasWare, phone/PC KaChat)
+  → live TN10 receipt + indexer
+  → KaChat signs it; timeout pay in one thread
+  → postage / grams so zero-KAS receivers work
+  → groups, tips, stakes, merchant QR, agents
+  → mainnet receipt after review
+  → hosted USD only if an issuer is on Kaspa
+  → overcollateral protocol only with Maker/Liquity-class budget
+  → licensed USD only as a company</code></pre>
+<p>Skipping to “mainnet chat-pay with a dollar glyph” is how a bridge IOU gets minted.</p>
+<hr>
+<h2>7. Short version</h2>
+<p>PegLab is the proof that a cheap pool is not a dollar. Keep it. Deploy <strong>something else</strong> on mainnet:</p>
+<ul><li>First, a <strong>KAS receipt</strong> (copy Liquity’s *redemption-is-the-product*, drop the dollar).</li><li>Later, <strong>host</strong> a named USDC/USDT (copy Sky’s PSM, inherit their risk, name it).</li><li>Only a <strong>company</strong> copies Circle.</li></ul>
+<p>Fund grants and payroll for infrastructure. Fund equity for a bank. Never fund a sister token. Think as big as KaChat-in-the-pocket, merchants, and agents — the covenant is the smallest part.</p>
+<p><strong>PegLab stays the lab. The successor earns the mainnet flag.</strong></p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
+  </footer>
+  <script src="./wallets.js"></script>
+</body>
+</html>

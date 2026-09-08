@@ -2,16 +2,23 @@ import {copyFile, mkdir, writeFile} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {PUBLIC_DOMAIN} from '../src/network.mjs';
+import {PAGES, renderMdPage} from './html-page.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = resolve(ROOT, 'docs');
+const WEB = resolve(ROOT, 'web');
 
 await mkdir(resolve(DOCS, 'src'), {recursive: true});
-await copyFile(resolve(ROOT, 'web/index.html'), resolve(DOCS, 'index.html'));
-await copyFile(resolve(ROOT, 'web/styles.css'), resolve(DOCS, 'styles.css'));
-await copyFile(resolve(ROOT, 'web/app.js'), resolve(DOCS, 'app.js'));
-await copyFile(resolve(ROOT, 'web/wallet.js'), resolve(DOCS, 'wallet.js'));
-await copyFile(resolve(ROOT, 'web/wallets.js'), resolve(DOCS, 'wallets.js'));
+for (const spec of PAGES) {
+  const html = await renderMdPage(ROOT, spec);
+  await writeFile(resolve(WEB, spec.html), html);
+  await writeFile(resolve(DOCS, spec.html), html);
+}
+await copyFile(resolve(WEB, 'index.html'), resolve(DOCS, 'index.html'));
+await copyFile(resolve(WEB, 'styles.css'), resolve(DOCS, 'styles.css'));
+await copyFile(resolve(WEB, 'app.js'), resolve(DOCS, 'app.js'));
+await copyFile(resolve(WEB, 'wallet.js'), resolve(DOCS, 'wallet.js'));
+await copyFile(resolve(WEB, 'wallets.js'), resolve(DOCS, 'wallets.js'));
 await copyFile(resolve(ROOT, 'src/engine.mjs'), resolve(DOCS, 'src/engine.mjs'));
 await copyFile(resolve(ROOT, 'src/receipt.mjs'), resolve(DOCS, 'src/receipt.mjs'));
 await copyFile(resolve(ROOT, 'src/network.mjs'), resolve(DOCS, 'src/network.mjs'));

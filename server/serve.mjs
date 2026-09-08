@@ -76,7 +76,21 @@ async function hostStatus() {
   };
 }
 
+const PAGE_ALIAS = {
+  '/VISION.md': '/vision.html',
+  '/vision': '/vision.html',
+  '/MAINNET.md': '/mainnet.html',
+  '/mainnet': '/mainnet.html',
+  '/BATTLE.md': '/battle.html',
+  '/battle': '/battle.html',
+  '/BEST.md': '/best.html',
+  '/best': '/best.html',
+  '/KACHAT.md': '/kachat.html',
+  '/kachat': '/kachat.html',
+};
+
 async function load(rel) {
+  rel = PAGE_ALIAS[rel] || rel;
   const candidates = rel === '/'
     ? [resolve(ROOT, 'web/index.html')]
     : [resolve(ROOT, '.' + rel), resolve(ROOT, 'web', '.' + rel)];
