@@ -33,7 +33,7 @@ npm run fixtures
 npm run serve
 ```
 
-Then open `http://127.0.0.1:8765/` and click **Run depeg lab**.
+Then open `http://127.0.0.1:8765/`. At the top: connect **KasWare** (own Testnet-10 tKAS) or **make a local wallet** funded with 1 tKAS from the host address. Then click **Run depeg lab**.
 
 ## Testnet-10 sponsor
 

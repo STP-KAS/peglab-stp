@@ -32,8 +32,49 @@ code { font-family: ui-monospace, "Cascadia Mono", monospace; font-size: 0.92em;
   border-bottom: 1px solid #6a3b30;
 }
 
-header, main, footer { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+header, main, footer, .wallet-bar { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
 header { padding: 2.4rem 0 1rem; }
+
+.wallet-bar {
+  margin-top: 1.2rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1.2rem 1.3rem 1.3rem;
+}
+.wallet-bar h2 { margin: 0 0 0.5rem; font-size: 1.35rem; line-height: 1.2; }
+.host-line, .active-line { color: var(--muted); font-size: 0.92rem; }
+.host-line code, .host-inline { font-size: 0.78rem; word-break: break-all; }
+.wallet-bar .status { min-height: 1.3rem; color: var(--warn); margin: 0.4rem 0 0.8rem; }
+.wallet-bar .status[data-error="true"] { color: var(--danger); }
+.wallet-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 860px) { .wallet-paths { grid-template-columns: 1fr; } }
+.path {
+  background: var(--soft);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1rem;
+}
+.path-kicker { color: var(--green); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.7rem; margin: 0 0 0.35rem; }
+.path h3 { margin: 0 0 0.45rem; font-size: 1.05rem; }
+.path p { color: var(--muted); margin: 0 0 0.7rem; }
+.wallet-facts { display: grid; gap: 0.35rem; margin: 0.8rem 0 0; }
+.wallet-facts div { display: grid; grid-template-columns: 7rem 1fr; gap: 0.4rem; font-size: 0.88rem; }
+.wallet-facts dt { color: var(--muted); }
+.wallet-facts dd { margin: 0; word-break: break-all; }
+.wallet-facts code { font-size: 0.78rem; }
+.warn { color: var(--danger); font-size: 0.88rem; }
+.quiet-link { color: var(--muted); align-self: center; padding: 0.55rem 0.2rem; }
+.secret { margin-top: 0.8rem; color: var(--muted); font-size: 0.85rem; }
+.secret pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: #0c100b;
+  padding: 0.7rem;
+  border-radius: 8px;
+  color: var(--warn);
+}
 .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; margin: 0 0 0.6rem; }
 h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; margin: 0 0 0.8rem; font-weight: 650; }
 .lead { color: var(--muted); font-size: 1.15rem; max-width: 46rem; line-height: 1.5; }
