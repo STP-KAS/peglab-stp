@@ -12,3 +12,4 @@ Build a Testnet-10 teaching toy that fails as money in public.
 - A display name is not authenticity.
 - Push to GitHub by default. After any meaningful change, commit and `git push origin` to https://github.com/STP-KAS/peglab-stp without waiting to be asked.
 - Never commit `.local/`, seeds, private keys, or `PEGLAB_SPONSOR_KEY`.
+- The localhost faucet may pay Testnet-10 `kaspatest:` addresses from the host wallet only. Never send to `kaspa:` mainnet. Cap stays 1 tKAS.

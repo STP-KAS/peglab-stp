@@ -9,6 +9,53 @@
 </head>
 <body>
   <div class="banner">TESTNET TOY · NOT USD · NOT AN ISSUER · WILL DEPEG</div>
+  <section class="wallet-bar" id="wallet-bar">
+    <p class="eyebrow">Test with tKAS · Testnet-10 only</p>
+    <h2>Own KasWare, or make a local wallet funded by the host.</h2>
+    <p class="note">This page never asks for a seed. KasWare stays in the extension. A local wallet is a disposable Testnet-10 key in this tab, paid from the host address below.</p>
+    <p class="host-line">Host tKAS: <code id="host-address"></code> · <strong id="host-balance">checking…</strong></p>
+    <p class="status" id="wallet-status" role="status"></p>
+    <div class="wallet-paths">
+      <article class="path">
+        <p class="path-kicker">A · I already have KasWare</p>
+        <h3>Open KasWare and show my tKAS</h3>
+        <p>Connect the extension, switch it to Testnet 10, then we show that address and its tKAS balance.</p>
+        <div class="controls">
+          <button type="button" id="connect-kasware" class="primary">Connect KasWare</button>
+          <a class="quiet-link" href="https://www.kasware.xyz" target="_blank" rel="noopener">Install KasWare</a>
+        </div>
+        <dl class="wallet-facts">
+          <div><dt>KasWare</dt><dd id="kw-state">Not connected</dd></div>
+          <div><dt>Address</dt><dd><code id="kw-address">—</code></dd></div>
+          <div><dt>Network</dt><dd id="kw-network">—</dd></div>
+          <div><dt>tKAS</dt><dd id="kw-balance">—</dd></div>
+        </dl>
+        <p class="warn" id="kw-warn" hidden></p>
+        <div class="controls">
+          <button type="button" id="fund-kasware" hidden>Send 1 host tKAS to this KasWare</button>
+        </div>
+      </article>
+      <article class="path">
+        <p class="path-kicker">B · I don’t have a tKAS wallet</p>
+        <h3>Make one here, paid from the host</h3>
+        <p>Creates a local Testnet-10 wallet in this tab and sends <strong>1 tKAS</strong> from <code class="host-inline"></code>.</p>
+        <div class="controls">
+          <button type="button" id="make-local" class="primary">Make local wallet + fund from host</button>
+          <button type="button" id="fund-local">Fund local wallet again</button>
+        </div>
+        <dl class="wallet-facts">
+          <div><dt>Local wallet</dt><dd id="local-state">None yet</dd></div>
+          <div><dt>Address</dt><dd><code id="local-address">—</code></dd></div>
+          <div><dt>tKAS</dt><dd id="local-balance">—</dd></div>
+        </dl>
+        <details class="secret">
+          <summary>Show local private key (Testnet-10 hex, not a seed)</summary>
+          <pre id="local-key">No local wallet in this tab.</pre>
+        </details>
+      </article>
+    </div>
+    <p class="active-line">Using for this page: <strong id="active-wallet">none yet</strong></p>
+  </section>
   <header>
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
     <h1>A dollar-shaped object<br>with a 2 tKAS pool.</h1>
@@ -55,6 +102,7 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Verify genesis outpoint, template hash, series bytes, and backing. Redeem is tKAS at an admin price, not dollars. Pause blocks new risk; it does not create a peg.</p>
     <p class="note">PegLab Testnet-10 wallet: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Fund it from your miner, then run genesis. The seed is not in this repository.</p>
   </footer>
+  <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
