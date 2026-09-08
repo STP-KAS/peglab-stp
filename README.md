@@ -37,7 +37,7 @@ npm run fixtures
 npm run serve
 ```
 
-Then open `http://127.0.0.1:8765/`.
+Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **https://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club** — DNS steps in [DNS.md](DNS.md).
 
 How to try it:
 
