@@ -134,14 +134,14 @@ If KaChat ever shows **USD**, the issuer is named, freeze is disclosed, and PegL
 
 ---
 
-## Phone: Open KaChat from this site
+## Open KaChat from this site
 
-PegLab’s **Open KaChat** button on a phone tries the installed app first, then the store.
+KaChat is a mobile app. It does not support PC.
 
-| Device | If installed | If not |
-| --- | --- | --- |
-| iPhone / iPad | `kachat://` (registered in KaChat iOS) | [App Store id 6759102359](https://apps.apple.com/us/app/kachat/id6759102359) |
-| Android | Chrome `intent://kapost` + package `com.kachat.app` (BROWSABLE host `kapost`; empty path just opens the app) | [Play `com.kachat.app`](https://play.google.com/store/apps/details?id=com.kachat.app) |
-| Desktop | [kachat.org](https://www.kachat.org/) | same |
+| Device | What this site does |
+| --- | --- |
+| Windows / macOS / Linux | Shows: **KaChat does not support PC.** No desktop client. Does not send the visitor to kachat.org as if the app will open. |
+| iPhone / iPad | **Open KaChat** uses `kachat://` (registered in KaChat iOS). If the app is missing: [App Store id 6759102359](https://apps.apple.com/us/app/kachat/id6759102359). |
+| Android | Chrome `intent://kapost` + package `com.kachat.app` (BROWSABLE host `kapost`; empty path just opens the app). If missing: [Play `com.kachat.app`](https://play.google.com/store/apps/details?id=com.kachat.app). |
 
-`kachat.org` has no Apple App Site Association file, so Universal Links on that domain cannot open the app. The custom scheme is what works. Android does not accept a bare `kachat://` with no host.
+`kachat.org` has no Apple App Site Association file, so Universal Links on that domain cannot open the app. The custom scheme is what works on a phone. Android does not accept a bare `kachat://` with no host.
