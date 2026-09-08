@@ -120,6 +120,8 @@ That is the Kaspa edge. The dollar token is someone else’s licensed inventory.
 
 The human product (phones, KaChat, postage, agents, what never to ship) is [VISION.md](VISION.md). This file is the capital and peg ladder. Do not mix them: a receipt is not a raise.
 
+What it would take to leave the lab — copy existing proofs of concept, how Maker/Circle/Liquity were actually funded, mainnet checklist — is [MAINNET.md](MAINNET.md). PegLab as this repo still does not go to mainnet as money.
+
 ### If you still want a Kaspa-native unit
 
 Pick **one** and say it in the first sentence:

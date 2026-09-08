@@ -36,3 +36,5 @@ See [STABLES-GUIDE.md](STABLES-GUIDE.md). Short version: do not raise money agai
 KaChat (chat + native KAS pay) is the first dapp that would feel this. How it would use PegLab, and the work to make that real: [KACHAT.md](KACHAT.md).
 
 The product is a finished conversation on a phone, not a coin page. Full vision and the detailed to-do (people, postage, law, ops, agents — not only the covenant): [VISION.md](VISION.md).
+
+This lab does not go to mainnet as money. What a successor would copy from other chains, how those projects were funded, and the checklist: [MAINNET.md](MAINNET.md).
