@@ -21,10 +21,32 @@ function isTestnet(address) {
   return typeof address === 'string' && address.startsWith('kaspatest:');
 }
 
-function tkasFromSompi(value) {
-  const n = Number(value || 0);
-  if (!Number.isFinite(n)) return '0';
-  return (n / 1e8).toFixed(8);
+function isKasAddress(address) {
+  return typeof address === 'string' && (address.startsWith('kaspatest:') || address.startsWith('kaspa:'));
+}
+
+function unitFor(address) {
+  return isTestnet(address) ? 'tKAS' : 'KAS';
+}
+
+function sompiFromBalance(raw) {
+  if (raw == null) return null;
+  if (typeof raw === 'bigint') return Number(raw);
+  if (typeof raw === 'number') return Number.isFinite(raw) ? raw : null;
+  if (typeof raw === 'string') {
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
+  const v = raw.confirmed ?? raw.total ?? raw.balance ?? raw.amount ?? raw.mature;
+  if (v == null || v === '') return 0;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function fmtAmount(sompi, digits) {
+  const n = Number(sompi);
+  if (!Number.isFinite(n) || n < 0) return (0).toFixed(digits);
+  return (n / 1e8).toFixed(digits);
 }
 
 async function api(path, options) {
@@ -84,24 +106,31 @@ function shortAddr(address) {
   return `${address.slice(0, 14)}…${address.slice(-6)}`;
 }
 
+function paintBalance(sompi, address) {
+  const unit = unitFor(address);
+  if ($('kw-balance')) {
+    $('kw-balance').textContent = sompi == null ? '—' : `${fmtAmount(sompi, 8)} ${unit}`;
+  }
+  if ($('kw-top-kas')) {
+    $('kw-top-kas').textContent = sompi == null ? `${unit} —` : `${fmtAmount(sompi, 1)} ${unit}`;
+  }
+}
+
 function paintTopKasware() {
   const login = $('kasware-top');
   const logout = $('kasware-out');
   const balBox = $('kw-top-bal');
   const who = $('kw-top-who');
-  const kas = $('kw-top-kas');
   const addr = $('kw-top-addr');
   if (!login) return;
   const state = $('kw-state')?.textContent || 'Not connected';
   const address = $('kw-address')?.textContent || '';
-  const amount = $('kw-balance')?.textContent || '';
-  const connected = state === 'Connected' && address.startsWith('kaspatest:');
+  const connected = state === 'Connected' && isKasAddress(address);
   if (logout) logout.hidden = !connected;
   if (balBox) balBox.hidden = !connected;
   if (who) who.hidden = !connected;
   if (connected) {
     login.hidden = true;
-    if (kas) kas.textContent = amount.includes('tKAS') ? amount : `tKAS ${amount}`;
     if (addr) {
       addr.textContent = shortAddr(address);
       addr.title = address;
@@ -109,8 +138,9 @@ function paintTopKasware() {
     return;
   }
   login.hidden = false;
+  if (balBox) balBox.hidden = true;
+  if (who) who.hidden = true;
   if (state === 'Connecting') login.textContent = 'Connecting…';
-  else if (state === 'Wrong network') login.textContent = 'Switch to Testnet 10';
   else if (state === 'Not installed') login.textContent = 'Install KasWare';
   else if (state === 'No account') login.textContent = 'No account';
   else login.textContent = 'Log in';
@@ -158,24 +188,24 @@ async function refreshHost() {
 }
 
 async function refreshAddress(address, target) {
-  if (!isTestnet(address)) {
-    target.textContent = 'not Testnet-10';
-    return;
-  }
+  if (!isLocalHost() || !isTestnet(address)) return;
   try {
     const bal = await api(`/api/balance?address=${encodeURIComponent(address)}`);
-    target.textContent = `${bal.confirmedTkas} tKAS`;
-  } catch (error) {
-    target.textContent = error.message;
+    const sompi = Number(bal.confirmedSompi);
+    if (target === $('kw-balance')) paintBalance(Number.isFinite(sompi) ? sompi : null, address);
+    else if (target) target.textContent = `${bal.confirmedTkas} tKAS`;
+  } catch {
+    // Keep the KasWare figure if the local node route is down.
   }
 }
 
-async function kaswareBalance(wallet) {
+async function readKaswareBalance(wallet) {
   if (!wallet?.getBalance) return null;
-  const raw = await wallet.getBalance();
-  if (!raw || typeof raw !== 'object') return null;
-  const confirmed = raw.confirmed ?? raw.total ?? 0;
-  return tkasFromSompi(confirmed);
+  try {
+    return sompiFromBalance(await wallet.getBalance());
+  } catch {
+    return null;
+  }
 }
 
 async function connectKasware() {
@@ -190,7 +220,12 @@ async function connectKasware() {
   say('Opening KasWare…');
   $('kw-state').textContent = 'Connecting';
   paintTopKasware();
-  const network = await switchToTestnet(wallet);
+  let network = '';
+  try {
+    network = await switchToTestnet(wallet);
+  } catch {
+    network = (await wallet.getNetwork?.()) || '';
+  }
   const accounts = await wallet.requestAccounts();
   const address = accounts?.[0] ? String(accounts[0]) : '';
   $('kw-address').textContent = address || '—';
@@ -201,29 +236,23 @@ async function connectKasware() {
     paintTopKasware();
     return;
   }
-  if (!isTestnet(address)) {
-    $('kw-warn').hidden = false;
-    $('kw-warn').textContent = 'KasWare is not on Testnet-10. In KasWare, switch Network to Testnet 10, then connect again. Host tKAS will not be sent to mainnet.';
-    $('fund-kasware').hidden = true;
-    $('kw-balance').textContent = 'blocked (mainnet)';
-    $('kw-state').textContent = 'Wrong network';
-    say('Switch KasWare to Testnet 10 before testing.', true);
-    paintTopKasware();
-    return;
-  }
-  $('kw-warn').hidden = true;
   $('kw-state').textContent = 'Connected';
-  $('fund-kasware').hidden = !isLocalHost();
-  try {
-    const kw = await kaswareBalance(wallet);
-    $('kw-balance').textContent = kw ? `${kw} tKAS` : 'checking node…';
-  } catch {
-    $('kw-balance').textContent = 'checking node…';
+  const testnet = isTestnet(address);
+  $('fund-kasware').hidden = !(isLocalHost() && testnet);
+  if (!testnet) {
+    $('kw-warn').hidden = false;
+    $('kw-warn').textContent = 'KasWare is on mainnet. Balance below is KAS. This lab is Testnet-10 — switch Network to Testnet 10 to try tPEG. Host tKAS will not be sent to mainnet.';
+  } else {
+    $('kw-warn').hidden = true;
   }
-  await refreshAddress(address, $('kw-balance'));
-  setActive(`KasWare ${address}`);
+  paintBalance(await readKaswareBalance(wallet), address);
   paintTopKasware();
-  say('KasWare is on Testnet-10. tKAS balance is from the node. This is not USD.');
+  await refreshAddress(address, $('kw-balance'));
+  paintTopKasware();
+  setActive(`KasWare ${address}`);
+  say(testnet
+    ? 'KasWare is on Testnet-10. tKAS balance is from KasWare. This is not USD.'
+    : 'KasWare is on mainnet. Showing KAS. Switch to Testnet 10 to use this lab.');
 }
 
 async function fund(address, label) {
@@ -279,7 +308,7 @@ if ($('kasware-out')) $('kasware-out').onclick = () => disconnectKasware().catch
 if ($('kw-top-addr')) {
   $('kw-top-addr').onclick = async () => {
     const address = $('kw-address')?.textContent || '';
-    if (!address.startsWith('kaspatest:')) return;
+    if (!isKasAddress(address)) return;
     try {
       await navigator.clipboard.writeText(address);
       say('Copied KasWare address.');
@@ -305,6 +334,12 @@ $('fund-local').onclick = () => {
 if (window.kasware?.on) {
   window.kasware.on('accountsChanged', () => connectKasware().catch(() => {}));
   window.kasware.on('networkChanged', () => connectKasware().catch(() => {}));
+  window.kasware.on('balanceChanged', (raw) => {
+    const address = $('kw-address')?.textContent || '';
+    if (!isKasAddress(address) || $('kw-state')?.textContent !== 'Connected') return;
+    paintBalance(sompiFromBalance(raw), address);
+    paintTopKasware();
+  });
 }
 
 paintTopKasware();

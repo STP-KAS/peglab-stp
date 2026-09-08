@@ -64,9 +64,10 @@ header, main, footer, .wallet-bar, .idea { width: min(1080px, calc(100% - 32px))
   flex-wrap: wrap;
 }
 .kw-right .bal {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: var(--text);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .kw-right .who-addr {
   display: inline-block;
