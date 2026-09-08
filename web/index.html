@@ -7,13 +7,20 @@
   <meta name="description" content="PegLab is a Kaspa-native alternative to centralized stablecoins for dapps. Testnet-10 lab. Not USD. Will depeg if you treat it as a dollar.">
   <meta name="apple-itunes-app" content="app-id=6759102359">
   <link rel="stylesheet" href="./styles.css">
+  <script>
+    try {
+      if (sessionStorage.getItem('peglab-welcome-seen')) {
+        document.documentElement.dataset.welcomeSeen = '1';
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <div class="welcome" data-welcome role="dialog" aria-modal="true" aria-label="Lunatic left has an opinion">
     <div class="welcome-card">
       <p class="eyebrow">Take note</p>
       <div class="welcome-stage">
-        <video class="welcome-film is-ready" muted autoplay playsinline loop preload="auto" controls src="media/lunatic-left.mp4" disablepictureinpicture>
+        <video class="welcome-film is-ready" muted playsinline loop preload="none" controls data-src="media/lunatic-left.mp4" disablepictureinpicture>
           Your browser cannot play this film. <a href="media/lunatic-left.mp4">Open the file</a>.
         </video>
       </div>
@@ -271,10 +278,28 @@
       if (!welcome) return;
       var key = 'peglab-welcome-seen';
       var video = welcome.querySelector('video');
-      function closed() { return welcome.hidden; }
+      var filmSrc = (video && (video.getAttribute('data-src') || video.getAttribute('src'))) || 'media/lunatic-left.mp4';
+      function seen() {
+        try { return sessionStorage.getItem(key) === '1'; } catch (e) { return false; }
+      }
       function remember() { try { sessionStorage.setItem(key, '1'); } catch (e) {} }
+      function closed() { return welcome.hidden; }
+      function unloadVideo() {
+        if (!video) return;
+        try { video.pause(); } catch (e) {}
+        video.removeAttribute('src');
+        video.removeAttribute('autoplay');
+        try { video.load(); } catch (e) {}
+      }
+      function hide() {
+        unloadVideo();
+        welcome.hidden = true;
+        remember();
+        document.documentElement.dataset.welcomeSeen = '1';
+      }
       function start() {
-        if (!video || closed()) return;
+        if (!video || closed() || seen()) return;
+        if (video.getAttribute('src') !== filmSrc) video.src = filmSrc;
         video.muted = true;
         video.defaultMuted = true;
         video.playsInline = true;
@@ -290,15 +315,10 @@
         var play = video.play();
         if (play && play.catch) play.catch(function () {});
       }
-      function hide() {
-        if (video) video.pause();
-        welcome.hidden = true;
-        remember();
-        document.documentElement.dataset.welcomeSeen = '1';
+      if (seen()) {
+        hide();
+        return;
       }
-      try {
-        sessionStorage.removeItem(key);
-      } catch (e) {}
       var closeBtn = welcome.querySelector('[data-welcome-close]');
       if (closeBtn) closeBtn.addEventListener('click', hide);
       welcome.addEventListener('pointerdown', function (event) {
@@ -312,6 +332,9 @@
       });
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && !closed()) hide();
+      });
+      window.addEventListener('pageshow', function () {
+        if (seen()) hide();
       });
       if (video) {
         video.addEventListener('playing', function () { video.classList.add('is-ready'); });
