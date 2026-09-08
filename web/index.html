@@ -16,6 +16,7 @@
       <a href="/VISION.md">Vision</a>
       <a href="/MAINNET.md">Mainnet</a>
       <a href="/BATTLE.md">Battle</a>
+      <a href="/BEST.md">Best</a>
       <a href="/KACHAT.md">KaChat</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
@@ -106,6 +107,44 @@
     <p class="active-line">Using for this page: <strong id="active-wallet">none yet</strong></p>
   </section>
   <main>
+    <section class="best card" id="best">
+      <p class="eyebrow">Best of both</p>
+      <h2>A real proof of concept is a receipt, not a pool.</h2>
+      <p class="note">Parker’s GitHub PoC: one unit equals one locked sompi, sponsor pays fees, name is not authenticity. PegLab: the tiny pool will depeg, KaChat lives on a phone, do not raise against tPEG. This tab runs the receipt. The other tab keeps the depeg warning.</p>
+      <div class="lab-tabs" role="tablist" aria-label="Proof of concept labs">
+        <button type="button" class="on" id="tab-receipt" role="tab" aria-selected="true" data-lab="receipt">Receipt PoC</button>
+        <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Depeg warning</button>
+      </div>
+      <p><a class="quiet-link" href="/BEST.md">Best-practice spec</a> · <a class="quiet-link" href="/BATTLE.md">Battle scorecard</a></p>
+    </section>
+    <section class="board lab-pane" id="lab-receipt">
+      <article class="card">
+        <h2>Receipt state</h2>
+        <p class="note">ENGINE_SPEC. One claim sompi per locked sompi. No oracle. Not USD.</p>
+        <div class="metrics" id="r-metrics"></div>
+        <div class="holders" id="r-holders"></div>
+        <div class="controls">
+          <button id="r-lock" class="primary" type="button">Lock 0.5 tKAS</button>
+          <button id="r-move" type="button">Transfer to Bob</button>
+          <button id="r-cash" type="button">Redeem 0.2 tKAS</button>
+          <button id="r-skim" class="danger" type="button">Try skim 1 sompi</button>
+          <button id="r-reset" type="button">Reset receipt</button>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Receipt prompt</h2>
+        <pre class="prompt" id="r-prompt"></pre>
+      </article>
+    </section>
+    <section class="lab card lab-pane" id="r-walk">
+      <h2>Receipt walk</h2>
+      <p class="note">Lock, move, redeem, refuse skim. Backing and claims stay 1:1. That is the unit KaChat can settle.</p>
+      <div class="controls">
+        <button id="r-demo" class="primary" type="button">Run receipt PoC</button>
+      </div>
+      <div class="steps" id="r-steps"></div>
+    </section>
+    <div id="lab-depeg" hidden>
     <section class="board">
       <article class="card">
         <h2>Live state</h2>
@@ -126,6 +165,7 @@
         <pre class="prompt" id="prompt"></pre>
       </article>
     </section>
+    </div>
     <section class="kachat card" id="kachat">
       <p class="eyebrow">First dapp · KaChat</p>
       <h2>How KaChat would use this unit</h2>
@@ -196,7 +236,7 @@
         <a class="quiet-link" href="/STABLES-GUIDE.md">Capital ladder</a>
       </div>
     </section>
-    <section class="lab card">
+    <section class="lab card" id="depeg-walk" hidden>
       <h2>Depeg lab</h2>
       <p class="note">Five scripted steps. A tiny pool and an admin price cannot hold $1. That is the warning for any dapp that wants a “Kaspa stable” without reserves. Target, pool, and redeem will disagree.</p>
       <div class="controls">
@@ -207,7 +247,7 @@
   </main>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/VISION.md">VISION.md</a> · <a href="/BATTLE.md">BATTLE.md</a> · <a href="/MAINNET.md">MAINNET.md</a> · <a href="/IDEA.md">IDEA.md</a> · <a href="/KACHAT.md">KACHAT.md</a> · <a href="/STABLES-GUIDE.md">STABLES-GUIDE.md</a></p>
+    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/BEST.md">BEST.md</a> · <a href="/VISION.md">VISION.md</a> · <a href="/BATTLE.md">BATTLE.md</a> · <a href="/MAINNET.md">MAINNET.md</a> · <a href="/IDEA.md">IDEA.md</a> · <a href="/KACHAT.md">KACHAT.md</a> · <a href="/STABLES-GUIDE.md">STABLES-GUIDE.md</a></p>
   </footer>
   <script src="./wallets.js"></script>
   <script type="module" src="./wallet.js"></script>

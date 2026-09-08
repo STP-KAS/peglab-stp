@@ -6,7 +6,7 @@
   "description": "Kaspa Testnet-10 community-toy stable. Not USD. Tiny pool. Will depeg.",
   "license": "MIT",
   "scripts": {
-    "test": "node --test tests/peglab.test.mjs",
+    "test": "node --test tests/peglab.test.mjs tests/receipt.test.mjs",
     "fixtures": "node server/peglab.mjs --fixtures",
     "compile": "node server/peglab.mjs --compile",
     "genesis": "node server/submit-genesis.mjs",
