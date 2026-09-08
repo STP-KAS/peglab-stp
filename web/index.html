@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PegLab — Kaspa unit for dapps, not a bank dollar</title>
   <meta name="description" content="PegLab is a Kaspa-native alternative to centralized stablecoins for dapps. Testnet-10 lab. Not USD. Will depeg if you treat it as a dollar.">
+  <meta name="apple-itunes-app" content="app-id=6759102359">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -137,9 +138,10 @@
         </article>
       </div>
       <div class="controls">
-        <a class="primary" href="https://www.kachat.org/" target="_blank" rel="noopener">Open KaChat</a>
+        <a class="primary" id="open-kachat" href="https://www.kachat.org/" target="_blank" rel="noopener">Open KaChat</a>
         <a class="quiet-link" href="/KACHAT.md">Full brief</a>
       </div>
+      <p class="note">On a phone, Open KaChat launches the app if it is installed. Otherwise it goes to the App Store, Play Store, or kachat.org.</p>
     </section>
     <section class="lab card">
       <h2>Depeg lab</h2>
@@ -156,5 +158,52 @@
   </footer>
   <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
+  <script>
+    (function () {
+      var link = document.getElementById('open-kachat');
+      if (!link) return;
+      var iosStore = 'https://apps.apple.com/us/app/kachat/id6759102359';
+      var play = 'https://play.google.com/store/apps/details?id=com.kachat.app';
+      var androidIntent =
+        'intent://kapost#Intent;scheme=kachat;package=com.kachat.app;S.browser_fallback_url=' +
+        encodeURIComponent(play) +
+        ';end';
+      function phoneKind(ua) {
+        if (/Android/i.test(ua)) return 'android';
+        if (/iPhone|iPad|iPod/i.test(ua)) return 'ios';
+        if (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1) return 'ios';
+        return '';
+      }
+      function stillHere(started) {
+        if (document.hidden || document.visibilityState === 'hidden') return false;
+        if (Date.now() - started > 2500) return false;
+        return true;
+      }
+      function trySchemeThenStore(scheme, store) {
+        var started = Date.now();
+        window.location.href = scheme;
+        setTimeout(function () {
+          if (!stillHere(started)) return;
+          window.location.href = store;
+        }, 1100);
+      }
+      link.addEventListener('click', function (event) {
+        var kind = phoneKind(navigator.userAgent || '');
+        if (!kind) return;
+        event.preventDefault();
+        if (kind === 'android') {
+          var ua = navigator.userAgent || '';
+          var chromeLike = /Chrome|Edg|SamsungBrowser/i.test(ua) && !/Firefox/i.test(ua);
+          if (chromeLike) {
+            window.location.href = androidIntent;
+            return;
+          }
+          trySchemeThenStore('kachat://kapost', play);
+          return;
+        }
+        trySchemeThenStore('kachat://', iosStore);
+      });
+    })();
+  </script>
 </body>
 </html>
