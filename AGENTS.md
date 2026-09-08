@@ -10,3 +10,5 @@ Build a Testnet-10 teaching toy that fails as money in public.
 - Keep the WILL DEPEG warning in README, UI banner, and wallet prompt.
 - Caps stay at 10 tKAS backing and 10,000 tPEG. The tiny pool stays at 2 tKAS seed.
 - A display name is not authenticity.
+- Push to GitHub by default. After any meaningful change, commit and `git push origin` to https://github.com/STP-KAS/peglab-stp without waiting to be asked.
+- Never commit `.local/`, seeds, private keys, or `PEGLAB_SPONSOR_KEY`.
