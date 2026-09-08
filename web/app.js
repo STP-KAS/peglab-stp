@@ -10,6 +10,16 @@ import {
   depegDemo,
   DEFAULT_ORACLE,
 } from '/src/engine.mjs';
+import {
+  genesis as receiptGenesis,
+  lock as receiptLock,
+  transfer as receiptTransfer,
+  redeem as receiptRedeem,
+  skimPrincipal,
+  inspect as inspectReceipt,
+  walletPrompt as receiptPrompt,
+  receiptDemo,
+} from '/src/receipt.mjs';
 
 const admin = '11'.repeat(32);
 const alice = '22'.repeat(32);
@@ -90,3 +100,80 @@ $('demo').onclick = () => {
 };
 
 render();
+
+const aliceR = '22'.repeat(32);
+const bobR = '33'.repeat(32);
+const receiptFee = 263_800n;
+let receipt = receiptGenesis();
+let receiptAction = 'genesis';
+let receiptError = '';
+
+function renderReceipt() {
+  const snap = inspectReceipt(receipt);
+  const rows = [
+    ['Unit', '1 claim = 1 locked sompi', false],
+    ['Oracle', snap.oracle, false],
+    ['Locked', sompi(snap.lockedSompi), false],
+    ['Claims', sompi(snap.circulating), !snap.backedOneToOne],
+    ['1:1', snap.backedOneToOne ? 'yes' : 'NO', !snap.backedOneToOne],
+    ['Sponsor fees', sompi(snap.sponsorFeesPaid), false],
+  ];
+  $('r-metrics').innerHTML = rows.map(([label, value, brk]) =>
+    `<div class="metric${brk ? ' break' : ''}"><span>${label}</span><strong>${value}</strong></div>`
+  ).join('');
+  const units = snap.units.length
+    ? snap.units.map((row) => `<tr><td><code>${row.owner.slice(0, 8)}…</code></td><td>${row.quantity.toString()} sompi</td></tr>`).join('')
+    : '<tr><td colspan="2">No claims. Lock tKAS to open a receipt.</td></tr>';
+  $('r-holders').innerHTML = `<table><thead><tr><th>Holder</th><th>Claim</th></tr></thead><tbody>${units}</tbody></table>`;
+  $('r-prompt').textContent = receiptError
+    ? `REJECTED\n${receiptError}\n\n${receiptPrompt(receiptAction, receipt)}`
+    : receiptPrompt(receiptAction, receipt);
+}
+
+function actReceipt(name, fn) {
+  receiptAction = name;
+  receiptError = '';
+  try {
+    const out = fn();
+    receipt = out.state ?? out;
+  } catch (err) {
+    receiptError = `${err.code || 'ERROR'}: ${err.message}`;
+  }
+  renderReceipt();
+}
+
+$('r-lock').onclick = () => actReceipt('lock 0.5 tKAS', () => receiptLock(receipt, {owner: aliceR, sompi: 50_000_000n, sponsorFee: receiptFee}));
+$('r-move').onclick = () => actReceipt('transfer to Bob', () => receiptTransfer(receipt, {from: aliceR, to: bobR, quantity: 50_000_000n}));
+$('r-cash').onclick = () => actReceipt('redeem 0.2 tKAS', () => receiptRedeem(receipt, {holder: bobR, quantity: 20_000_000n, sponsorFee: receiptFee}));
+$('r-skim').onclick = () => actReceipt('skim 1 sompi from principal', () => skimPrincipal(receipt, {holder: bobR, quantity: 1n}));
+$('r-reset').onclick = () => actReceipt('reset receipt', () => ({state: receiptGenesis()}));
+
+$('r-demo').onclick = () => {
+  const demo = receiptDemo();
+  receipt = demo.state;
+  receiptAction = 'receipt PoC';
+  receiptError = '';
+  $('r-steps').innerHTML = demo.steps.map((step, i) => {
+    const nums = `${step.lockedSompi} locked<br>${step.circulating} claims<br>1:1 ${step.backedOneToOne ? 'yes' : 'NO'}`;
+    return `<article class="step${i === demo.steps.length - 1 ? ' active' : ''}"><b>${String(i + 1).padStart(2, '0')}</b><div><strong>${step.title}</strong><p>${step.lesson}</p></div><div class="nums">${nums}</div></article>`;
+  }).join('');
+  renderReceipt();
+};
+
+function showLab(name) {
+  const receiptOn = name === 'receipt';
+  $('lab-receipt').hidden = !receiptOn;
+  $('r-walk').hidden = !receiptOn;
+  $('lab-depeg').hidden = receiptOn;
+  $('depeg-walk').hidden = receiptOn;
+  $('tab-receipt').classList.toggle('on', receiptOn);
+  $('tab-depeg').classList.toggle('on', !receiptOn);
+  $('tab-receipt').setAttribute('aria-selected', String(receiptOn));
+  $('tab-depeg').setAttribute('aria-selected', String(!receiptOn));
+}
+
+$('tab-receipt').onclick = () => showLab('receipt');
+$('tab-depeg').onclick = () => showLab('depeg');
+
+renderReceipt();
+showLab('receipt');
