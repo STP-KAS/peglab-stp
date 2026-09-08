@@ -10,16 +10,19 @@
 </head>
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
-  <nav class="topbar" aria-label="KasWare and docs">
-    <button type="button" id="kasware-top" class="kasware-chip">
-      <span class="chip-kicker">KasWare</span>
-      <span id="kw-top-label">Connect</span>
-    </button>
-    <div class="top-docs">
+  <div class="nav">
+    <a class="brand" href="/">PegLab</a>
+    <nav aria-label="Docs">
       <a href="/VISION.md">Vision</a>
-      <a href="/KACHAT.md">KaChat brief</a>
+      <a href="/KACHAT.md">KaChat</a>
+    </nav>
+    <div class="kw-right">
+      <span class="bal" id="kw-top-bal" hidden><span id="kw-top-kas">tKAS —</span></span>
+      <span class="who" id="kw-top-who" hidden><span class="who-addr" id="kw-top-addr" title="Copy address">—</span></span>
+      <button class="ghost" type="button" id="kasware-top">Log in</button>
+      <button class="ghost" type="button" id="kasware-out" hidden>Log out</button>
     </div>
-  </nav>
+  </div>
   <header>
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
     <h1>A unit for dapps on Kaspa.<br>Not a bank stablecoin.</h1>
