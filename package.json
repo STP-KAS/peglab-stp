@@ -11,7 +11,8 @@
     "compile": "node server/peglab.mjs --compile",
     "genesis": "node server/submit-genesis.mjs",
     "genesis:submit": "node server/submit-genesis.mjs --submit",
-    "serve": "node server/serve.mjs"
+    "serve": "node server/serve.mjs",
+    "pages": "node scripts/build-pages.mjs"
   },
   "engines": {
     "node": ">=20"
