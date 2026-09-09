@@ -54,6 +54,21 @@
     <p class="lead">Dapps need something stable enough to invoice, escrow, and pay fees. They should not have to wait on Circle or Tether. PegLab is that alternative <em>idea</em>: a covenant unit sequenced on Kaspa, backed by locked tKAS. This page is the teaching build. If you call tPEG a US dollar, it will depeg. We show that on purpose.</p>
     <p class="rung"><a class="primary" href="#best">Best of both · receipt PoC</a></p>
   </div>
+  <section class="phone-handoff card" id="phone-handoff" hidden>
+    <p class="eyebrow">Phone</p>
+    <h2>Open this page on your phone</h2>
+    <p class="note">KaChat does not support PC. Scan the QR to open the public lab on iOS or Android. Same URL as the public site, not localhost.</p>
+    <figure class="phone-qr">
+      <img src="media/phone-qr.svg" width="148" height="148" alt="QR code for the public PegLab page">
+      <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
+    </figure>
+  </section>
+  <section class="series card" id="series" hidden>
+    <p class="eyebrow">Live Testnet-10</p>
+    <h2>Genesis on chain</h2>
+    <p class="note" id="series-claim">SCRIPT_ENFORCED CONTROL lock. Not USD.</p>
+    <dl class="wallet-facts" id="series-facts"></dl>
+  </section>
   <section class="best card" id="best">
     <p class="eyebrow">Best of both</p>
     <h2>Best of both</h2>
@@ -223,6 +238,10 @@
         <h3>KaChat does not support PC</h3>
         <p>KaChat is published for iOS and Android only. There is no supported client for Windows, macOS, or Linux, and a desktop browser cannot open the app.</p>
         <p>To use KaChat, open this page on an iPhone, iPad, or Android device. If the app is installed, it will launch. If it is not, you will be directed to the App Store or Google Play.</p>
+        <figure class="phone-qr">
+          <img src="media/phone-qr.svg" width="128" height="128" alt="QR code for the public PegLab page">
+          <figcaption>Scan to open this lab on your phone.</figcaption>
+        </figure>
         <p><a class="quiet-link" href="/kachat.html">Full brief</a></p>
       </aside>
       <div class="kachat-mobile" id="kachat-mobile">
@@ -272,6 +291,33 @@
   <script src="./wallets.js"></script>
   <script type="module" src="./wallet.js"></script>
   <script type="module" src="./app.js"></script>
+  <script>
+    (function () {
+      var box = document.getElementById('series');
+      var facts = document.getElementById('series-facts');
+      var claim = document.getElementById('series-claim');
+      if (!box || !facts) return;
+      fetch('./series.json', {cache: 'no-store'}).then(function (res) {
+        if (!res.ok) return null;
+        return res.json();
+      }).then(function (data) {
+        if (!data || !data.transactionId) return;
+        if (claim && data.claim) claim.textContent = data.claim;
+        var rows = [
+          ['Claim', 'SCRIPT_ENFORCED genesis · ENGINE_SPEC mint/redeem'],
+          ['Series', data.seriesId],
+          ['Covenant', data.covenantId],
+          ['Txid', data.transactionId],
+          ['P2SH', data.p2sh],
+          ['Pool', (Number(data.poolSompi) / 1e8).toFixed(2) + ' tKAS locked'],
+        ];
+        facts.innerHTML = rows.map(function (row) {
+          return '<div><dt>' + row[0] + '</dt><dd><code>' + row[1] + '</code></dd></div>';
+        }).join('');
+        box.hidden = false;
+      }).catch(function () {});
+    })();
+  </script>
   <script>
     (function () {
       var welcome = document.querySelector('.welcome[data-welcome]');
@@ -361,6 +407,8 @@
       }
       var kind = phoneKind(navigator.userAgent || '');
       if (section) section.classList.add(kind ? 'on-phone' : 'on-pc');
+      var handoff = document.getElementById('phone-handoff');
+      if (handoff && !kind) handoff.hidden = false;
       if (!link || !kind) return;
       function stillHere(started) {
         if (document.hidden || document.visibilityState === 'hidden') return false;

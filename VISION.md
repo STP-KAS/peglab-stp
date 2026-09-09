@@ -165,8 +165,8 @@ Checkboxes are work, not slogans. “Done when” is the test. Strike nothing th
 - [x] IDEA, KACHAT, STABLES-GUIDE, this vision
 - [x] Footer and nav point at this file on local and public
 - [ ] HTTPS on the public domain once GitHub has a certificate
-- [ ] Live TN10 genesis broadcast + journal the series ids (not only the JS engine)
-- [ ] Desktop QR / “open on your phone” for the public URL
+- [x] Live TN10 genesis broadcast + journal the series ids (not only the JS engine)
+- [x] Desktop QR / “open on your phone” for the public URL
 
 ### Phase 1 — Honesty and handoff (days, not a raise)
 
@@ -176,7 +176,7 @@ Done when a stranger on a PC understands they cannot chat here, and a stranger o
 | --- | --- |
 | PC copy | Desktop shows KaChat is mobile-only; no fake “Open” to kachat.org |
 | Phone deep link | Installed app opens; missing app → App Store / Play |
-| QR to phone | PC visitor can scan into the same public URL |
+| QR to phone | PC visitor can scan into the same public URL — landing and KaChat pages |
 | Store truth | App Store id and Play package stay in KACHAT.md |
 | No seed in UI | Page never asks; mainnet `kaspa:` refused |
 
@@ -259,7 +259,8 @@ Do **not** wait for Circle to ship timeout-KAS pay. That can go live on **KAS** 
 
 ```
 Lab honesty (done) 
-  → phone open / PC refusal (done)
+  → phone open / PC refusal / desktop QR (done)
+  → live TN10 CONTROL genesis (done; receipt + indexer still next)
   → live TN10 receipt + indexer
   → KaChat signs it on testnet
   → timeout pay in a 1:1 thread

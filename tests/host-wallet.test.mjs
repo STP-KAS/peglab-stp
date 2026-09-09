@@ -32,4 +32,23 @@ describe('host faucet rules', () => {
     assert.equal(mass.minimumFee, '263800');
     assert.ok(100_000n < BigInt(mass.minimumFee));
   });
+
+  it('prices CONTROL genesis 1-in 2-out at compute mass 2683 * 100 sompi', () => {
+    const p2pk = {version: 0, script: '20' + 'ab'.repeat(32) + 'ac'};
+    const p2sh = {version: 0, script: 'aa20' + 'cd'.repeat(32) + '87'};
+    const tx = {
+      inputs: [{
+        computeBudget: 16,
+        signatureScript: '41' + '00'.repeat(64) + '01',
+        utxo: {amount: 226_768_157n, entry: {scriptPublicKey: p2pk}},
+      }],
+      outputs: [
+        {value: 200_000_000n, scriptPublicKey: p2sh, covenant: {authorizingInput: 0}},
+        {value: 26_499_857n, scriptPublicKey: p2pk},
+      ],
+    };
+    const mass = nativeMass(tx, {feeRate: MIN_RELAY_RATE});
+    assert.equal(mass.computeMass, 2683);
+    assert.equal(mass.minimumFee, '268300');
+  });
 });

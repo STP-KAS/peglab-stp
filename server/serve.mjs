@@ -21,6 +21,7 @@ const TYPES = {
   '.json': 'application/json; charset=utf-8',
   '.md': 'text/markdown; charset=utf-8',
   '.mp4': 'video/mp4',
+  '.svg': 'image/svg+xml',
 };
 
 const recent = new Map();

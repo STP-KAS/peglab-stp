@@ -11,6 +11,8 @@ export const FAUCET_AMOUNT = 100_000_000n; // 1 tKAS
 export const MIN_RELAY_RATE = 100; // sompi / gram, Toccata node policy
 export const MAX_FAUCET_FEE = 1_000_000n;
 export const MIN_CHANGE = 1_000n;
+// CONTROL genesis output encoding on Toccata (covenant id + authorizing input).
+export const CONTROL_COVENANT_BYTES = 34;
 const PLACEHOLDER_SIG = '41' + '00'.repeat(64) + '01';
 
 function integer(value, min, max) {
@@ -34,9 +36,11 @@ export function nativeMass(transaction, {feeRate = MIN_RELAY_RATE} = {}) {
   const outputs = transaction.outputs;
   const size = 94 + inputs.reduce((s, i) => s + 54 + (i.signatureScript?.length ?? 0) / 2, 0)
     + outputs.reduce((s, o) => s + 18 + o.scriptPublicKey.script.length / 2, 0);
+  const covenantBytes = [...outputs].reduce((s, o) => s + (o.covenant ? CONTROL_COVENANT_BYTES : 0), 0);
   const computeMass = size
     + outputs.reduce((s, o) => s + (2 + o.scriptPublicKey.script.length / 2) * 10, 0)
-    + inputs.reduce((s, i) => s + integer(i.computeBudget, 0, 65535) * 100, 0);
+    + inputs.reduce((s, i) => s + integer(i.computeBudget, 0, 65535) * 100, 0)
+    + covenantBytes;
   const C = 1_000_000_000_000n;
   const plurality = (scriptLen, extra = 0) => BigInt(Math.ceil((63 + scriptLen / 2 + extra) / 100));
   const inputCells = inputs.map((i) => {

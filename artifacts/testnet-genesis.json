@@ -1,0 +1,63 @@
+{
+  "network": "testnet-10",
+  "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+  "mode": "submit",
+  "sponsor": "kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0",
+  "series": "5065674c61622d746e31302d7631000000000000000000000000000000000000",
+  "admin": "82c6f6dd431c9d9688385859b43c0c9736a249bed9979f088ad94721245c849f",
+  "poolSompi": "200000000",
+  "fee": "268300",
+  "fundingOutpoint": {
+    "transactionId": "aca0f16e5c5f41a97fa6733bdd0be01d731be645abd36d5bfc7cc0a3557933eb",
+    "index": 1
+  },
+  "fundingAmount": "226768157",
+  "covenantId": "3645afa88bf721625ac49e3e28d6c61381aad6bdfb152bfeaf2b34bd230bedd4",
+  "scriptP2SH": "kaspatest:pzpuxya0drdqr0frtz5za8zfw6v80em9kdl3gq8kfq7n2xjykl6kz37jetrgk",
+  "computeMass": 2683,
+  "transactionId": "f8a8315592bf6aa863ebb09476867f82c9b39247723bee83e07956db429f046a",
+  "submitted": true,
+  "createdAt": "2026-09-09T18:36:48.559Z",
+  "transaction": {
+    "id": "f8a8315592bf6aa863ebb09476867f82c9b39247723bee83e07956db429f046a",
+    "version": 1,
+    "inputs": [
+      {
+        "transactionId": "aca0f16e5c5f41a97fa6733bdd0be01d731be645abd36d5bfc7cc0a3557933eb",
+        "index": 1,
+        "sequence": "0",
+        "sigOpCount": 0,
+        "computeBudget": 16,
+        "signatureScript": "4161b22bb71dbbc57b8dc60a21bbc3c2f54807d32e357fc65746936931263fcb885da6023754c9ab054bf56fbde17bc3e2b527548af5d357bca79deeeebdbab28a01",
+        "utxo": {
+          "address": "kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0",
+          "amount": "226768157",
+          "scriptPublicKey": "00002082c6f6dd431c9d9688385859b43c0c9736a249bed9979f088ad94721245c849fac",
+          "blockDaaScore": "565148109",
+          "isCoinbase": false,
+          "covenantId": null
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "value": "200000000",
+        "scriptPublicKey": "0000aa2083c313af68da01bd2358a82e9c49769877e765b37f1400f6483d351a44b7f56187",
+        "covenant": {
+          "authorizingInput": 0,
+          "covenantId": "3645afa88bf721625ac49e3e28d6c61381aad6bdfb152bfeaf2b34bd230bedd4"
+        }
+      },
+      {
+        "value": "26499857",
+        "scriptPublicKey": "00002082c6f6dd431c9d9688385859b43c0c9736a249bed9979f088ad94721245c849fac",
+        "covenant": null
+      }
+    ],
+    "subnetworkId": "0000000000000000000000000000000000000000",
+    "lockTime": "0",
+    "gas": "0",
+    "storageMass": "38327",
+    "payload": ""
+  }
+}

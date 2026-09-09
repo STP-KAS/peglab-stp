@@ -37,7 +37,7 @@ npm run fixtures
 npm run serve
 ```
 
-Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **https://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club** — DNS steps in [DNS.md](DNS.md).
+Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/** — DNS steps in [DNS.md](DNS.md). On a PC, scan the QR to open that public URL on a phone. HTTPS waits on GitHub’s certificate.
 
 How to try it:
 
@@ -65,7 +65,13 @@ npm run genesis
 npm run genesis:submit
 ```
 
-`--submit` reads gitignored `.local/sponsor.json` or `PEGLAB_SPONSOR_KEY`. Genesis locks **2 tKAS** in CONTROL, fee cap **0.01 tKAS**, change back to the PegLab address. Journal: `artifacts/testnet-genesis.json`.
+`--submit` reads gitignored `.local/sponsor.json` or `PEGLAB_SPONSOR_KEY`. Genesis locks **2 tKAS** in CONTROL, fee cap **0.01 tKAS**, change back to the PegLab address. Journal: `artifacts/testnet-genesis.json`. Public ids: `web/series.json`.
+
+Live Testnet-10 CONTROL (SCRIPT_ENFORCED genesis; mint/redeem on the page are still ENGINE_SPEC):
+
+- txid: `f8a8315592bf6aa863ebb09476867f82c9b39247723bee83e07956db429f046a`
+- covenant: `3645afa88bf721625ac49e3e28d6c61381aad6bdfb152bfeaf2b34bd230bedd4`
+- P2SH: `kaspatest:pzpuxya0drdqr0frtz5za8zfw6v80em9kdl3gq8kfq7n2xjykl6kz37jetrgk`
 
 ## Layout
 

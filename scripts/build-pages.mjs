@@ -11,6 +11,12 @@ const WEB = resolve(ROOT, 'web');
 await mkdir(resolve(DOCS, 'src'), {recursive: true});
 await mkdir(resolve(DOCS, 'media'), {recursive: true});
 await copyFile(resolve(WEB, 'media/lunatic-left.mp4'), resolve(DOCS, 'media/lunatic-left.mp4'));
+await copyFile(resolve(WEB, 'media/phone-qr.svg'), resolve(DOCS, 'media/phone-qr.svg'));
+try {
+  await copyFile(resolve(WEB, 'series.json'), resolve(DOCS, 'series.json'));
+} catch {
+  // Live genesis journal is optional until npm run genesis:submit succeeds.
+}
 for (const spec of PAGES) {
   const html = await renderMdPage(ROOT, spec);
   await writeFile(resolve(WEB, spec.html), html);
