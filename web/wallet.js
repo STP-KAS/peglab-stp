@@ -15,6 +15,11 @@ function isLocalHost() {
   return host === '127.0.0.1' || host === 'localhost';
 }
 
+function isPhone() {
+  return document.documentElement.dataset.phone === '1'
+    || (window.KaspaWallets && typeof window.KaspaWallets.isPhone === 'function' && window.KaspaWallets.isPhone());
+}
+
 function isTestnet(address) {
   return typeof address === 'string' && address.startsWith('kaspatest:');
 }
@@ -83,7 +88,9 @@ async function refreshHost() {
     $('host-balance').textContent = 'public site · host faucet stays on localhost';
     $('make-local').disabled = true;
     $('fund-local').disabled = true;
-    say(`This is ${PUBLIC_DOMAIN}. KasWare works here. Host tKAS fill is only on http://127.0.0.1:8765/ so the key never sits on the public web.`);
+    say(isPhone()
+      ? `This is ${PUBLIC_DOMAIN}. KasWare is a desktop extension — skip it on a phone. Host tKAS fill is only on http://127.0.0.1:8765/.`
+      : `This is ${PUBLIC_DOMAIN}. KasWare works here. Host tKAS fill is only on http://127.0.0.1:8765/ so the key never sits on the public web.`);
     return null;
   }
   const status = await api('/api/status');
@@ -123,7 +130,9 @@ async function fund(address, label) {
 
 async function makeLocal() {
   if (!isLocalHost()) {
-    throw new Error('Make-local + host fill only runs on http://127.0.0.1:8765/. On the public site use KasWare.');
+    throw new Error(isPhone()
+      ? 'Make-local + host fill only runs on http://127.0.0.1:8765/ on a PC. KasWare does not exist on a phone.'
+      : 'Make-local + host fill only runs on http://127.0.0.1:8765/. On the public site use KasWare.');
   }
   say('Creating a local Testnet-10 wallet and asking the host for 1 tKAS…');
   const guest = await api('/api/guest', {method: 'POST'});
@@ -153,13 +162,19 @@ async function restoreLocal() {
   setActive(`local ${guest.address}`);
 }
 
-$('connect-kasware').onclick = () => {
-  if (!window.KaspaWallets) {
-    say('KasWare login is not loaded.', true);
-    return;
-  }
-  window.KaspaWallets.connect('kasware').catch((err) => say(err.message, true));
-};
+if ($('connect-kasware')) {
+  $('connect-kasware').onclick = () => {
+    if (isPhone()) {
+      say('KasWare is a desktop extension. It does not exist on iOS or Android.', true);
+      return;
+    }
+    if (!window.KaspaWallets) {
+      say('KasWare login is not loaded.', true);
+      return;
+    }
+    window.KaspaWallets.connect('kasware').catch((err) => say(err.message, true));
+  };
+}
 $('fund-kasware').onclick = () => {
   const address = $('kw-address').textContent;
   fund(address, 'KasWare').then(() => {
@@ -176,12 +191,14 @@ $('fund-local').onclick = () => {
   fund(address, 'the local wallet').then(() => refreshAddress(address, $('local-balance'))).catch((err) => say(err.message, true));
 };
 
-window.addEventListener('kaspa-wallet', (ev) => {
-  paintKaswarePanel(ev.detail && ev.detail.address);
-});
-if (window.KaspaWallets) {
-  const now = window.KaspaWallets.current();
-  if (now && now.address) paintKaswarePanel(now.address);
+if (!isPhone()) {
+  window.addEventListener('kaspa-wallet', (ev) => {
+    paintKaswarePanel(ev.detail && ev.detail.address);
+  });
+  if (window.KaspaWallets) {
+    const now = window.KaspaWallets.current();
+    if (now && now.address) paintKaswarePanel(now.address);
+  }
 }
 
 refreshHost().then(restoreLocal).catch((err) => say(err.message, true));
