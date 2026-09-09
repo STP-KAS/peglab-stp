@@ -161,6 +161,14 @@ export function chrome({title, description, active, extra = '', body}) {
   <title>${escapeHtml(title)} — PegLab</title>
   <meta name="description" content="${escapeHtml(description)}">
   <link rel="stylesheet" href="./styles.css">
+  <script>
+    try {
+      var ua = navigator.userAgent || '';
+      var phone = /Android|iPhone|iPad|iPod/i.test(ua)
+        || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+      if (phone) document.documentElement.dataset.phone = '1';
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>

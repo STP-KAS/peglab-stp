@@ -12,6 +12,10 @@
       if (sessionStorage.getItem('peglab-welcome-seen')) {
         document.documentElement.dataset.welcomeSeen = '1';
       }
+      var ua = navigator.userAgent || '';
+      var phone = /Android|iPhone|iPad|iPod/i.test(ua)
+        || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+      if (phone) document.documentElement.dataset.phone = '1';
     } catch (e) {}
   </script>
 </head>
@@ -148,7 +152,8 @@
         <p class="eyebrow">How to try it</p>
         <ol class="how">
           <li>Stay on this page. Testnet-10 only. No seed goes in the box.</li>
-          <li><strong>A</strong> — Connect <strong>KasWare</strong>, switch it to Testnet 10, see your tKAS balance.<br><strong>B</strong> — No wallet? <strong>Make local wallet + fund from host</strong> (1 tKAS from the host address).</li>
+          <li class="kasware-only"><strong>A</strong> — Connect <strong>KasWare</strong>, switch it to Testnet 10, see your tKAS balance.<br><strong>B</strong> — No wallet? <strong>Make local wallet + fund from host</strong> (1 tKAS from the host address).</li>
+          <li class="phone-only">KasWare is a desktop extension. It does not exist on iOS or Android. Run the receipt PoC here; settlement on a phone is <a href="/kachat.html">KaChat</a>. Host tKAS fill is localhost on a PC.</li>
           <li>Open <strong>Best of both</strong> at the top. Run the receipt PoC. The depeg tab is the warning.</li>
           <li>Read three numbers: admin price, pool price, redeem price. They will not match. That is why this is not USDT.</li>
         </ol>
@@ -163,12 +168,14 @@
   </section>
   <section class="wallet-bar" id="wallet-bar">
     <p class="eyebrow">Test with tKAS · Testnet-10 only</p>
-    <h2>Own KasWare, or make a local wallet funded by the host.</h2>
-    <p class="note">This page never asks for a seed. KasWare stays in the extension. A local wallet is a disposable Testnet-10 key in this tab, paid from the host address below.</p>
+    <h2 class="kasware-only">Own KasWare, or make a local wallet funded by the host.</h2>
+    <h2 class="phone-only">KasWare does not exist on a phone.</h2>
+    <p class="note kasware-only">This page never asks for a seed. KasWare stays in the extension. A local wallet is a disposable Testnet-10 key in this tab, paid from the host address below.</p>
+    <p class="note phone-only">KasWare is a browser extension for a PC. Skip it here. The engines still run. On a phone, pay is KaChat. Host fill is only on a PC at http://127.0.0.1:8765/.</p>
     <p class="host-line">Host tKAS: <code id="host-address"></code> · <strong id="host-balance">checking…</strong></p>
     <p class="status" id="wallet-status" role="status"></p>
     <div class="wallet-paths">
-      <article class="path">
+      <article class="path kasware-only" id="kasware-path">
         <p class="path-kicker">A · I already have KasWare</p>
         <h3>Open KasWare and show my tKAS</h3>
         <p>Connect the extension, switch it to Testnet 10, then we show that address and its tKAS balance.</p>

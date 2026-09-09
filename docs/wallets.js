@@ -24,8 +24,23 @@
     ]);
   }
 
+  function isPhone() {
+    try {
+      if (document.documentElement.dataset.phone === "1") return true;
+      var ua = navigator.userAgent || "";
+      if (/Android|iPhone|iPad|iPod/i.test(ua)) return true;
+      if (navigator.platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1) return true;
+    } catch (_) {}
+    return false;
+  }
+
+  function markPhone() {
+    if (isPhone()) document.documentElement.dataset.phone = "1";
+  }
+
   function detected() {
     const d = [];
+    if (isPhone()) return d;
     if (typeof window.kasware !== "undefined") d.push("kasware");
     if (typeof window.kastle !== "undefined") d.push("kastle");
     return d;
@@ -82,6 +97,12 @@
   }
 
   function paintButtons() {
+    if (isPhone()) {
+      document.querySelectorAll("[data-wallet-connect], [data-wallet-logout], [data-balances], [data-who]").forEach(function (el) {
+        el.hidden = true;
+      });
+      return;
+    }
     const c = current();
     document.querySelectorAll("[data-wallet-connect]").forEach(function (btn) {
       if (c.address) {
@@ -183,6 +204,9 @@
   }
 
   async function connectKasware() {
+    if (isPhone()) {
+      throw new Error("KasWare is a desktop extension. It does not exist on iOS or Android.");
+    }
     closeModal();
     let w = window.kasware;
     if (!w) {
@@ -277,6 +301,10 @@
   }
 
   async function clickLogin(btn) {
+    if (isPhone()) {
+      status("KasWare is a desktop extension. Skip Log in on a phone.");
+      return;
+    }
     if (current().address) {
       status(current().name || current().address);
       return;
@@ -298,6 +326,10 @@
   }
 
   async function resume() {
+    if (isPhone()) {
+      paintButtons();
+      return;
+    }
     const quiet = await kaswareAccountsQuiet();
     if (quiet[0]) {
       persist("kasware", quiet[0], current().name);
@@ -309,6 +341,11 @@
   }
 
   function bind() {
+    markPhone();
+    if (isPhone()) {
+      paintButtons();
+      return;
+    }
     if (!document.getElementById("walletModal")) {
       const wrap = document.createElement("div");
       wrap.innerHTML =
@@ -500,7 +537,7 @@
       });
   }
 
-  window.KaspaWallets = { connect: connect, logout: logout, current: current, detected: detected, paintButtons: paintButtons };
+  window.KaspaWallets = { connect: connect, logout: logout, current: current, detected: detected, paintButtons: paintButtons, isPhone: isPhone };
 
   function bindEasy() {
     var main = document.querySelector("main");
