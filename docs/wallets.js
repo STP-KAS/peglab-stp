@@ -27,15 +27,28 @@
   function isPhone() {
     try {
       if (document.documentElement.dataset.phone === "1") return true;
+      if (document.documentElement.dataset.pc === "1") return false;
       var ua = navigator.userAgent || "";
-      if (/Android|iPhone|iPad|iPod/i.test(ua)) return true;
+      var touch = (navigator.maxTouchPoints || 0) > 1 || "ontouchstart" in window;
+      var coarse = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      var mobileHint = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+      if (mobileHint || coarse) return true;
+      if (/Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)) return true;
+      if (/Macintosh|Mac OS X/i.test(ua) && touch) return true;
       if (navigator.platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1) return true;
     } catch (_) {}
     return false;
   }
 
   function markPhone() {
-    if (isPhone()) document.documentElement.dataset.phone = "1";
+    var root = document.documentElement;
+    if (isPhone()) {
+      root.dataset.phone = "1";
+      root.removeAttribute("data-pc");
+    } else {
+      root.dataset.pc = "1";
+      root.removeAttribute("data-phone");
+    }
   }
 
   function detected() {

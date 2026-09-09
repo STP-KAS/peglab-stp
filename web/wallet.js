@@ -16,8 +16,9 @@ function isLocalHost() {
 }
 
 function isPhone() {
-  return document.documentElement.dataset.phone === '1'
-    || (window.KaspaWallets && typeof window.KaspaWallets.isPhone === 'function' && window.KaspaWallets.isPhone());
+  if (document.documentElement.dataset.phone === '1') return true;
+  if (document.documentElement.dataset.pc === '1') return false;
+  return window.KaspaWallets && typeof window.KaspaWallets.isPhone === 'function' && window.KaspaWallets.isPhone();
 }
 
 function isTestnet(address) {
