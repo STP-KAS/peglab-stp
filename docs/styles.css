@@ -209,6 +209,24 @@ html[data-welcome-seen] .welcome { display: none !important; }
 .kachat-pc .quiet-link { padding-left: 0; }
 .kachat.on-pc .kachat-mobile { display: none; }
 .kachat.on-phone .kachat-pc { display: none; }
+.phone-handoff, .series { margin: 0 auto 1.2rem; }
+.phone-handoff h2, .series h2 { margin: 0 0 0.4rem; }
+.phone-qr {
+  margin: 0.85rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.phone-qr img {
+  display: block;
+  width: 148px;
+  height: 148px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: #eef3ea;
+}
+.phone-qr figcaption { color: var(--muted); max-width: 22rem; line-height: 1.45; }
 .masthead { padding: 2.4rem 0 0.4rem; }
 
 .idea { margin-top: 0.4rem; margin-bottom: 1.2rem; }

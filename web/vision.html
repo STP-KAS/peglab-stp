@@ -80,10 +80,10 @@
 <h2>5. Detailed to-do</h2>
 <p>Checkboxes are work, not slogans. “Done when” is the test. Strike nothing that is still a lab.</p>
 <h3>Phase 0 — This lab (PegLab repo)</h3>
-<ul><li class="check">☑ TN10-only engine, WILL DEPEG, no mainnet path</li><li class="check">☑ Depeg demo on local and public pages</li><li class="check">☑ KasWare path + local wallet funded from host (localhost faucet only)</li><li class="check">☑ Public .club via GitHub Pages; local 127.0.0.1:8765 kept</li><li class="check">☑ KaChat section on both copies</li><li class="check">☑ Phone: open KaChat app if installed, else store</li><li class="check">☑ PC: “KaChat does not support PC”</li><li class="check">☑ IDEA, KACHAT, STABLES-GUIDE, this vision</li><li class="check">☑ Footer and nav point at this file on local and public</li><li class="check">☐ HTTPS on the public domain once GitHub has a certificate</li><li class="check">☐ Live TN10 genesis broadcast + journal the series ids (not only the JS engine)</li><li class="check">☐ Desktop QR / “open on your phone” for the public URL</li></ul>
+<ul><li class="check">☑ TN10-only engine, WILL DEPEG, no mainnet path</li><li class="check">☑ Depeg demo on local and public pages</li><li class="check">☑ KasWare path + local wallet funded from host (localhost faucet only)</li><li class="check">☑ Public .club via GitHub Pages; local 127.0.0.1:8765 kept</li><li class="check">☑ KaChat section on both copies</li><li class="check">☑ Phone: open KaChat app if installed, else store</li><li class="check">☑ PC: “KaChat does not support PC”</li><li class="check">☑ IDEA, KACHAT, STABLES-GUIDE, this vision</li><li class="check">☑ Footer and nav point at this file on local and public</li><li class="check">☐ HTTPS on the public domain once GitHub has a certificate</li><li class="check">☑ Live TN10 genesis broadcast + journal the series ids (not only the JS engine)</li><li class="check">☑ Desktop QR / “open on your phone” for the public URL</li></ul>
 <h3>Phase 1 — Honesty and handoff (days, not a raise)</h3>
 <p>Done when a stranger on a PC understands they cannot chat here, and a stranger on a phone can open KaChat without a tutorial.</p>
-<div class="table-wrap"><table><thead><tr><th>Item</th><th>Done when</th></tr></thead><tbody><tr><td>PC copy</td><td>Desktop shows KaChat is mobile-only; no fake “Open” to kachat.org</td></tr><tr><td>Phone deep link</td><td>Installed app opens; missing app → App Store / Play</td></tr><tr><td>QR to phone</td><td>PC visitor can scan into the same public URL</td></tr><tr><td>Store truth</td><td>App Store id and Play package stay in KACHAT.md</td></tr><tr><td>No seed in UI</td><td>Page never asks; mainnet <code>kaspa:</code> refused</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Item</th><th>Done when</th></tr></thead><tbody><tr><td>PC copy</td><td>Desktop shows KaChat is mobile-only; no fake “Open” to kachat.org</td></tr><tr><td>Phone deep link</td><td>Installed app opens; missing app → App Store / Play</td></tr><tr><td>QR to phone</td><td>PC visitor can scan into the same public URL — landing and KaChat pages</td></tr><tr><td>Store truth</td><td>App Store id and Play package stay in KACHAT.md</td></tr><tr><td>No seed in UI</td><td>Page never asks; mainnet <code>kaspa:</code> refused</td></tr></tbody></table></div>
 <h3>Phase 2 — A real Testnet-10 receipt (not a dollar)</h3>
 <p>Done when an explorer and a second wallet agree on one series balance.</p>
 <div class="table-wrap"><table><thead><tr><th>Item</th><th>Done when</th></tr></thead><tbody><tr><td>Genesis on TN10</td><td>Outpoint, template hash, series bytes published</td></tr><tr><td>Transfer + redeem</td><td>Node accepts; not only <code>src/engine.mjs</code></td></tr><tr><td>No USD oracle on this asset</td><td>Receipt = sompi. Admin price stays on the <strong>depeg toy</strong> only</td></tr><tr><td>Indexer</td><td>Address → UNIT UTXOs visible to KaChat’s stack or a documented indexer</td></tr><tr><td>Wallet verify</td><td>Unknown series rejected. Ticker is not funds</td></tr><tr><td>Caps published</td><td>Backing cap, supply cap, dust — same as the lab, named in UI</td></tr></tbody></table></div>
@@ -104,7 +104,8 @@
 <hr>
 <h2>6. Order of work (so we do not skip the human)</h2>
 <pre><code>Lab honesty (done) 
-  → phone open / PC refusal (done)
+  → phone open / PC refusal / desktop QR (done)
+  → live TN10 CONTROL genesis (done; receipt + indexer still next)
   → live TN10 receipt + indexer
   → KaChat signs it on testnet
   → timeout pay in a 1:1 thread

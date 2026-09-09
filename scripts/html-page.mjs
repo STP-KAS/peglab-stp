@@ -197,7 +197,17 @@ export async function renderMdPage(root, spec) {
   const src = await readFile(`${root}/${spec.md}`, 'utf8');
   const extra = spec.html === 'best.html'
     ? '<p class="rung doc-jump"><a class="primary" href="/#best">Run the receipt PoC on the home page</a></p>'
-    : '';
+    : spec.html === 'kachat.html'
+      ? `<section class="phone-handoff card" id="phone-handoff">
+    <p class="eyebrow">Phone</p>
+    <h2>Open PegLab on your phone</h2>
+    <p class="note">KaChat does not support PC. Scan to open the public lab on iOS or Android.</p>
+    <figure class="phone-qr">
+      <img src="media/phone-qr.svg" width="148" height="148" alt="QR code for the public PegLab page">
+      <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
+    </figure>
+  </section>`
+      : '';
   return chrome({
     title: spec.title,
     description: spec.description,

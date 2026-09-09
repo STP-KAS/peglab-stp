@@ -1,0 +1,12 @@
+{
+  "network": "testnet-10",
+  "warning": "TESTNET TOY. NOT USD. WILL DEPEG.",
+  "claim": "SCRIPT_ENFORCED genesis CONTROL lock. Mint and redeem on this page remain ENGINE_SPEC until those txs are accepted.",
+  "seriesId": "5065674c61622d746e31302d7631000000000000000000000000000000000000",
+  "covenantId": "3645afa88bf721625ac49e3e28d6c61381aad6bdfb152bfeaf2b34bd230bedd4",
+  "transactionId": "f8a8315592bf6aa863ebb09476867f82c9b39247723bee83e07956db429f046a",
+  "p2sh": "kaspatest:pzpuxya0drdqr0frtz5za8zfw6v80em9kdl3gq8kfq7n2xjykl6kz37jetrgk",
+  "poolSompi": "200000000",
+  "feeSompi": "268300",
+  "computeMass": 2683
+}

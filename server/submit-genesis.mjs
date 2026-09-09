@@ -18,6 +18,7 @@ import {
   MINING_ADDRESS,
 } from '../src/network.mjs';
 import {DEFAULT_ORACLE, DEFAULT_POOL_TPEG, MAX_FEE, MAX_TPEG} from '../src/engine.mjs';
+import {MIN_RELAY_RATE, nativeMass} from './host-wallet.mjs';
 import {silvercPath} from './peglab.mjs';
 
 const execute = promisify(execFile);
@@ -125,11 +126,12 @@ export async function planGenesis({submit = false} = {}) {
     const own = sdk.payToAddressScript(new sdk.Address(SPONSOR_ADDRESS));
     if (own.script.slice(2, 66) !== SPONSOR_XONLY) throw new Error('Sponsor address does not match pinned x-only key.');
     const estimate = await rpc.getFeeEstimate();
-    const feeRate = Math.max(100, Math.ceil(estimate.estimate.priorityBucket.feerate));
-    let fee = 100_000n;
+    const feeRate = Math.max(MIN_RELAY_RATE, Math.ceil(estimate.estimate.priorityBucket.feerate || MIN_RELAY_RATE));
+    let fee = 1_000n;
     let selected;
     let tx;
-    for (let attempt = 0; attempt < 6; attempt++) {
+    let mass;
+    for (let attempt = 0; attempt < 8; attempt++) {
       if (fee > MAX_GENESIS_FEE) throw new Error('Genesis fee would exceed 0.01 tKAS.');
       selected = selectFunding(entries, own.script, GENESIS_POOL_SOMPI + fee);
       const change = BigInt(selected.amount) - GENESIS_POOL_SOMPI - fee;
@@ -155,15 +157,19 @@ export async function planGenesis({submit = false} = {}) {
       });
       tx.populateGenesisCovenants([{authorizingInput: 0, outputs: [0]}]);
       placeholderSig(sdk, tx, 0);
-      const mass = tx.mass ? tx.mass : null;
-      const minFee = BigInt(Math.ceil(feeRate * 1));
-      if (fee < minFee && minFee <= MAX_GENESIS_FEE) {
-        fee = minFee;
+      mass = nativeMass(tx, {feeRate});
+      const grams = Math.max(mass.computeMass, 2683);
+      const need = BigInt(Math.ceil(grams * feeRate));
+      if (!mass.withinBlockLimits || grams > 500000) throw new Error('Genesis transaction exceeds block mass limits.');
+      if (fee < need) {
+        fee = need;
         continue;
       }
-      void mass;
+      tx.storageMass = BigInt(mass.storageMass);
+      mass = {...mass, computeMass: grams, minimumFee: String(need)};
       break;
     }
+    if (!mass || fee < BigInt(mass.minimumFee)) throw new Error('Could not meet the node fee for genesis.');
     const covenantId = sdk.covenantId(
       tx.inputs[0].previousOutpoint,
       [{index: 0, output: tx.outputs[0]}],
@@ -187,6 +193,7 @@ export async function planGenesis({submit = false} = {}) {
       fundingAmount: selected.amount.toString(),
       covenantId,
       scriptP2SH: sdk.addressFromScriptPublicKey(tx.outputs[0].scriptPublicKey, NETWORK).toString(),
+      computeMass: mass.computeMass,
     };
     if (!submit) return review;
 
@@ -194,19 +201,38 @@ export async function planGenesis({submit = false} = {}) {
     const address = key.toAddress(NETWORK).toString();
     if (address !== SPONSOR_ADDRESS) throw new Error('PEGLAB_SPONSOR_KEY does not match the documented sponsor address.');
     tx.inputs[0].signatureScript = sdk.createInputSignature(tx, 0, key);
+    const checked = nativeMass(tx, {feeRate});
+    const grams = Math.max(checked.computeMass, mass.computeMass);
+    if (fee < BigInt(Math.ceil(grams * feeRate)) || !checked.withinBlockLimits) {
+      throw new Error('Signed genesis payment failed mass verification.');
+    }
+    tx.storageMass = BigInt(checked.storageMass);
     tx.finalize();
     review.transactionId = tx.id;
+    review.computeMass = grams;
+    const result = await rpc.submitTransaction({transaction: tx, allowOrphan: false});
+    if (result.transactionId !== tx.id) throw new Error('Unexpected transaction ID. Do not retry automatically.');
+    review.submitted = true;
     const dir = resolve(ROOT, 'artifacts');
     await mkdir(dir, {recursive: true});
-    const journal = resolve(dir, 'testnet-genesis.json');
-    await writeFile(journal, JSON.stringify({
+    const journal = {
       ...review,
       createdAt: new Date().toISOString(),
       transaction: JSON.parse(tx.serializeToSafeJSON()),
-    }, null, 2));
-    const result = await rpc.submitTransaction({transaction: tx, allowOrphan: false});
-    if (result.transactionId !== tx.id) throw new Error('Unexpected transaction ID. Inspect artifacts/testnet-genesis.json; do not retry automatically.');
-    review.submitted = true;
+    };
+    await writeFile(resolve(dir, 'testnet-genesis.json'), JSON.stringify(journal, null, 2));
+    await writeFile(resolve(ROOT, 'web/series.json'), JSON.stringify({
+      network: NETWORK,
+      warning: 'TESTNET TOY. NOT USD. WILL DEPEG.',
+      claim: 'SCRIPT_ENFORCED genesis CONTROL lock. Mint and redeem on this page remain ENGINE_SPEC until those txs are accepted.',
+      seriesId: SERIES_ID,
+      covenantId,
+      transactionId: tx.id,
+      p2sh: review.scriptP2SH,
+      poolSompi: GENESIS_POOL_SOMPI.toString(),
+      feeSompi: fee.toString(),
+      computeMass: grams,
+    }, null, 2) + '\n');
     return review;
   } finally {
     await rpc.disconnect();
