@@ -20,7 +20,7 @@
     <div class="welcome-card">
       <p class="eyebrow">Take note</p>
       <div class="welcome-stage">
-        <video class="welcome-film is-ready" muted playsinline loop preload="none" controls data-src="media/lunatic-left.mp4" disablepictureinpicture>
+        <video class="welcome-film is-ready" muted playsinline webkit-playsinline loop preload="none" controls data-src="media/lunatic-left.mp4" disablepictureinpicture controlslist="nodownload noplaybackrate">
           Your browser cannot play this film. <a href="media/lunatic-left.mp4">Open the file</a>.
         </video>
       </div>
@@ -325,6 +325,8 @@
       var key = 'peglab-welcome-seen';
       var video = welcome.querySelector('video');
       var filmSrc = (video && (video.getAttribute('data-src') || video.getAttribute('src'))) || 'media/lunatic-left.mp4';
+      var primed = false;
+      var userSound = false;
       function seen() {
         try { return sessionStorage.getItem(key) === '1'; } catch (e) { return false; }
       }
@@ -346,20 +348,19 @@
       function start() {
         if (!video || closed() || seen()) return;
         if (video.getAttribute('src') !== filmSrc) video.src = filmSrc;
-        video.muted = true;
-        video.defaultMuted = true;
         video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
         video.classList.add('is-ready');
-        var play = video.play();
-        if (play && play.catch) play.catch(function () {});
-      }
-      function soundOn() {
-        if (!video || closed()) return;
-        video.muted = false;
-        video.defaultMuted = false;
-        video.volume = 1;
-        var play = video.play();
-        if (play && play.catch) play.catch(function () {});
+        if (!primed && !userSound) {
+          video.muted = true;
+          video.defaultMuted = true;
+        }
+        primed = true;
+        if (video.paused) {
+          var play = video.play();
+          if (play && play.catch) play.catch(function () {});
+        }
       }
       if (seen()) {
         hide();
@@ -370,10 +371,9 @@
       welcome.addEventListener('pointerdown', function (event) {
         if (closed()) return;
         if (event.target.closest('[data-welcome-close]')) return;
-        if (event.target.closest('.welcome-card')) {
-          soundOn();
-          return;
-        }
+        // iOS audio/play controls live on the video. Do not toggle mute here or
+        // the native button unmutes then our handler / click remutes it.
+        if (event.target.closest('video, .welcome-stage, .welcome-film, .welcome-card')) return;
         hide();
       });
       document.addEventListener('keydown', function (event) {
@@ -383,6 +383,13 @@
         if (seen()) hide();
       });
       if (video) {
+        video.addEventListener('volumechange', function () {
+          if (!video.muted) {
+            userSound = true;
+            video.defaultMuted = false;
+            video.removeAttribute('muted');
+          }
+        });
         video.addEventListener('playing', function () { video.classList.add('is-ready'); });
         video.addEventListener('canplay', start);
       }

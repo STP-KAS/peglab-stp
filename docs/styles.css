@@ -53,6 +53,7 @@ html[data-welcome-seen] .welcome { display: none !important; }
   background: #111;
   border: 1px solid var(--rule);
   margin: 0 0 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 .welcome-film {
   display: block;
@@ -60,6 +61,8 @@ html[data-welcome-seen] .welcome { display: none !important; }
   height: 100%;
   object-fit: contain;
   background: #000;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .welcome-copy {
   margin: 16px 0 20px;
