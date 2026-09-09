@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Best of both — PegLab</title>
   <meta name="description" content="Parker’s receipt rules plus PegLab honesty: the real proof of concept.">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=nokw">
   <script>
     try {
       var ua = navigator.userAgent || '';
-      var phone = /Android|iPhone|iPad|iPod/i.test(ua)
+      var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
+      var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      var mobileHint = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+      var phone = mobileHint
+        || coarse
+        || /Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+        || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
-      if (phone) document.documentElement.dataset.phone = '1';
+      var root = document.documentElement;
+      if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
+      else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
   </script>
 </head>
@@ -33,8 +41,8 @@
       <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
       <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
     </div>
-    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
-    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
   </header>
   <p class="rung doc-jump"><a class="primary" href="/#best">Run the receipt PoC on the home page</a></p>
   <article class="doc">
@@ -61,6 +69,6 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
   </footer>
-  <script src="./wallets.js"></script>
+  <script src="./wallets.js?v=nokw"></script>
 </body>
 </html>

@@ -6,16 +6,24 @@
   <title>PegLab — Kaspa unit for dapps, not a bank dollar</title>
   <meta name="description" content="PegLab is a Kaspa-native alternative to centralized stablecoins for dapps. Testnet-10 lab. Not USD. Will depeg if you treat it as a dollar.">
   <meta name="apple-itunes-app" content="app-id=6759102359">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=nokw">
   <script>
     try {
       if (sessionStorage.getItem('peglab-welcome-seen')) {
         document.documentElement.dataset.welcomeSeen = '1';
       }
       var ua = navigator.userAgent || '';
-      var phone = /Android|iPhone|iPad|iPod/i.test(ua)
+      var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
+      var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      var mobileHint = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+      var phone = mobileHint
+        || coarse
+        || /Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+        || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
-      if (phone) document.documentElement.dataset.phone = '1';
+      var root = document.documentElement;
+      if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
+      else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
   </script>
 </head>
@@ -49,8 +57,8 @@
       <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
       <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
     </div>
-    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
-    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
   </header>
   <div class="masthead">
     <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
@@ -295,8 +303,8 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/kachat.html">KaChat</a></p>
   </footer>
-  <script src="./wallets.js"></script>
-  <script type="module" src="./wallet.js"></script>
+  <script src="./wallets.js?v=nokw"></script>
+  <script type="module" src="./wallet.js?v=nokw"></script>
   <script type="module" src="./app.js"></script>
   <script>
     (function () {

@@ -263,15 +263,37 @@ html[data-welcome-seen] .welcome { display: none !important; }
 .host-line code, .host-inline { font-size: 0.78rem; word-break: break-all; }
 .wallet-bar .status { min-height: 1.3rem; color: var(--warn); margin: 0.4rem 0 0.8rem; }
 .wallet-bar .status[data-error="true"] { color: var(--danger); }
+/* KasWare is a desktop extension. Hidden unless this is a confirmed PC. */
+.kasware-only { display: none !important; }
 .phone-only { display: none; }
-html[data-phone] .kasware-only { display: none !important; }
-html[data-phone] .phone-only { display: block; }
-html[data-phone] .how > .phone-only { display: list-item; }
+html[data-phone] .phone-only { display: block !important; }
+html[data-phone] .how > .phone-only { display: list-item !important; }
 html[data-phone] [data-wallet-connect],
 html[data-phone] [data-wallet-logout],
 html[data-phone] [data-balances],
-html[data-phone] [data-who] { display: none !important; }
+html[data-phone] [data-who],
+html[data-phone] #kasware-path,
+html[data-phone] #connect-kasware { display: none !important; }
 html[data-phone] .wallet-paths { grid-template-columns: 1fr; }
+html[data-pc] h2.kasware-only,
+html[data-pc] p.kasware-only,
+html[data-pc] article.kasware-only { display: block !important; }
+html[data-pc] li.kasware-only { display: list-item !important; }
+html[data-pc] .phone-only { display: none !important; }
+html[data-pc] [data-wallet-connect]:not([hidden]),
+html[data-pc] [data-wallet-logout]:not([hidden]) { display: inline-block !important; }
+@media (hover: none) and (pointer: coarse) {
+  .kasware-only,
+  [data-wallet-connect],
+  [data-wallet-logout],
+  [data-balances],
+  [data-who],
+  #kasware-path,
+  #connect-kasware { display: none !important; }
+  .phone-only { display: block !important; }
+  .how > .phone-only { display: list-item !important; }
+  .wallet-paths { grid-template-columns: 1fr; }
+}
 .wallet-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 860px) { .wallet-paths { grid-template-columns: 1fr; } }
 .path {
