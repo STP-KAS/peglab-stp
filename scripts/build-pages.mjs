@@ -37,6 +37,7 @@ await copyFile(resolve(ROOT, 'VISION.md'), resolve(DOCS, 'VISION.md'));
 await copyFile(resolve(ROOT, 'MAINNET.md'), resolve(DOCS, 'MAINNET.md'));
 await copyFile(resolve(ROOT, 'BATTLE.md'), resolve(DOCS, 'BATTLE.md'));
 await copyFile(resolve(ROOT, 'BEST.md'), resolve(DOCS, 'BEST.md'));
+await copyFile(resolve(ROOT, 'DOCTRINE.md'), resolve(DOCS, 'DOCTRINE.md'));
 await writeFile(resolve(DOCS, '.nojekyll'), '');
 await writeFile(resolve(DOCS, 'CNAME'), `${PUBLIC_DOMAIN}\n`);
 console.log(`docs/ ready for https://${PUBLIC_DOMAIN}`);

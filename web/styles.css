@@ -231,6 +231,24 @@ html[data-welcome-seen] .welcome { display: none !important; }
 }
 .phone-qr figcaption { color: var(--muted); max-width: 22rem; line-height: 1.45; }
 .masthead { padding: 2.4rem 0 0.4rem; }
+.objects {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0.6rem auto 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.objects article {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1rem 1.05rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+.objects h2 { margin: 0 0 0.45rem; font-size: 1.15rem; }
+.objects p { color: var(--muted); margin: 0; line-height: 1.45; }
+@media (max-width: 860px) { .objects { grid-template-columns: 1fr; } }
+#classroom { scroll-margin-top: 4.5rem; }
 
 .idea { margin-top: 0.4rem; margin-bottom: 1.2rem; }
 .idea-grid { display: grid; grid-template-columns: 1.15fr 0.95fr; gap: 1.2rem; }

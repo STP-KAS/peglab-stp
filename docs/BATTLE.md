@@ -2,7 +2,7 @@
 
 Parker’s public model is not a dollar printer. It is **[kaspa-explained](https://github.com/parker2017code/kaspa-explained)** (Testnet-10 receipts, wrap lab, Sprout Harbor) plus **[tn12-covenant-vault-demo](https://github.com/parker2017code/tn12-covenant-vault-demo)** (accepted TN12 vault/escrow/assurance proofs).
 
-This file scores **this PegLab checkout** against that model. PegLab is allowed to lose. If a row says Parker wins, do not “fix” it by calling tPEG USD.
+Authority: [DOCTRINE.md](DOCTRINE.md). This file scores **this PegLab checkout** against that model. PegLab is allowed to lose. If a row says Parker wins, do not “fix” it by calling tPEG USD.
 
 **TESTNET TOY. NOT USD. DO NOT RAISE AGAINST tPEG.**
 

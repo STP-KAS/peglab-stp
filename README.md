@@ -1,10 +1,8 @@
 # PegLab
 
-**Dapps need a unit to run on. That unit does not have to be USDT or USDC.**
+**Parker has the unit. PegLab has the warning. KaChat has the pocket. Do not mix them.**
 
-PegLab is a Kaspa-native **alternative for stablecoins** so apps can invoice, escrow, and pay on Kaspa without a bank issuer. tPEG is a covenant claim on locked tKAS, not a US dollar.
-
-This repo is the **Testnet-10 lab**. If you treat tPEG as USD it **will depeg**. That is shown on purpose. Read [IDEA.md](IDEA.md) for the one-page story.
+This repo is the **Testnet-10 classroom**. tPEG + a 2 tKAS pool + one admin oracle **will depeg** if you treat it as USD. The unit you would actually ship is a **KAS receipt** (1 sompi locked = 1 sompi claimed) — Parker’s GitHub already proved that. Ruling: [DOCTRINE.md](DOCTRINE.md). One-page: [IDEA.md](IDEA.md).
 
 **TESTNET-10 · NOT USD · NOT AN ISSUER · NOT A TOKEN SALE**
 
@@ -41,10 +39,9 @@ Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **http://pegla
 
 How to try it:
 
-1. **A** — Connect KasWare on **Testnet 10**, see tKAS.  
-   **B** — No wallet? **Make local wallet + fund from host** (1 tKAS).
-2. Click **Run depeg lab**.
-3. Three prices (admin, pool, redeem) will disagree. That is why this is not a bank stable.
+1. Run **Receipt PoC** (Parker rules, ENGINE_SPEC). Then **Classroom** (depeg lab).
+2. On a **PC**: KasWare on Testnet 10, or **Make local wallet + fund from host** (1 tKAS). On a **phone**: skip KasWare.
+3. Three classroom prices (admin, pool, redeem) will disagree. That is why tPEG is not a bank stable.
 
 The page never asks for a seed. Mainnet `kaspa:` is refused.
 
@@ -81,7 +78,8 @@ src/engine.mjs           Executable economic spec (browser + Node)
 server/peglab.mjs        Fixtures + silverc wrapper
 web/                     Depeg-lab UI
 tests/                   Reject paths, conservation, depeg reproduction
-IDEA.md                  What PegLab is: dapp unit on Kaspa, not a bank dollar
+DOCTRINE.md              Ruling: Parker unit, PegLab classroom, KaChat scene, Circle company
+IDEA.md                  One-page: three objects, never mix
 VISION.md                Finished conversation on a phone: full vision and to-do beyond the chain
 MAINNET.md               What a successor would need to leave the lab; other-chain PoCs and how they were funded
 BATTLE.md                PegLab scored against Parker’s kaspa-explained / TN12 receipt PoC

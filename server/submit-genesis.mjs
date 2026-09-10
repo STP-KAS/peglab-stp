@@ -224,7 +224,7 @@ export async function planGenesis({submit = false} = {}) {
     await writeFile(resolve(ROOT, 'web/series.json'), JSON.stringify({
       network: NETWORK,
       warning: 'TESTNET TOY. NOT USD. WILL DEPEG.',
-      claim: 'SCRIPT_ENFORCED genesis CONTROL lock. Mint and redeem on this page remain ENGINE_SPEC until those txs are accepted.',
+      claim: 'SCRIPT_ENFORCED classroom CONTROL (depeg toy). Not Parker’s receipt. Mint and redeem on this page remain ENGINE_SPEC.',
       seriesId: SERIES_ID,
       covenantId,
       transactionId: tx.id,

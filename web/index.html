@@ -44,11 +44,10 @@
   <header class="nav">
     <a class="brand" href="/" title="Home">PegLab</a>
     <nav>
-      <a href="/best.html">Best of both</a>
-      <a href="/vision.html">Vision</a>
-      <a href="/mainnet.html">Mainnet</a>
-      <a href="/battle.html">Battle</a>
+      <a href="#best">Receipt</a>
+      <a href="#classroom">Classroom</a>
       <a href="/kachat.html">KaChat</a>
+      <a href="/doctrine.html">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -61,11 +60,28 @@
     <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
   </header>
   <div class="masthead">
-    <p class="eyebrow">PegLab · Kaspa Testnet-10</p>
-    <h1>A unit for dapps on Kaspa.<br>Not a bank stablecoin.</h1>
-    <p class="lead">Dapps need something stable enough to invoice, escrow, and pay fees. They should not have to wait on Circle or Tether. PegLab is that alternative <em>idea</em>: a covenant unit sequenced on Kaspa, backed by locked tKAS. This page is the teaching build. If you call tPEG a US dollar, it will depeg. We show that on purpose.</p>
-    <p class="rung"><a class="primary" href="#best">Best of both · receipt PoC</a></p>
+    <p class="eyebrow">PegLab · Kaspa Testnet-10 · doctrine</p>
+    <h1>Three objects.<br>Never mix them.</h1>
+    <p class="lead">Parker’s GitHub already has the <strong>unit</strong> (a KAS receipt: one sompi locked is one sompi claimed). This lab is the <strong>classroom</strong> that a 2 tKAS pool will depeg if you call it a dollar. The <strong>scene</strong> is KaChat on a phone. Circle is a company. PegLab is not a bank, not USDT, and not Parker’s receipt dressed up as tPEG.</p>
+    <p class="rung"><a class="primary" href="#best">Run the receipt PoC</a> <a class="quiet-link" href="/doctrine.html">Read the ruling</a></p>
   </div>
+  <section class="objects" aria-label="Three objects">
+    <article>
+      <p class="eyebrow">1 · Receipt</p>
+      <h2>1 unit = 1 locked sompi</h2>
+      <p>No dollar oracle. Sponsor pays fees. Name is not authenticity. ENGINE_SPEC on this page. Parker has SCRIPT_ENFORCED evidence on TN10.</p>
+    </article>
+    <article>
+      <p class="eyebrow">2 · Classroom</p>
+      <h2>tPEG will depeg</h2>
+      <p>Admin price + tiny pool. Three numbers disagree. That is the lesson. Never list it in KaChat. Never mainnet the pool.</p>
+    </article>
+    <article>
+      <p class="eyebrow">3 · Scene</p>
+      <h2>KaChat is the pocket</h2>
+      <p>Quote, pay, claim or reclaim. Postage is KAS. No PC app. KasWare is desktop-only. A still number for the length of a conversation.</p>
+    </article>
+  </section>
   <section class="phone-handoff card" id="phone-handoff" hidden>
     <p class="eyebrow">Phone</p>
     <h2>Open this page on your phone</h2>
@@ -75,21 +91,16 @@
       <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
     </figure>
   </section>
-  <section class="series card" id="series" hidden>
-    <p class="eyebrow">Live Testnet-10</p>
-    <h2>Genesis on chain</h2>
-    <p class="note" id="series-claim">SCRIPT_ENFORCED CONTROL lock. Not USD.</p>
-    <dl class="wallet-facts" id="series-facts"></dl>
-  </section>
   <section class="best card" id="best">
-    <p class="eyebrow">Best of both</p>
-    <h2>Best of both</h2>
-    <p class="note">Parker’s GitHub PoC: one unit equals one locked sompi, sponsor pays fees, name is not authenticity. PegLab: the tiny pool will depeg, KaChat lives on a phone, do not raise against tPEG. This tab runs the receipt. The other tab keeps the depeg warning.</p>
+    <p class="eyebrow">Receipt · ENGINE_SPEC</p>
+    <h2>Parker’s rules, this lab’s warning</h2>
+    <p class="note">Receipt tab: lock, transfer, redeem, refuse skim. 1:1 sompi. Not USD. Classroom tab: the tiny pool dies as a dollar. Do not mix the two tickers. Next real work is a live TN10 receipt journal, not more tPEG.</p>
     <div class="lab-tabs" role="tablist" aria-label="Proof of concept labs">
       <button type="button" class="on" id="tab-receipt" role="tab" aria-selected="true" data-lab="receipt">Receipt PoC</button>
-      <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Depeg warning</button>
+      <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Classroom</button>
     </div>
-    <p><a class="quiet-link" href="/best.html">Best-practice spec</a> · <a class="quiet-link" href="/battle.html">Battle scorecard</a></p>
+    <span id="classroom"></span>
+    <p><a class="quiet-link" href="/doctrine.html">Doctrine</a> · <a class="quiet-link" href="/best.html">Receipt spec</a> · <a class="quiet-link" href="/battle.html">Battle</a></p>
   </section>
   <section class="board lab-pane" id="lab-receipt">
     <article class="card">
@@ -141,7 +152,7 @@
     </section>
   </div>
   <section class="lab card" id="depeg-walk" hidden>
-    <h2>Depeg lab</h2>
+    <h2>Classroom · depeg lab</h2>
     <p class="note">Five scripted steps. A tiny pool and an admin price cannot hold $1. That is the warning for any dapp that wants a “Kaspa stable” without reserves. Target, pool, and redeem will disagree.</p>
     <div class="controls">
       <button id="demo" class="primary">Run depeg lab</button>
@@ -153,25 +164,25 @@
       <article>
         <p class="eyebrow">The idea</p>
         <h2>Skip centralized stables for dapps.</h2>
-        <p>USDT/USDC are cash in a company. Fine for a listed dollar. Bad as the only way a Kaspa app can run. PegLab explores a Kaspa-native unit: lock tKAS, issue tPEG, redeem under a spend rule. The dapp talks to Kaspa, not to an issuer.</p>
-        <p>This lab is cheap on purpose (tiny pool, one admin price). That is why a dollar peg fails here. The takeaway is not “ship this as money.” It is “dapps can settle on Kaspa rules; a fake $1 is not the product.”</p>
+        <p>USDT/USDC are cash in a company. Fine for a listed dollar. Bad as the only way a Kaspa app can run. The Kaspa-native unit is a <strong>receipt</strong>: lock sompi, transfer the claim, redeem the same sompi. Parker already wrote that contract. This lab teaches why a fake $1 is not that unit.</p>
+        <p>The classroom is cheap on purpose (tiny pool, one admin price). That is why a dollar peg fails here. Ship Kaspa settlement or host a real USD. Do not ship this pool.</p>
       </article>
       <article>
         <p class="eyebrow">How to try it</p>
         <ol class="how">
           <li>Stay on this page. Testnet-10 only. No seed goes in the box.</li>
-          <li class="kasware-only"><strong>A</strong> — Connect <strong>KasWare</strong>, switch it to Testnet 10, see your tKAS balance.<br><strong>B</strong> — No wallet? <strong>Make local wallet + fund from host</strong> (1 tKAS from the host address).</li>
+          <li>Run the <strong>receipt</strong> tab, then the <strong>classroom</strong> tab. They are different objects.</li>
+          <li class="kasware-only"><strong>PC</strong> — Connect <strong>KasWare</strong> on Testnet 10, or <strong>make a local wallet + fund from host</strong> (1 tKAS).</li>
           <li class="phone-only">KasWare is a desktop extension. It does not exist on iOS or Android. Run the receipt PoC here; settlement on a phone is <a href="/kachat.html">KaChat</a>. Host tKAS fill is localhost on a PC.</li>
-          <li>Open <strong>Best of both</strong> at the top. Run the receipt PoC. The depeg tab is the warning.</li>
-          <li>Read three numbers: admin price, pool price, redeem price. They will not match. That is why this is not USDT.</li>
+          <li>In the classroom, three numbers (admin, pool, redeem) disagree. That is why tPEG is not USDT.</li>
         </ol>
       </article>
     </div>
     <dl class="is-isnot">
-      <div><dt>Is</dt><dd>A Testnet-10 lab for dapp settlement on Kaspa</dd></div>
-      <div><dt>Is not</dt><dd>USD, USDT, USDC, a bank, or a token sale</dd></div>
-      <div><dt>tPEG</dt><dd>A claim on locked tKAS, not a dollar</dd></div>
-      <div><dt>Next</dt><dd>A finished conversation on a phone — <a href="/vision.html">Vision</a>. Not a dollar.</dd></div>
+      <div><dt>Is</dt><dd>A Testnet-10 classroom that a cheap pool is not a dollar</dd></div>
+      <div><dt>Is not</dt><dd>USD, USDT, USDC, a bank, Parker’s live receipt, or a token sale</dd></div>
+      <div><dt>tPEG</dt><dd>The depeg toy. Not KaChat money. Not the receipt.</dd></div>
+      <div><dt>Next</dt><dd>Live TN10 receipt txids, then KaChat signs — <a href="/doctrine.html">Doctrine</a></dd></div>
     </dl>
   </section>
   <section class="wallet-bar" id="wallet-bar">
@@ -227,7 +238,7 @@
     <section class="kachat card" id="kachat">
       <p class="eyebrow">First dapp · KaChat</p>
       <h2>How KaChat would use this unit</h2>
-      <p class="note">KaChat is already encrypted chat plus native KAS pay. PegLab is the unit so a price in a thread is not an FX trade. This lab is not money inside KaChat 4.x.</p>
+      <p class="note">KaChat is encrypted chat plus native KAS pay. The unit in the pay button must be a <strong>receipt</strong> (sompi) or a <strong>named USD</strong> later. Lab tPEG is not money inside KaChat 4.x. wTestUSD cannot buy crops; tPEG cannot pay KaChat.</p>
       <div class="idea-grid">
         <article>
           <h3>In the chat</h3>
@@ -267,41 +278,27 @@
         <p class="note">This button opens the KaChat app if it is installed. Otherwise it goes to the App Store or Google Play.</p>
       </div>
     </section>
+    <section class="series card" id="series" hidden>
+      <p class="eyebrow">Depeg toy · SCRIPT_ENFORCED CONTROL</p>
+      <h2>Toy genesis is on chain. The receipt is not.</h2>
+      <p class="note" id="series-claim">This lock is the classroom covenant, not Parker’s receipt series. Mint and redeem on this page remain ENGINE_SPEC. Not USD.</p>
+      <dl class="wallet-facts" id="series-facts"></dl>
+    </section>
     <section class="vision card" id="vision">
-      <p class="eyebrow">Beyond the chain</p>
-      <h2>The job is a finished conversation</h2>
-      <p class="note">The covenant is the court file. People live in a thread on a phone. KaChat does not support PC. tPEG is not a US dollar. The product is: agree a number, pay it, claim or reclaim — without an FX trade and without sending anyone to Circle to finish a Kaspa chat.</p>
-      <div class="idea-grid">
-        <article>
-          <h3>What “done” looks like</h3>
-          <ol class="how">
-            <li>Two people already talking in KaChat on their phones.</li>
-            <li>A quote that stays still for the timeout — not a KAS price that moved while they argued.</li>
-            <li>Pay, claim, or reclaim. Postage is KAS in the background (sponsor or grams).</li>
-            <li>If the unit is a KAS receipt, the UI says sompi, not <code>$</code>. A named USD later is a different asset with a named issuer.</li>
-          </ol>
-        </article>
-        <article>
-          <h3>To-do, in order</h3>
-          <ol class="how">
-            <li>Keep this lab honest (depeg demo, no raise against tPEG). Phone opens KaChat; PC is told it cannot.</li>
-            <li>Live Testnet-10 <strong>receipt</strong> + indexer. Wallets verify series hashes, not the word tPEG.</li>
-            <li>KaChat signs that receipt on testnet. Timeout pay in a 1:1 thread. Zero-KAS receivers still work.</li>
-            <li>Then groups, tips, stakes, agents, merchant QR. Mainnet only as a receipt after review. Hosted USD only if an issuer exists.</li>
-          </ol>
-        </article>
-      </div>
+      <p class="eyebrow">Doctrine</p>
+      <h2>Parker has the unit. PegLab has the warning. KaChat has the pocket.</h2>
+      <p class="note">Redemption is the product. A 2 tKAS pool is not a peg. Circle is a company. Terra is forbidden. Next empty box: live TN10 receipt txids, then KaChat signs them. Do not skip to a dollar glyph.</p>
       <div class="controls">
-        <a class="primary" href="/vision.html">Full vision and checklist</a>
-        <a class="quiet-link" href="/battle.html">Vs Parker’s PoC</a>
-        <a class="quiet-link" href="/mainnet.html">What mainnet would take</a>
-        <a class="quiet-link" href="/STABLES-GUIDE.md">Capital ladder</a>
+        <a class="primary" href="/doctrine.html">Full ruling</a>
+        <a class="quiet-link" href="/battle.html">Battle</a>
+        <a class="quiet-link" href="/mainnet.html">Mainnet</a>
+        <a class="quiet-link" href="/STABLES-GUIDE.md">Capital</a>
       </div>
     </section>
   </main>
   <footer>
-    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/kachat.html">KaChat</a></p>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Classroom redeem is tKAS at an admin price, not dollars. Receipt redeem is locked sompi. Pause is a brake, not a peg.</p>
+    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a></p>
   </footer>
   <script src="./wallets.js?v=nokw"></script>
   <script type="module" src="./wallet.js?v=nokw"></script>
@@ -319,7 +316,8 @@
         if (!data || !data.transactionId) return;
         if (claim && data.claim) claim.textContent = data.claim;
         var rows = [
-          ['Claim', 'SCRIPT_ENFORCED genesis · ENGINE_SPEC mint/redeem'],
+          ['Object', 'Classroom CONTROL — not the receipt'],
+          ['Claim', 'SCRIPT_ENFORCED toy lock · ENGINE_SPEC mint/redeem'],
           ['Series', data.seriesId],
           ['Covenant', data.covenantId],
           ['Txid', data.transactionId],

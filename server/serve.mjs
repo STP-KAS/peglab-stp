@@ -89,6 +89,8 @@ const PAGE_ALIAS = {
   '/best': '/best.html',
   '/KACHAT.md': '/kachat.html',
   '/kachat': '/kachat.html',
+  '/DOCTRINE.md': '/doctrine.html',
+  '/doctrine': '/doctrine.html',
 };
 
 async function load(rel) {
