@@ -28,11 +28,10 @@
   <header class="nav">
     <a class="brand" href="/" title="Home">PegLab</a>
     <nav>
-      <a href="/best.html">Best of both</a>
-      <a href="/vision.html">Vision</a>
-      <a href="/mainnet.html">Mainnet</a>
-      <a href="/battle.html">Battle</a>
+      <a href="/#best">Receipt</a>
+      <a href="/#classroom">Classroom</a>
       <a href="/kachat.html" class="on">KaChat</a>
+      <a href="/doctrine.html">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -56,8 +55,8 @@
   <article class="doc">
 <h1>How KaChat could use PegLab — and what “real” means</h1>
 <p>KaChat (<a href="https://www.kachat.org/">kachat.org</a>, <a href="https://github.com/vsmirn0v/KaChat">vsmirn0v/KaChat</a>) is encrypted chat <strong>plus native KAS payments</strong> on Kaspa (<code>kchat:1:pay</code> memos, timeout reclaim). It already runs. What it does not have is a unit that stays still while two people argue over a price in a thread.</p>
-<p>PegLab’s idea is that unit: a Kaspa-native alternative to USDT/USDC so a dapp can invoice, escrow, and tip <strong>on Kaspa</strong>, not on Circle.</p>
-<p><strong>PegLab today cannot sit in KaChat as money.</strong> This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. KaChat should not ship that.</p>
+<p>The unit is a <strong>KAS receipt</strong> (Parker) or a <strong>named USD</strong> later. Lab tPEG is not that unit.</p>
+<p><strong>PegLab today cannot sit in KaChat as money.</strong> This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. <strong>tPEG cannot pay KaChat</strong> — same rule as Parker’s wTestUSD cannot buy crops. Authority: <a href="/doctrine.html">DOCTRINE.md</a>.</p>
 <hr>
 <h2>What KaChat is today</h2>
 <div class="table-wrap"><table><thead><tr><th>Piece</th><th>Today</th></tr></thead><tbody><tr><td>Chat</td><td>E2E payloads on L1 (<code>kchat:1:comm</code>, groups, KaPosts)</td></tr><tr><td>Pay</td><td>Native <strong>KAS</strong> to a recipient, optional encrypted memo</td></tr><tr><td>Timeout pay</td><td>Sketch already exists: <code>KaChatPayTimeout.sil</code> — recipient claims now, sender reclaims after <code>tx.time</code></td></tr><tr><td>Identity</td><td>KNS names; aliases are not consensus uniqueness</td></tr><tr><td>Fees</td><td>Every message and pay still burns <strong>KAS mass</strong></td></tr><tr><td>FX</td><td>Portfolio uses CoinGecko; the payment itself is still sompi</td></tr></tbody></table></div>
@@ -115,7 +114,7 @@
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="/">Home</a> · <a href="/best.html">Best of both</a> · <a href="/vision.html">Vision</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/battle.html">Battle</a> · <a href="/kachat.html">KaChat</a></p>
+    <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
   </footer>
   <script src="./wallets.js?v=nokw"></script>
 </body>

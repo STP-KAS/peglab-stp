@@ -2,9 +2,9 @@
 
 KaChat ([kachat.org](https://www.kachat.org/), [vsmirn0v/KaChat](https://github.com/vsmirn0v/KaChat)) is encrypted chat **plus native KAS payments** on Kaspa (`kchat:1:pay` memos, timeout reclaim). It already runs. What it does not have is a unit that stays still while two people argue over a price in a thread.
 
-PegLab’s idea is that unit: a Kaspa-native alternative to USDT/USDC so a dapp can invoice, escrow, and tip **on Kaspa**, not on Circle.
+The unit is a **KAS receipt** (Parker) or a **named USD** later. Lab tPEG is not that unit.
 
-**PegLab today cannot sit in KaChat as money.** This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. KaChat should not ship that.
+**PegLab today cannot sit in KaChat as money.** This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. **tPEG cannot pay KaChat** — same rule as Parker’s wTestUSD cannot buy crops. Authority: [DOCTRINE.md](DOCTRINE.md).
 
 ---
 

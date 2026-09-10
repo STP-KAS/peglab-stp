@@ -175,5 +175,11 @@ function showLab(name) {
 $('tab-receipt').onclick = () => showLab('receipt');
 $('tab-depeg').onclick = () => showLab('depeg');
 
+function applyHash() {
+  if (location.hash === '#classroom') showLab('depeg');
+  else if (location.hash === '#best' || location.hash === '') showLab('receipt');
+}
+
 renderReceipt();
-showLab('receipt');
+applyHash();
+window.addEventListener('hashchange', applyHash);

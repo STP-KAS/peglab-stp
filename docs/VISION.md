@@ -1,6 +1,6 @@
 # Vision: a finished conversation, not a coin
 
-PegLab is not a dollar. KaChat is not a PC app. Kaspa is not a bank.
+Authority: [DOCTRINE.md](DOCTRINE.md). PegLab is not a dollar. KaChat is not a PC app. Kaspa is not a bank.
 
 The job is still real: **two people agree on a number, then one of them gets paid, without the number turning into an FX trade, and without sending anyone to Circle to finish a Kaspa chat.**
 

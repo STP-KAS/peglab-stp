@@ -1,6 +1,6 @@
 # Best of both: the real proof of concept
 
-Parker’s GitHub PoC already has the **unit**. PegLab already has the **warning** and the **product scene**. This tab is both, as one receipt lab.
+Authority: [DOCTRINE.md](DOCTRINE.md). Parker’s GitHub PoC already has the **unit**. PegLab already has the **warning** and the **product scene**. This tab is both, as one receipt lab.
 
 **Not USD. Not tPEG. Do not raise against this either — fund grants for the live TN10 series.**
 

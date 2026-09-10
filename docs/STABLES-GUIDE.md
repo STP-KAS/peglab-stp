@@ -1,5 +1,7 @@
 # PegLab is not the Kaspa dollar. Here is the alternative.
 
+Authority: [DOCTRINE.md](DOCTRINE.md).
+
 **TESTNET TOY. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.**
 
 This is the plan for a Kaspa stable *other than* PegLab. PegLab stays the $50k–$300k teaching rung: code, audit-lite, tiny pool, **will depeg**. Using it as a fundraising story for a payment stable is how people get hurt.

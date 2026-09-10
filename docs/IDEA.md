@@ -1,40 +1,32 @@
 # What PegLab is
 
-**Dapps need a unit to run on. That unit does not have to be USDT or USDC.**
+**PegLab is not the Kaspa unit. It is the public classroom that a cheap pool is not a dollar.**
 
-PegLab is a Kaspa-native alternative for that job: a covenant unit (tPEG) sequenced on Kaspa, backed by locked tKAS, with rules in the spend — not a bank, not Circle, not Tether.
+The unit you would actually ship is a **KAS receipt**: one claim sompi per locked sompi, no oracle, sponsor pays fees. Parker’s GitHub already proved that object. This page runs an ENGINE_SPEC of those rules next to the depeg warning.
 
-This checkout is **Testnet-10 only**. If you treat tPEG as a US dollar it **will depeg**. The lab shows that on purpose. A cheap pool and an admin price are not a dollar. Dapps should still run on Kaspa rules (lock, redeem, escrow, fees) instead of waiting for a centralized stable to exist.
+The conversation happens in **KaChat on a phone**. KasWare is a desktop extension. KaChat does not support PC. tPEG cannot pay KaChat. A licensed USD later is a named issuer. PegLab is not that issuer.
 
-## One paragraph
+**TESTNET-10 · NOT USD · NOT AN ISSUER · NOT A TOKEN SALE · WILL DEPEG IF YOU TREAT tPEG AS A DOLLAR**
 
-Stablecoins on other chains are mostly cash in a company. Kaspa dapps (invoices, escrow, agents, games) need a predictable unit *on this network*. PegLab is the teaching object for that alternative: same shape as a “stable,” honest about failure, so the next build can be a receipt or a hosted real USD — not a fake peg.
+## Three objects. Never mix.
 
-## What it is / is not
-
-| Is | Is not |
+| Object | Honest sentence |
 | --- | --- |
-| A Testnet-10 lab for dapp money on Kaspa | A US dollar |
-| tPEG = claim on locked tKAS | USDT / USDC / an issuer license |
-| Public depeg: tiny pool cannot defend $1 | A token sale |
-| Wallet: your KasWare **or** a local wallet paid from the host | Mainnet |
+| **Receipt** | 1 unit = 1 locked sompi. Not USD. ENGINE_SPEC here; Parker has SCRIPT_ENFORCED evidence. |
+| **Classroom** | tPEG + admin oracle + 2 tKAS pool. Shows the depeg on purpose. Never money. |
+| **Scene** | Quote → pay → claim or reclaim in KaChat. Postage is KAS. |
+
+Doctrine (the ruling): [DOCTRINE.md](DOCTRINE.md). Battle score: [BATTLE.md](BATTLE.md). Receipt spec: [BEST.md](BEST.md).
 
 ## How to try it
 
-1. Open http://127.0.0.1:8765/ (from this repo: `npm run serve`).
-2. **A** — Connect KasWare, switch it to **Testnet 10**, see your tKAS.  
-   **B** — If you have no wallet, **Make local wallet + fund from host** (1 tKAS from `kaspatest:qzpvdaka…`).
-3. Click **Run depeg lab**.
-4. Read three numbers: admin price, pool price, redeem price. They disagree. That is the lesson for dapps: do not ship a toy dollar; ship Kaspa-native settlement or host a real USD.
+1. Open http://127.0.0.1:8765/ or the public .club page. No seed in the box. Mainnet `kaspa:` refused.
+2. Run **Receipt PoC**. Lock, transfer, redeem, refuse skim. Claims stay 1:1 with backing.
+3. Open **Classroom**. Admin, pool, and redeem disagree. That is why this is not USDT.
+4. On a **PC**, KasWare or a localhost host-funded wallet. On a **phone**, skip KasWare; settlement is KaChat.
 
-Never paste a seed into the page. Mainnet `kaspa:` addresses are refused.
+## Next
 
-## Next, if you want a real dapp unit
+Do not mainnet this pool. Next real work is live TN10 **receipt** lock/transfer/redeem with a txid journal, then KaChat signs it.
 
-See [STABLES-GUIDE.md](STABLES-GUIDE.md). Short version: do not raise money against tPEG. Host a named USD when it exists, or ship KAS receipts that never claim $1.
-
-KaChat (chat + native KAS pay) is the first dapp that would feel this. How it would use PegLab, and the work to make that real: [KACHAT.md](KACHAT.md).
-
-The product is a finished conversation on a phone, not a coin page. Full vision and the detailed to-do (people, postage, law, ops, agents — not only the covenant): [VISION.md](VISION.md).
-
-This lab does not go to mainnet as money. What a successor would copy from other chains, how those projects were funded, and the checklist: [MAINNET.md](MAINNET.md).
+Do not raise money against tPEG. Grants for the receipt. Equity only if you are a licensed issuer.
