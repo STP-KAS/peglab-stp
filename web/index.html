@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PegLab — Kaspa unit for dapps, not a bank dollar</title>
-  <meta name="description" content="PegLab is a Kaspa-native alternative to centralized stablecoins for dapps. Testnet-10 lab. Not USD. Will depeg if you treat it as a dollar.">
+  <title>PegLab — classroom, not a dollar. Parker has the unit.</title>
+  <meta name="description" content="Testnet-10 classroom: a 2 tKAS pool will depeg. The unit is a KAS receipt (1 sompi locked = 1 sompi claimed). Not USD. Not a token sale.">
   <meta name="apple-itunes-app" content="app-id=6759102359">
-  <link rel="stylesheet" href="./styles.css?v=nokw">
+  <link rel="stylesheet" href="./styles.css?v=auth">
   <script>
     try {
       if (sessionStorage.getItem('peglab-welcome-seen')) {
         document.documentElement.dataset.welcomeSeen = '1';
       }
+      var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
       var ua = navigator.userAgent || '';
       var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
       var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -21,7 +24,6 @@
         || /Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)
         || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
-      var root = document.documentElement;
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -66,21 +68,21 @@
     <p class="rung"><a class="primary" href="#best">Run the receipt PoC</a> <a class="quiet-link" href="/doctrine.html">Read the ruling</a></p>
   </div>
   <section class="objects" aria-label="Three objects">
-    <article>
+    <a class="object" href="#best">
       <p class="eyebrow">1 · Receipt</p>
       <h2>1 unit = 1 locked sompi</h2>
       <p>No dollar oracle. Sponsor pays fees. Name is not authenticity. ENGINE_SPEC on this page. Parker has SCRIPT_ENFORCED evidence on TN10.</p>
-    </article>
-    <article>
+    </a>
+    <a class="object" href="#classroom">
       <p class="eyebrow">2 · Classroom</p>
       <h2>tPEG will depeg</h2>
       <p>Admin price + tiny pool. Three numbers disagree. That is the lesson. Never list it in KaChat. Never mainnet the pool.</p>
-    </article>
-    <article>
+    </a>
+    <a class="object" href="#kachat">
       <p class="eyebrow">3 · Scene</p>
       <h2>KaChat is the pocket</h2>
       <p>Quote, pay, claim or reclaim. Postage is KAS. No PC app. KasWare is desktop-only. A still number for the length of a conversation.</p>
-    </article>
+    </a>
   </section>
   <section class="phone-handoff card" id="phone-handoff" hidden>
     <p class="eyebrow">Phone</p>
@@ -128,6 +130,7 @@
       <button id="r-demo" class="primary" type="button">Run receipt PoC</button>
     </div>
     <div class="steps" id="r-steps"></div>
+    <p class="note" id="r-journal-line">ENGINE_SPEC journal. Not SCRIPT_ENFORCED. No txid yet.</p>
   </section>
   <div id="lab-depeg" hidden>
     <section class="board">
@@ -160,24 +163,6 @@
     <div class="steps" id="steps"></div>
   </section>
   <section class="idea" id="what">
-    <div class="idea-grid">
-      <article>
-        <p class="eyebrow">The idea</p>
-        <h2>Skip centralized stables for dapps.</h2>
-        <p>USDT/USDC are cash in a company. Fine for a listed dollar. Bad as the only way a Kaspa app can run. The Kaspa-native unit is a <strong>receipt</strong>: lock sompi, transfer the claim, redeem the same sompi. Parker already wrote that contract. This lab teaches why a fake $1 is not that unit.</p>
-        <p>The classroom is cheap on purpose (tiny pool, one admin price). That is why a dollar peg fails here. Ship Kaspa settlement or host a real USD. Do not ship this pool.</p>
-      </article>
-      <article>
-        <p class="eyebrow">How to try it</p>
-        <ol class="how">
-          <li>Stay on this page. Testnet-10 only. No seed goes in the box.</li>
-          <li>Run the <strong>receipt</strong> tab, then the <strong>classroom</strong> tab. They are different objects.</li>
-          <li class="kasware-only"><strong>PC</strong> — Connect <strong>KasWare</strong> on Testnet 10, or <strong>make a local wallet + fund from host</strong> (1 tKAS).</li>
-          <li class="phone-only">KasWare is a desktop extension. It does not exist on iOS or Android. Run the receipt PoC here; settlement on a phone is <a href="/kachat.html">KaChat</a>. Host tKAS fill is localhost on a PC.</li>
-          <li>In the classroom, three numbers (admin, pool, redeem) disagree. That is why tPEG is not USDT.</li>
-        </ol>
-      </article>
-    </div>
     <dl class="is-isnot">
       <div><dt>Is</dt><dd>A Testnet-10 classroom that a cheap pool is not a dollar</dd></div>
       <div><dt>Is not</dt><dd>USD, USDT, USDC, a bank, Parker’s live receipt, or a token sale</dd></div>
@@ -213,7 +198,7 @@
           <button type="button" id="fund-kasware" hidden>Send 1 host tKAS to this KasWare</button>
         </div>
       </article>
-      <article class="path">
+      <article class="path local-only">
         <p class="path-kicker">B · I don’t have a tKAS wallet</p>
         <h3>Make one here, paid from the host</h3>
         <p>Creates a local Testnet-10 wallet in this tab and sends <strong>1 tKAS</strong> from <code class="host-inline"></code>.</p>
@@ -237,7 +222,7 @@
   <main>
     <section class="kachat card" id="kachat">
       <p class="eyebrow">First dapp · KaChat</p>
-      <h2>How KaChat would use this unit</h2>
+      <h2>How KaChat would use a receipt</h2>
       <p class="note">KaChat is encrypted chat plus native KAS pay. The unit in the pay button must be a <strong>receipt</strong> (sompi) or a <strong>named USD</strong> later. Lab tPEG is not money inside KaChat 4.x. wTestUSD cannot buy crops; tPEG cannot pay KaChat.</p>
       <div class="idea-grid">
         <article>
@@ -300,9 +285,9 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Classroom redeem is tKAS at an admin price, not dollars. Receipt redeem is locked sompi. Pause is a brake, not a peg.</p>
     <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a></p>
   </footer>
-  <script src="./wallets.js?v=nokw"></script>
-  <script type="module" src="./wallet.js?v=nokw"></script>
-  <script type="module" src="./app.js"></script>
+  <script src="./wallets.js?v=auth"></script>
+  <script type="module" src="./wallet.js?v=auth"></script>
+  <script type="module" src="./app.js?v=auth"></script>
   <script>
     (function () {
       var box = document.getElementById('series');

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Receipt — PegLab</title>
   <meta name="description" content="Parker’s receipt rules plus PegLab honesty: the real proof of concept.">
-  <link rel="stylesheet" href="./styles.css?v=nokw">
+  <link rel="stylesheet" href="./styles.css?v=auth">
   <script>
     try {
       var ua = navigator.userAgent || '';
@@ -18,6 +18,8 @@
         || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -61,13 +63,13 @@
 <ol><li><strong>Lock</strong> 0.5 tKAS → Alice holds 50_000_000 sompi of claim. Backing = claim.</li><li><strong>Transfer</strong> to Bob. Totals unchanged.</li><li><strong>Redeem</strong> 0.2 tKAS. Bob gets sompi. Sponsor pays 263_800 sompi (native 1-in 2-out floor).</li><li><strong>Skim</strong> refused (<code>SKIM</code>).</li><li><strong>Redeem the rest.</strong> Series empty. 1:1 the whole way.</li></ol>
 <p>That is Parker’s wrap-lab native tab, taught on PegLab’s page, with PegLab’s “not a dollar” banner.</p>
 <h2>Still missing (so it is a PoC, not production)</h2>
-<ul><li class="check">☐ Broadcast lock / transfer / redeem on Testnet-10; journal txids like Parker’s wrap record</li><li class="check">☐ Indexer row per address</li><li class="check">☐ KaChat signs the covenant (not only KasWare on the web)</li><li class="check">☐ Timeout pay using Parker’s TN12 escrow/vault shape</li><li class="check">☐ External review of the SilverScript, not only this JS spec</li></ul>
+<ul><li class="check">☑ ENGINE_SPEC journal (<code>artifacts/receipt-engine-spec.json</code>) — lock/transfer/redeem/SKIM, series empty 1:1. Not a txid.</li><li class="check">☐ Broadcast lock / transfer / redeem on Testnet-10; journal txids like Parker’s wrap record</li><li class="check">☐ Indexer row per address</li><li class="check">☐ KaChat signs the covenant (not only KasWare on the web)</li><li class="check">☐ Timeout pay using Parker’s TN12 escrow/vault shape</li><li class="check">☐ External review of the SilverScript, not only this JS spec</li></ul>
 <p>Until those boxes tick, this tab is <strong>ENGINE_SPEC</strong>. It is not <code>SCRIPT_ENFORCED</code> on mainnet.</p>
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
   </footer>
-  <script src="./wallets.js?v=nokw"></script>
+  <script src="./wallets.js?v=auth"></script>
 </body>
 </html>

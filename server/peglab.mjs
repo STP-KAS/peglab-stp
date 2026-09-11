@@ -5,6 +5,7 @@ import {promisify} from 'node:util';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {depegDemo, inspect, genesis} from '../src/engine.mjs';
+import {receiptDemo, inspect as inspectReceipt} from '../src/receipt.mjs';
 
 const execute = promisify(execFile);
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -47,7 +48,35 @@ export async function generateFixtures(destination = resolve(ROOT, 'artifacts/de
   };
   await mkdir(dirname(destination), {recursive: true});
   await writeFile(destination, JSON.stringify(body, null, 2));
-  return {path: destination, steps: demo.steps.length};
+  const receipt = await generateReceiptJournal();
+  return {path: destination, steps: demo.steps.length, receipt};
+}
+
+export async function generateReceiptJournal(destination = resolve(ROOT, 'artifacts/receipt-engine-spec.json')) {
+  const demo = receiptDemo();
+  const snap = inspectReceipt(demo.state);
+  const body = {
+    claim: 'ENGINE_SPEC',
+    network: 'testnet-10',
+    warning: 'RECEIPT. ONE UNIT = ONE LOCKED SOMPI. NOT USD. NOT tPEG. NOT SCRIPT_ENFORCED.',
+    seriesName: snap.seriesName,
+    backedOneToOne: snap.backedOneToOne,
+    lockedSompi: snap.lockedSompi.toString(),
+    circulating: snap.circulating.toString(),
+    sponsorFeesPaid: snap.sponsorFeesPaid.toString(),
+    skim: demo.skim,
+    steps: demo.steps.map((s) => ({
+      title: s.title,
+      lesson: s.lesson,
+      lockedSompi: s.lockedSompi.toString(),
+      circulating: s.circulating.toString(),
+      backedOneToOne: s.backedOneToOne,
+      skim: s.skim || null,
+    })),
+  };
+  await mkdir(dirname(destination), {recursive: true});
+  await writeFile(destination, JSON.stringify(body, null, 2) + '\n');
+  return {path: destination, steps: body.steps.length, claim: body.claim, skim: body.skim};
 }
 
 const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);

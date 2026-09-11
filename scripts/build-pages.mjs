@@ -17,6 +17,12 @@ try {
 } catch {
   // Live genesis journal is optional until npm run genesis:submit succeeds.
 }
+try {
+  await copyFile(resolve(ROOT, 'artifacts/receipt-engine-spec.json'), resolve(WEB, 'receipt-journal.json'));
+  await copyFile(resolve(WEB, 'receipt-journal.json'), resolve(DOCS, 'receipt-journal.json'));
+} catch {
+  // Written by npm run fixtures.
+}
 for (const spec of PAGES) {
   const html = await renderMdPage(ROOT, spec);
   await writeFile(resolve(WEB, spec.html), html);
@@ -40,4 +46,4 @@ await copyFile(resolve(ROOT, 'BEST.md'), resolve(DOCS, 'BEST.md'));
 await copyFile(resolve(ROOT, 'DOCTRINE.md'), resolve(DOCS, 'DOCTRINE.md'));
 await writeFile(resolve(DOCS, '.nojekyll'), '');
 await writeFile(resolve(DOCS, 'CNAME'), `${PUBLIC_DOMAIN}\n`);
-console.log(`docs/ ready for https://${PUBLIC_DOMAIN}`);
+console.log(`docs/ ready for http://${PUBLIC_DOMAIN}`);

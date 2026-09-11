@@ -172,14 +172,28 @@ function showLab(name) {
   $('tab-depeg').setAttribute('aria-selected', String(!receiptOn));
 }
 
-$('tab-receipt').onclick = () => showLab('receipt');
-$('tab-depeg').onclick = () => showLab('depeg');
+$('tab-receipt').onclick = () => {
+  showLab('receipt');
+  if (location.hash !== '#best') history.replaceState(null, '', '#best');
+};
+$('tab-depeg').onclick = () => {
+  showLab('depeg');
+  if (location.hash !== '#classroom') history.replaceState(null, '', '#classroom');
+};
 
 function applyHash() {
   if (location.hash === '#classroom') showLab('depeg');
-  else if (location.hash === '#best' || location.hash === '') showLab('receipt');
+  else showLab('receipt');
 }
 
 renderReceipt();
 applyHash();
 window.addEventListener('hashchange', applyHash);
+if ($('r-demo') && !$('r-steps').innerHTML) $('r-demo').click();
+fetch('./receipt-journal.json', {cache: 'no-store'}).then(function (res) {
+  return res.ok ? res.json() : null;
+}).then(function (data) {
+  const line = $('r-journal-line');
+  if (!line || !data || data.claim !== 'ENGINE_SPEC') return;
+  line.textContent = `ENGINE_SPEC journal · ${data.steps.length} steps · SKIM ${data.skim} · series empty 1:1. Not SCRIPT_ENFORCED. No txid.`;
+}).catch(function () {});

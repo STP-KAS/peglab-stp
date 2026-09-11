@@ -1,0 +1,53 @@
+{
+  "claim": "ENGINE_SPEC",
+  "network": "testnet-10",
+  "warning": "RECEIPT. ONE UNIT = ONE LOCKED SOMPI. NOT USD. NOT tPEG. NOT SCRIPT_ENFORCED.",
+  "seriesName": "PegLab-receipt-v1",
+  "backedOneToOne": true,
+  "lockedSompi": "0",
+  "circulating": "0",
+  "sponsorFeesPaid": "791400",
+  "skim": "SKIM",
+  "steps": [
+    {
+      "title": "Genesis",
+      "lesson": "Empty series. No oracle. Nothing is a dollar.",
+      "lockedSompi": "0",
+      "circulating": "0",
+      "backedOneToOne": true,
+      "skim": null
+    },
+    {
+      "title": "Lock 0.5 tKAS",
+      "lesson": "Alice’s claim equals locked sompi. Parker’s receipt rule.",
+      "lockedSompi": "50000000",
+      "circulating": "50000000",
+      "backedOneToOne": true,
+      "skim": null
+    },
+    {
+      "title": "Transfer to Bob",
+      "lesson": "Quantity and backing unchanged. Name is not authenticity.",
+      "lockedSompi": "50000000",
+      "circulating": "50000000",
+      "backedOneToOne": true,
+      "skim": null
+    },
+    {
+      "title": "Redeem 0.2 tKAS",
+      "lesson": "Bob gets sompi. Sponsor pays the fee. No skim.",
+      "lockedSompi": "30000000",
+      "circulating": "30000000",
+      "backedOneToOne": true,
+      "skim": null
+    },
+    {
+      "title": "Full redeem + skim refused",
+      "lesson": "Series empty. SKIM rejected. This can go on-chain as successor A.",
+      "lockedSompi": "0",
+      "circulating": "0",
+      "backedOneToOne": true,
+      "skim": "SKIM"
+    }
+  ]
+}
