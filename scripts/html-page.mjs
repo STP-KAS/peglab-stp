@@ -1,6 +1,7 @@
 import {readFile} from 'node:fs/promises';
 
 export const PAGES = [
+  {md: 'WHOLE.md', html: 'whole.html', title: 'The scheme', nav: 'Scheme', description: 'Conversation, invoice, rail, timeout. Crypto is optional. tPEG is not money.'},
   {md: 'DOCTRINE.md', html: 'doctrine.html', title: 'Doctrine', nav: 'Doctrine', description: 'Parker has the unit. PegLab has the warning. KaChat has the pocket. Do not mix them.'},
   {md: 'BEST.md', html: 'best.html', title: 'Receipt', nav: 'Receipt', description: 'Parker’s receipt rules plus PegLab honesty: the real proof of concept.'},
   {md: 'KACHAT.md', html: 'kachat.html', title: 'KaChat', nav: 'KaChat', description: 'How KaChat would settle in a Kaspa unit. Mobile only.'},
@@ -11,6 +12,7 @@ export const PAGES = [
 ];
 
 const HREF = {
+  'WHOLE.md': 'whole.html',
   'DOCTRINE.md': 'doctrine.html',
   'VISION.md': 'vision.html',
   'MAINNET.md': 'mainnet.html',
@@ -149,6 +151,7 @@ export function navHtml(active) {
     ['index.html#classroom', 'Classroom'],
     ['kachat.html', 'KaChat'],
     ['doctrine.html', 'Doctrine'],
+    ['whole.html', 'Scheme'],
   ];
   return links.map(([href, label]) =>
     `<a href="${href}"${label === active ? ' class="on"' : ''}>${label}</a>`
@@ -206,7 +209,7 @@ ${body}
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
+    <p class="note"><a href="index.html">Home</a> · <a href="whole.html">Scheme</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
 </body>
@@ -216,7 +219,7 @@ ${body}
 
 export async function renderMdPage(root, spec) {
   const src = await readFile(`${root}/${spec.md}`, 'utf8');
-  const extra = spec.html === 'best.html' || spec.html === 'doctrine.html'
+  const extra = spec.html === 'best.html' || spec.html === 'doctrine.html' || spec.html === 'whole.html'
     ? '<p class="rung doc-jump"><a class="primary" href="index.html#best">Run the receipt PoC on the home page</a></p>'
     : spec.html === 'kachat.html'
       ? `<section class="phone-handoff card" id="phone-handoff">

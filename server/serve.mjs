@@ -93,6 +93,8 @@ const PAGE_ALIAS = {
   '/doctrine': '/doctrine.html',
   '/STABLES-GUIDE.md': '/stables.html',
   '/stables': '/stables.html',
+  '/WHOLE.md': '/whole.html',
+  '/whole': '/whole.html',
 };
 
 async function load(rel) {
