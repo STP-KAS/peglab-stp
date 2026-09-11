@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Kaspa Testnet-10 community-toy stable. Not USD. Tiny pool. Will depeg.",
+  "description": "Kaspa Testnet-10 classroom: tiny pool will depeg. Receipt is 1 sompi. Not USD.",
   "license": "MIT",
   "scripts": {
     "test": "node --test tests/peglab.test.mjs tests/receipt.test.mjs tests/host-wallet.test.mjs",

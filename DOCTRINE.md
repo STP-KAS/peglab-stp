@@ -115,7 +115,9 @@ Keep the classroom honest (WILL DEPEG, no raise, no KasWare on phones)
 
 Skipping to “mainnet chat-pay with a dollar glyph” is how a bridge IOU gets minted.
 
-Next empty box: **broadcast receipt lock / transfer / redeem on Testnet-10 and journal txids.** Not another tPEG feature. Not another essay.
+ENGINE_SPEC journal exists (`artifacts/receipt-engine-spec.json`): lock, transfer, redeem, SKIM refused, series empty 1:1. That is not a txid.
+
+Next empty box: **broadcast receipt lock / transfer / redeem on Testnet-10 and journal accepted txids.** Not another tPEG feature. Not another essay.
 
 ---
 

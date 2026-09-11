@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Doctrine — PegLab</title>
   <meta name="description" content="Parker has the unit. PegLab has the warning. KaChat has the pocket. Do not mix them.">
-  <link rel="stylesheet" href="./styles.css?v=nokw">
+  <link rel="stylesheet" href="./styles.css?v=auth">
   <script>
     try {
       var ua = navigator.userAgent || '';
@@ -18,6 +18,8 @@
         || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -93,7 +95,8 @@
   → overcollateral only at Maker/Liquity budget
   → licensed USD only as a company</code></pre>
 <p>Skipping to “mainnet chat-pay with a dollar glyph” is how a bridge IOU gets minted.</p>
-<p>Next empty box: <strong>broadcast receipt lock / transfer / redeem on Testnet-10 and journal txids.</strong> Not another tPEG feature. Not another essay.</p>
+<p>ENGINE_SPEC journal exists (<code>artifacts/receipt-engine-spec.json</code>): lock, transfer, redeem, SKIM refused, series empty 1:1. That is not a txid.</p>
+<p>Next empty box: <strong>broadcast receipt lock / transfer / redeem on Testnet-10 and journal accepted txids.</strong> Not another tPEG feature. Not another essay.</p>
 <hr>
 <h2>7. Never</h2>
 <ul><li>List lab tPEG in KaChat as money</li><li>Call a receipt <code>$</code></li><li>Call this CONTROL genesis the receipt series</li><li>Use one admin oracle as a dollar</li><li>Ship a PC KaChat</li><li>Mainnet the 2 tKAS pool</li><li>Raise against tPEG</li><li>Invent a third timeout covenant when Parker already has escrow/vault on TN12</li></ul>
@@ -107,6 +110,6 @@
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
   </footer>
-  <script src="./wallets.js?v=nokw"></script>
+  <script src="./wallets.js?v=auth"></script>
 </body>
 </html>

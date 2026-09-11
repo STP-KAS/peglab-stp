@@ -15,6 +15,8 @@ function isLocalHost() {
   return host === '127.0.0.1' || host === 'localhost';
 }
 
+if (isLocalHost()) document.documentElement.dataset.local = '1';
+
 function isPhone() {
   if (document.documentElement.dataset.phone === '1') return true;
   if (document.documentElement.dataset.pc === '1') return false;

@@ -13,11 +13,11 @@ try {
 Start-Process $loopback
 if ($busy) {
   Write-Host "Already running. Opened $loopback"
-  Write-Host "Public https://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
+  Write-Host "Public http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
   exit 0
 }
 
 Write-Host "Open $loopback"
 Write-Host "Also $url if hosts has peglab.localhost"
-Write-Host "Public https://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
+Write-Host "Public http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
 node server/serve.mjs

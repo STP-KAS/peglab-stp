@@ -161,7 +161,7 @@ export function chrome({title, description, active, extra = '', body}) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(title)} — PegLab</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <link rel="stylesheet" href="./styles.css?v=nokw">
+  <link rel="stylesheet" href="./styles.css?v=auth">
   <script>
     try {
       var ua = navigator.userAgent || '';
@@ -174,6 +174,8 @@ export function chrome({title, description, active, extra = '', body}) {
         || (/Macintosh|Mac OS X/i.test(ua) && touch)
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -204,7 +206,7 @@ ${body}
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
     <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
   </footer>
-  <script src="./wallets.js?v=nokw"></script>
+  <script src="./wallets.js?v=auth"></script>
 </body>
 </html>
 `;

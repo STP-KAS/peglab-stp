@@ -50,6 +50,7 @@ That is Parker’s wrap-lab native tab, taught on PegLab’s page, with PegLab�
 
 ## Still missing (so it is a PoC, not production)
 
+- [x] ENGINE_SPEC journal (`artifacts/receipt-engine-spec.json`) — lock/transfer/redeem/SKIM, series empty 1:1. Not a txid.
 - [ ] Broadcast lock / transfer / redeem on Testnet-10; journal txids like Parker’s wrap record
 - [ ] Indexer row per address
 - [ ] KaChat signs the covenant (not only KasWare on the web)
