@@ -35,7 +35,7 @@ npm run fixtures
 npm run serve
 ```
 
-Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/** — DNS steps in [DNS.md](DNS.md). On a PC, scan the QR to open that public URL on a phone. HTTPS waits on GitHub’s certificate.
+Then open `http://127.0.0.1:8765/`. Public copy (no host faucet): **https://stp-kas.github.io/peglab-stp/**. The `.club` custom domain is NXDOMAIN until DNS is restored — [DNS.md](DNS.md). On a PC, scan the QR to open the live public URL on a phone.
 
 How to try it:
 

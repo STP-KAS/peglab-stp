@@ -20,7 +20,7 @@ import {
   DEFAULT_POOL_KAS,
   DEFAULT_POOL_TPEG,
 } from '../src/engine.mjs';
-import {NETWORK, SPONSOR_ADDRESS, SPONSOR_XONLY, SERIES_ID, GENESIS_POOL_SOMPI, MINING_ADDRESS, PUBLIC_DOMAIN} from '../src/network.mjs';
+import {NETWORK, SPONSOR_ADDRESS, SPONSOR_XONLY, SERIES_ID, GENESIS_POOL_SOMPI, MINING_ADDRESS, PUBLIC_DOMAIN, PUBLIC_SITE_URL} from '../src/network.mjs';
 
 const admin = '11'.repeat(32);
 const alice = '22'.repeat(32);
@@ -161,6 +161,7 @@ describe('testnet sponsor', () => {
     assert.equal(SPONSOR_XONLY, '82c6f6dd431c9d9688385859b43c0c9736a249bed9979f088ad94721245c849f');
     assert.match(MINING_ADDRESS, /^kaspatest:qqup3k4r/);
     assert.equal(PUBLIC_DOMAIN, 'peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club');
+    assert.equal(PUBLIC_SITE_URL, 'https://stp-kas.github.io/peglab-stp/');
     assert.equal(SERIES_ID.length, 64);
     assert.equal(GENESIS_POOL_SOMPI, 200_000_000n);
   });

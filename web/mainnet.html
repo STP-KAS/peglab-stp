@@ -19,7 +19,7 @@
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
       var host = location.hostname;
-      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
+      if (host === '127.0.0.1' || host === 'localhost' || /.localhost$/i.test(host)) root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -28,12 +28,12 @@
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
-    <a class="brand" href="/" title="Home">PegLab</a>
+    <a class="brand" href="index.html" title="Home">PegLab</a>
     <nav>
-      <a href="/#best">Receipt</a>
-      <a href="/#classroom">Classroom</a>
-      <a href="/kachat.html">KaChat</a>
-      <a href="/doctrine.html">Doctrine</a>
+      <a href="index.html#best">Receipt</a>
+      <a href="index.html#classroom">Classroom</a>
+      <a href="kachat.html">KaChat</a>
+      <a href="doctrine.html">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -50,7 +50,7 @@
 <h1>What it would take to leave the lab</h1>
 <p>PegLab, <strong>as this repo</strong>, cannot deploy on Kaspa mainnet as money. The pool is 2 tKAS. The oracle is one key. If you treat tPEG as a dollar it depegs. That is the proof of concept. The name “PegLab” stays the teaching bench.</p>
 <p>What *can* go to mainnet is a <strong>successor</strong> that copies working objects from other chains — not this toy’s ticker. This file is that map: existing proofs of concept, how they were actually funded, and the full list of what Kaspa still lacks. It is not legal advice and not a raise.</p>
-<p>Authority: <a href="/doctrine.html">DOCTRINE.md</a>. Related: <a href="STABLES-GUIDE.md">STABLES-GUIDE.md</a> (pegs and capital ladder), <a href="/vision.html">VISION.md</a> (finished conversation on a phone), <a href="/kachat.html">KACHAT.md</a> (chat + pay), <a href="/battle.html">BATTLE.md</a> (PegLab vs Parker’s GitHub PoC).</p>
+<p>Authority: <a href="doctrine.html">DOCTRINE.md</a>. Related: <a href="stables.html">STABLES-GUIDE.md</a> (pegs and capital ladder), <a href="vision.html">VISION.md</a> (finished conversation on a phone), <a href="kachat.html">KACHAT.md</a> (chat + pay), <a href="battle.html">BATTLE.md</a> (PegLab vs Parker’s GitHub PoC).</p>
 <p><strong>TESTNET-10 LAB. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.</strong></p>
 <hr>
 <h2>1. Call this lab what it is</h2>
@@ -106,7 +106,7 @@
 <h2>4. Think bigger than the covenant</h2>
 <p>The chain is the court file. Mainnet fails if any of these are missing.</p>
 <h3>Product (the scene)</h3>
-<p>Two people on <strong>KaChat phones</strong> quote a still number, pay, claim or reclaim. Postage is KAS in the background. No PC KaChat. No <code>$</code> on a receipt. See <a href="/vision.html">VISION.md</a>.</p>
+<p>Two people on <strong>KaChat phones</strong> quote a still number, pay, claim or reclaim. Postage is KAS in the background. No PC KaChat. No <code>$</code> on a receipt. See <a href="vision.html">VISION.md</a>.</p>
 <p>Without that scene, a mainnet series is a block explorer toy.</p>
 <h3>Protocol (what Toccata is for)</h3>
 <ul><li>Live <strong>series</strong> on Testnet-10 first: genesis outpoint, template hash, series bytes — wallets verify those, not the word tPEG.</li><li>Transfer + redeem accepted by the node, not only <code>src/engine.mjs</code>.</li><li>Kill the admin USD oracle on any asset KaChat would show. Receipts do not need a dollar feed.</li><li>Timeout reclaim (<code>KaChatPayTimeout</code> shape). Split / tip / stake as the same family.</li><li>Sponsor-fee or prepaid grams (KIP-21 mass) so a receiver with 0 KAS still works. Kaspa Core already flagged this.</li></ul>
@@ -151,7 +151,7 @@
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
+    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
 </body>

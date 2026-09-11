@@ -1,10 +1,10 @@
 # Point the GoDaddy domain at PegLab
 
-Public site: **https://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club**
+**Live public site today:** [https://stp-kas.github.io/peglab-stp/](https://stp-kas.github.io/peglab-stp/) (GitHub Pages, `docs/` on `main`).
 
-Localhost stays: **http://127.0.0.1:8765/** (`npm run serve`). Host tKAS faucet stays there only.
+**Intended custom domain:** `peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club` — **NXDOMAIN as of 2026-09-11**. Do not advertise HTTPS there until the zone answers and GitHub has issued a certificate. Localhost stays **http://127.0.0.1:8765/** (`npm run serve`). Host tKAS faucet stays there only.
 
-GitHub Pages serves the copy in `docs/`. After DNS is set, GitHub issues a certificate.
+GitHub Pages has **no CNAME** until this zone exists, so github.io is not redirected into a dead name.
 
 ## GoDaddy DNS (this domain)
 
@@ -42,7 +42,7 @@ I cannot log into GoDaddy SSO from this machine. A **production API key** is eno
 
 1. Open https://developer.godaddy.com/keys while logged into the same GoDaddy account that owns the domain.
 2. Create a **production** key (not OTE/test).
-3. Either paste the key and secret in chat, or in PowerShell:
+3. Put the key and secret in **environment variables only**. Never paste production secrets into chat:
 
 ```powershell
 $env:GODADDY_API_KEY = "..."

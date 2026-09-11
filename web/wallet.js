@@ -1,4 +1,4 @@
-import {SPONSOR_ADDRESS, PUBLIC_DOMAIN} from '/src/network.mjs';
+import {SPONSOR_ADDRESS} from './src/network.mjs';
 
 const STORE = 'peglab-guest';
 const $ = (id) => document.getElementById(id);
@@ -12,7 +12,7 @@ function say(text, error = false) {
 
 function isLocalHost() {
   const host = location.hostname;
-  return host === '127.0.0.1' || host === 'localhost';
+  return host === '127.0.0.1' || host === 'localhost' || host.endsWith('.localhost');
 }
 
 if (isLocalHost()) document.documentElement.dataset.local = '1';
@@ -92,8 +92,8 @@ async function refreshHost() {
     $('make-local').disabled = true;
     $('fund-local').disabled = true;
     say(isPhone()
-      ? `This is ${PUBLIC_DOMAIN}. KasWare is a desktop extension — skip it on a phone. Host tKAS fill is only on http://127.0.0.1:8765/.`
-      : `This is ${PUBLIC_DOMAIN}. KasWare works here. Host tKAS fill is only on http://127.0.0.1:8765/ so the key never sits on the public web.`);
+      ? `This is the public copy (${location.host}). KasWare is a desktop extension — skip it on a phone. Host tKAS fill is only on http://127.0.0.1:8765/.`
+      : `This is the public copy (${location.host}). KasWare works here. Host tKAS fill is only on http://127.0.0.1:8765/ so the key never sits on the public web.`);
     return null;
   }
   const status = await api('/api/status');

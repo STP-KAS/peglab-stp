@@ -289,6 +289,8 @@ html[data-welcome-seen] .welcome { display: none !important; }
 .kasware-only { display: none !important; }
 .phone-only { display: none; }
 html[data-phone] .phone-only { display: block !important; }
+html[data-phone] .phone-handoff { display: none !important; }
+html[data-pc] .phone-handoff { display: block !important; }
 html[data-phone] .how > .phone-only { display: list-item !important; }
 html[data-phone] [data-wallet-connect],
 html[data-phone] [data-wallet-logout],
