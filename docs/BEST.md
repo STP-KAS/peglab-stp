@@ -57,4 +57,4 @@ That is Parker’s wrap-lab native tab, taught on PegLab’s page, with PegLab�
 - [ ] Timeout pay using Parker’s TN12 escrow/vault shape
 - [ ] External review of the SilverScript, not only this JS spec
 
-Until those boxes tick, this tab is **ENGINE_SPEC**. It is not `SCRIPT_ENFORCED` on mainnet.
+Until the broadcast box ticks, this tab is **ENGINE_SPEC**. It is not `SCRIPT_ENFORCED` on Testnet-10 either — there is no receipt txid. Do not read Parker’s wrap pUSD round-trip as a 1-sompi receipt journal.

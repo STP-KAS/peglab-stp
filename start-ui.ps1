@@ -1,4 +1,4 @@
-# PegLab local preview. Public site is peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club
+# PegLab local preview. Live public site: https://stp-kas.github.io/peglab-stp/
 $Host.UI.RawUI.WindowTitle = "PegLab"
 Set-Location $PSScriptRoot
 
@@ -13,11 +13,11 @@ try {
 Start-Process $loopback
 if ($busy) {
   Write-Host "Already running. Opened $loopback"
-  Write-Host "Public http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
+  Write-Host "Public https://stp-kas.github.io/peglab-stp/"
   exit 0
 }
 
 Write-Host "Open $loopback"
 Write-Host "Also $url if hosts has peglab.localhost"
-Write-Host "Public http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/"
+Write-Host "Public https://stp-kas.github.io/peglab-stp/"
 node server/serve.mjs

@@ -9,7 +9,7 @@ import {
   walletPrompt,
   depegDemo,
   DEFAULT_ORACLE,
-} from '/src/engine.mjs';
+} from './src/engine.mjs';
 import {
   genesis as receiptGenesis,
   lock as receiptLock,
@@ -19,7 +19,7 @@ import {
   inspect as inspectReceipt,
   walletPrompt as receiptPrompt,
   receiptDemo,
-} from '/src/receipt.mjs';
+} from './src/receipt.mjs';
 
 const admin = '11'.repeat(32);
 const alice = '22'.repeat(32);

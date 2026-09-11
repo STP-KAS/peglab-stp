@@ -4,18 +4,20 @@ export const PAGES = [
   {md: 'DOCTRINE.md', html: 'doctrine.html', title: 'Doctrine', nav: 'Doctrine', description: 'Parker has the unit. PegLab has the warning. KaChat has the pocket. Do not mix them.'},
   {md: 'BEST.md', html: 'best.html', title: 'Receipt', nav: 'Receipt', description: 'Parker’s receipt rules plus PegLab honesty: the real proof of concept.'},
   {md: 'KACHAT.md', html: 'kachat.html', title: 'KaChat', nav: 'KaChat', description: 'How KaChat would settle in a Kaspa unit. Mobile only.'},
+  {md: 'STABLES-GUIDE.md', html: 'stables.html', title: 'Capital', nav: 'Capital', description: 'PegLab is not the Kaspa dollar. Capital ladder and peg models.'},
   {md: 'VISION.md', html: 'vision.html', title: 'Vision', nav: 'Vision', description: 'A finished conversation on a phone. Not a coin.'},
   {md: 'MAINNET.md', html: 'mainnet.html', title: 'Mainnet', nav: 'Mainnet', description: 'What a successor would need to leave the PegLab toy.'},
   {md: 'BATTLE.md', html: 'battle.html', title: 'Battle', nav: 'Battle', description: 'PegLab scored against Parker’s GitHub receipt PoC.'},
 ];
 
 const HREF = {
-  'DOCTRINE.md': '/doctrine.html',
-  'VISION.md': '/vision.html',
-  'MAINNET.md': '/mainnet.html',
-  'BATTLE.md': '/battle.html',
-  'BEST.md': '/best.html',
-  'KACHAT.md': '/kachat.html',
+  'DOCTRINE.md': 'doctrine.html',
+  'VISION.md': 'vision.html',
+  'MAINNET.md': 'mainnet.html',
+  'BATTLE.md': 'battle.html',
+  'BEST.md': 'best.html',
+  'KACHAT.md': 'kachat.html',
+  'STABLES-GUIDE.md': 'stables.html',
 };
 
 export function rewriteHref(href) {
@@ -143,10 +145,10 @@ export function mdToHtml(src) {
 
 export function navHtml(active) {
   const links = [
-    ['/#best', 'Receipt'],
-    ['/#classroom', 'Classroom'],
-    ['/kachat.html', 'KaChat'],
-    ['/doctrine.html', 'Doctrine'],
+    ['index.html#best', 'Receipt'],
+    ['index.html#classroom', 'Classroom'],
+    ['kachat.html', 'KaChat'],
+    ['doctrine.html', 'Doctrine'],
   ];
   return links.map(([href, label]) =>
     `<a href="${href}"${label === active ? ' class="on"' : ''}>${label}</a>`
@@ -175,7 +177,7 @@ export function chrome({title, description, active, extra = '', body}) {
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
       var host = location.hostname;
-      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
+      if (host === '127.0.0.1' || host === 'localhost' || /\.localhost$/i.test(host)) root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -184,7 +186,7 @@ export function chrome({title, description, active, extra = '', body}) {
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
-    <a class="brand" href="/" title="Home">PegLab</a>
+    <a class="brand" href="index.html" title="Home">PegLab</a>
     <nav>
       ${navHtml(active)}
     </nav>
@@ -204,7 +206,7 @@ ${body}
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
+    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
 </body>
@@ -215,7 +217,7 @@ ${body}
 export async function renderMdPage(root, spec) {
   const src = await readFile(`${root}/${spec.md}`, 'utf8');
   const extra = spec.html === 'best.html' || spec.html === 'doctrine.html'
-    ? '<p class="rung doc-jump"><a class="primary" href="/#best">Run the receipt PoC on the home page</a></p>'
+    ? '<p class="rung doc-jump"><a class="primary" href="index.html#best">Run the receipt PoC on the home page</a></p>'
     : spec.html === 'kachat.html'
       ? `<section class="phone-handoff card" id="phone-handoff">
     <p class="eyebrow">Phone</p>
@@ -223,7 +225,7 @@ export async function renderMdPage(root, spec) {
     <p class="note">KaChat does not support PC. Scan to open the public lab on iOS or Android.</p>
     <figure class="phone-qr">
       <img src="media/phone-qr.svg" width="148" height="148" alt="QR code for the public PegLab page">
-      <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
+      <figcaption>Scan to open <a href="https://stp-kas.github.io/peglab-stp/">stp-kas.github.io/peglab-stp</a></figcaption>
     </figure>
   </section>`
       : '';

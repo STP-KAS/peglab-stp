@@ -11,3 +11,5 @@ export const GENESIS_POOL_SOMPI = 200_000_000n;
 export const MAX_GENESIS_FEE = 1_000_000n;
 export const MINING_ADDRESS = 'kaspatest:qqup3k4ru5uhj9swa05afa3zqcwkyhtv9vz9dme68cglza73mc5yk4r7an5cj';
 export const PUBLIC_DOMAIN = 'peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club';
+// Live public host while the .club zone is NXDOMAIN. Do not CNAME Pages until DNS answers.
+export const PUBLIC_SITE_URL = 'https://stp-kas.github.io/peglab-stp/';

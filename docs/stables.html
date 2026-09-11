@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capital — PegLab</title>
+  <meta name="description" content="PegLab is not the Kaspa dollar. Capital ladder and peg models.">
+  <link rel="stylesheet" href="./styles.css?v=auth">
+  <script>
+    try {
+      var ua = navigator.userAgent || '';
+      var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
+      var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      var mobileHint = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+      var phone = mobileHint
+        || coarse
+        || /Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+        || (/Macintosh|Mac OS X/i.test(ua) && touch)
+        || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+      var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost' || /.localhost$/i.test(host)) root.dataset.local = '1';
+      if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
+      else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="index.html" title="Home">PegLab</a>
+    <nav>
+      <a href="index.html#best">Receipt</a>
+      <a href="index.html#classroom">Classroom</a>
+      <a href="kachat.html">KaChat</a>
+      <a href="doctrine.html">Doctrine</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost kasware-only" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  
+  <article class="doc">
+<h1>PegLab is not the Kaspa dollar. Here is the alternative.</h1>
+<p>Authority: <a href="doctrine.html">DOCTRINE.md</a>.</p>
+<p><strong>TESTNET TOY. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.</strong></p>
+<p>This is the plan for a Kaspa stable *other than* PegLab. PegLab stays the $50k–$300k teaching rung: code, audit-lite, tiny pool, <strong>will depeg</strong>. Using it as a fundraising story for a payment stable is how people get hurt.</p>
+<p>This is a product and capital guide, not legal advice. Payment stables are regulated money in the US (GENIUS Act, 2025–26), the EU (MiCA, full 2026), and similar regimes. A token sale that implies “this is a dollar” is the wrong instrument even before the code is wrong.</p>
+<hr>
+<h2>1. Pushback (read this first)</h2>
+<div class="table-wrap"><table><thead><tr><th>Temptation</th><th>Pushback</th></tr></thead><tbody><tr><td>Raise $50k–$300k and call it a Kaspa stable</td><td>That budget buys a demo. It does not buy a peg. PegLab already *is* that demo, and it is designed to fail.</td></tr><tr><td>Sell tPEG, points, or a “stability token”</td><td>Sister-token backing is Terra’s death spiral. Do Kwon was sentenced in 2025. Do not copy the mechanism or the marketing.</td></tr><tr><td>Put PegLab on mainnet with a 2 tKAS pool</td><td>A 0.2 tKAS swap already moves the pool &gt;5% on testnet. Mainnet does not add magic.</td></tr><tr><td>Mint against an admin oracle and say 1:1 USD</td><td>The oracle is a key. The key is the dollar. That is not a stable.</td></tr><tr><td>“We’ll add a market maker later”</td><td>The peg *is* redemption plus depth. Later means unbacked liabilities now.</td></tr><tr><td>Race 1kUSD / Igra / Chainge with a faster launch</td><td>Chainge wrapped “stables” already taught Kaspa a depeg. Speed without reserves repeats it.</td></tr><tr><td>Algorithmic / seigniorage / rebase to hold $1</td><td>Market share of working payment stables is ~95% fiat-backed. Regimes that matter have banned or frozen the algo corner.</td></tr></tbody></table></div>
+<p><strong>Do raise money only after the product name matches the backing.</strong> If the pitch says dollar, the reserves must be dollars (or a licensed claim on dollars). If the pitch says “KAS receipt,” do not say dollar.</p>
+<hr>
+<h2>2. What actually holds a peg on other chains</h2>
+<p>A peg is <strong>redemption at par under stress</strong>, not a pool price in a calm week.</p>
+<h3>Models that survived at scale</h3>
+<div class="table-wrap"><table><thead><tr><th>Model</th><th>Examples</th><th>How the peg is real</th><th>What you must buy</th><th>Failure mode</th></tr></thead><tbody><tr><td>Fiat-backed 1:1</td><td>USDT, USDC, PYUSD</td><td>Redeem for cash / T-bills at par. Segregated reserves. Monthly examined disclosures (GENIUS); Circle also full corporate audit.</td><td>License, bank, custodian, attestations, freeze/compliance UX</td><td>Bank freeze (USDC/SVB 2023: ~$0.88 for days). <strong>Survived because the cash existed.</strong></td></tr><tr><td>Crypto-overcollateral + liquidations</td><td>Maker/Sky DAI &amp; USDS, Liquity LUSD/BOLD, crvUSD</td><td>Lock more collateral than you mint. Liquidate or continuously rebalance.</td><td>Oracles, surplus buffer, liquidation path, risk policy</td><td>Oracle lag, cascade, governance. DAI fell with USDC in 2023 because the PSM *was* USDC.</td></tr><tr><td>PSM to an upstream dollar</td><td>Sky LitePSM (USDC ↔ USDS at $1)</td><td>Arb against a deep, redeemable dollar. Caps matter.</td><td>The upstream dollar already on your chain, plus a ceiling</td><td>You inherit the upstream issuer. When the PSM hits its cap, the peg gaps (DAI ~$0.89, March 2023).</td></tr><tr><td>Native redemption vs collateral</td><td>Liquity: redeem LUSD for $1 of ETH</td><td>No PSM. Hard redemption pulls price up from below. Can <strong>overpeg</strong> in a flight to safety.</td><td>Deep collateral, redemption gas, no yield gimmick</td><td>Overpeg; ETH crash + liquidation stress. Not a consumer checking account.</td></tr></tbody></table></div>
+<p>Fiat-backed is ~$300B+ of a ~$320B market (Q1 2026). Crypto-backed is a rounding error by size. That is the market’s vote, and the regulator’s.</p>
+<h3>Models that failed as money</h3>
+<div class="table-wrap"><table><thead><tr><th>Model</th><th>Example</th><th>Lesson</th></tr></thead><tbody><tr><td>Algorithmic / sister token</td><td>Terra UST–LUNA, May 2022</td><td>Backing was confidence. Minting the volatile token to defend $1 hyperinflated it. Design failure is terminal; UST did not repeg.</td></tr><tr><td>Thin pool as “peg”</td><td>PegLab; countless farm tokens</td><td>Constant-product with shallow depth *is* the depeg. Do not market it as stability.</td></tr><tr><td>Illiquid “reserves”</td><td>IRON, various 2021 coins</td><td>If you cannot sell the backing in a run, quantity of collateral is a slogan.</td></tr><tr><td>Yield that pays the peg</td><td>Anchor ~20% on UST</td><td>Subsidised yield is a run waiting for a date.</td></tr><tr><td>Venue oracle as price</td><td>Ethena USDe on Binance, Oct 2025 (~$0.65 print vs DEX near par)</td><td>CEX index ≠ redemption. Hedge + oracle design is not the same as cash.</td></tr></tbody></table></div>
+<h3>Engineering practices worth copying (not the brand)</h3>
+<ol><li><strong>Redemption is the product.</strong> Sky’s PSM works because anyone can swap USDS↔USDC at $1 until the ceiling. Liquity works because anyone can redeem for $1 of ETH. PegLab’s “redeem” is tKAS at an admin price. Different object.</li><li><strong>Fail closed on stale prices.</strong> Mint/swap stop; existing holders still exit if backing remains. PegLab already does this on testnet. Keep it.</li><li><strong>Caps and dust floors.</strong> Sky PSM has a governance ceiling. That ceiling *is* why DAI gapped in 2023. Publish the cap; do not pretend infinite depth.</li><li><strong>Name ≠ identity.</strong> Series / genesis / template hash. Maker learned this the hard way with fake tokens; Kaspa UTXO series will be worse if wallets show “tPEG” or “USD”.</li><li><strong>Attestation ≠ audit.</strong> A snapshot of balances is not controls. GENIUS-tier payment stables need monthly examined reserve composition; large issuers need GAAP audits.</li><li><strong>Do not skim principal for fees.</strong> Sponsor pays fees. Backed receipts on kaspa-explained already encode this. Keep it in any real unit.</li><li><strong>Pause is a brake, not a peg.</strong> Circle recovered because reserves were real. Pause without reserves is a rug with extra steps.</li><li><strong>Who pays the fee asset.</strong> Kaspa Core R&amp;D already flagged this: a dollar UTXO that still needs KAS for mass is bad consumer UX. Solve sponsor-fee / refundable KAS *before* calling it payments.</li></ol>
+<hr>
+<h2>3. What Kaspa can uniquely do (and what it cannot)</h2>
+<p>Toccata is live (mainnet 30 June 2026). Covenants can lock, split, timeout, and prove a spend rule. That is <strong>programmable cash</strong>, not a central-bank license.</p>
+<p>Kaspa is strong as:</p>
+<ul><li>Fast sequencing and cheap settlement</li><li>Public evidence of who got paid</li><li>Covenant escrow, budgets, receipts (LocalSettle / HouseLedger class)</li></ul>
+<p>Kaspa is not:</p>
+<ul><li>A Treasury prime fund</li><li>A substitute for Circle/Tether distribution</li><li>A reason to ignore GENIUS/MiCA if you say “dollar”</li></ul>
+<p>Wrapped “USDT on Kaspa” via a bridge (Chainge-class) is <strong>issuer + bridge</strong> risk. It is not native. Treat it as a wrapped IOU in the UX, including freeze risk.</p>
+<p><a href="https://github.com/NeaBouli/1kUSD">1kUSD</a> is a serious research program (PSM, no CDP, Kaspa-primary ADR). It is <strong>not</strong> production: mock oracle, stub governance, no external audit, no mainnet. Do not race it by launching a thinner copy.</p>
+<hr>
+<h2>4. The capital ladder (honest)</h2>
+<div class="table-wrap"><table><thead><tr><th>Rung</th><th>Budget (order of mag.)</th><th>What you actually buy</th><th>Peg outcome</th><th>Raise?</th></tr></thead><tbody><tr><td><strong>PegLab (this repo)</strong></td><td>$0–$300k</td><td>Code, tests, tiny TN10 pool, teaching UI</td><td><strong>Will depeg</strong></td><td><strong>No public raise. No token.</strong> Optional self-fund of testnet coins only.</td></tr><tr><td><strong>KAS receipt / unit of account</strong></td><td>$100k–$1M</td><td>Covenant receipts = sompi, not USD. Wallet copy, explorer, merchant display with FX banner</td><td>Never claimed $1</td><td>Grants / self-fund. Not a stablecoin sale.</td></tr><tr><td><strong>Crypto-overcollateral protocol</strong></td><td>$2M–$15M</td><td>Oracles (not one key), audits, surplus buffer, MM, incident process</td><td>Soft peg; can gap</td><td>Equity or public-goods for *infrastructure*, not “buy the dollar.”</td></tr><tr><td><strong>PSM to native USDC/USDT</strong></td><td>Mostly distribution</td><td>Wait for a real issuer/bridge you can name in the UI</td><td>As good as the upstream</td><td>Do not raise to *be* the PSM until the upstream exists on Kaspa.</td></tr><tr><td><strong>Licensed payment stable</strong></td><td>$10M–$50M+</td><td>Entity, banking, custody, examinations, redemption ops, travel rule, lawyers</td><td>Can hold if run honestly</td><td><strong>Company raise.</strong> Not a meme round.</td></tr></tbody></table></div>
+<p>PegLab already occupies rung 1. Skip to rung 5 in your head and you will ship rung 1 with rung 5 marketing. That is the failure.</p>
+<hr>
+<h2>5. Recommended path (what to do)</h2>
+<h3>Now (PegLab)</h3>
+<ul><li>Keep TN10, WILL DEPEG, no mainnet.</li><li>Fund the dedicated sponsor wallet if you want a live genesis demo: send ≥2.01 tKAS from the miner to <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>, then <code>npm run genesis:submit</code>.</li><li>Use the depeg lab as <strong>community education</strong>, not a listing pitch.</li><li>Do not add a governance token, points, or “stability fees.”</li></ul>
+<h3>Next product (not a dollar)</h3>
+<p>Build the <strong>settlement app</strong> that becomes useful the day a real stable lands:</p>
+<ol><li>LocalSettle / invoice / escrow with <strong>display currency = USD</strong> and <strong>pay-in = KAS or future stable</strong>.</li><li>Honest FX banner on KAS pay-in.</li><li>Receipts that name asset id, amount, covenant state.</li><li>Sponsor-fee path so the receiver is not told to go buy KAS first.</li></ol>
+<p>That is the Kaspa edge. The dollar token is someone else’s licensed inventory.</p>
+<p>The human product (phones, KaChat, postage, agents, what never to ship) is <a href="vision.html">VISION.md</a>. This file is the capital and peg ladder. Do not mix them: a receipt is not a raise.</p>
+<p>What it would take to leave the lab — copy existing proofs of concept, how Maker/Circle/Liquity were actually funded, mainnet checklist — is <a href="mainnet.html">MAINNET.md</a>. PegLab as this repo still does not go to mainnet as money.</p>
+<h3>If you still want a Kaspa-native unit</h3>
+<p>Pick <strong>one</strong> and say it in the first sentence:</p>
+<div class="table-wrap"><table><thead><tr><th>Choice</th><th>First sentence</th><th>First build</th></tr></thead><tbody><tr><td><strong>A. Receipt on tKAS</strong></td><td>“One unit is one sompi locked in the covenant. Not USD.”</td><td>Productionise kaspa-explained backed-receipt. No oracle.</td></tr><tr><td><strong>B. Overcollateral KAS→unit</strong></td><td>“You lock KAS; you get a bounded claim; it can trade off $1 and we will show that.”</td><td>Oracles with staleness halt; no sister token; no 20% yield. Budget like rung 3.</td></tr><tr><td><strong>C. Host USDC/USDT</strong></td><td>“We do not issue the dollar. Circle/Tether (or named bridge) does.”</td><td>Wallet + escrow templates. Freeze UX.</td></tr><tr><td><strong>D. Licensed USD on Kaspa</strong></td><td>“We are an issuer. Reserves are cash and T-bills. Here is the entity.”</td><td>Lawyers and a bank before SilverScript.</td></tr><tr><td><strong>E. Energy / invoice unit</strong></td><td>“This is kWh or EUR invoice, not a consumer dollar.”</td><td>Gigawatt-class counterparties, not Discord.</td></tr></tbody></table></div>
+<p><strong>Default recommendation:</strong> A + C. Receipts now; host a real dollar when it exists. Do not do B with PegLab’s oracle. Do not do D from this repo.</p>
+<h3>Fundraising, if any</h3>
+<ul><li><strong>PegLab:</strong> $0. If someone wants to donate tKAS to the TN10 demo wallet, that is a testnet gift, not an investment.</li><li><strong>Settlement app:</strong> small grant / self-fund. Sell software or subscriptions later, not a coin.</li><li><strong>Issuer (path D):</strong> equity in a company that can be examined. If a lawyer says you need a license, stop building the token until that is true.</li><li><strong>Never:</strong> presale of tPEG, “founders allocation,” or a stability-share that defends the peg.</li></ul>
+<p>If a pitch deck needs PegLab’s UI without the WILL DEPEG banner, the pitch is the bug.</p>
+<hr>
+<h2>6. Checklist before anyone says “stable”</h2>
+<ul><li class="check">☐ Backing is named (cash, T-bills, ETH, KAS sompi) and is <strong>not</strong> this project’s own token</li><li class="check">☐ Redemption path is live, capped, and tested as a *run* (not only mint)</li><li class="check">☐ Oracle, if any, is not a single admin key</li><li class="check">☐ Pool depth vs. a 5% trade is published; if it cannot defend, the UI says so</li><li class="check">☐ Pause / freeze is disclosed as issuer power</li><li class="check">☐ Series / genesis / template are what wallets verify</li><li class="check">☐ Legal entity matches the claim (payment stable vs. experimental token)</li><li class="check">☐ No mainnet PegLab</li></ul>
+<p>If more than two boxes fail, you still have a toy. Ship it as PegLab, not as money.</p>
+<hr>
+<h2>7. Sources (sampled 2026)</h2>
+<ul><li>Fiat vs crypto vs algo market structure: Stablecoin Issuance Landscape / design-model surveys (fiat ~95% of value).</li><li>GENIUS Act (US, 2025) and MiCA (EU, 2026): 1:1 liquid reserves, par redemption, disclosures; algo corner constrained.</li><li>Sky/Maker PSM: USDS↔USDC at par; DAI inherited USDC/SVB in March 2023 (Fed note).</li><li>Liquity: ETH redemption, no PSM, overpeg in panics.</li><li>Terra UST: circular backing; terminal depeg.</li><li>Kaspa: Toccata live 30 June 2026; 1kUSD research not production; Core R&amp;D “who pays the KAS” for dollar UTXOs.</li></ul>
+<p>PegLab’s own evidence: <code>KNOWN-BREAKS.md</code>, <code>AUDIT-LITE.md</code>, <code>npm test</code>.</p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
+  </footer>
+  <script src="./wallets.js?v=auth"></script>
+</body>
+</html>

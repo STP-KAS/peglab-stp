@@ -2,7 +2,6 @@ pragma silverscript ^0.1.0;
 
 // PegLab — Kaspa Testnet-10 community toy.
 // Not USD. Not an issuer. Not redeemable for dollars. Will depeg.
-// Budget rung: code + audit-lite + tiny pool ($50k–$300k fiction).
 //
 // kind 1 = CONTROL (pool tKAS lives in the UTXO value; AMM tPEG in poolTpeg)
 // kind 2 = UNIT (circulating tPEG; cell value is 1000 sompi)

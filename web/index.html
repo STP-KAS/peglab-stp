@@ -14,7 +14,7 @@
       }
       var root = document.documentElement;
       var host = location.hostname;
-      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
+      if (host === '127.0.0.1' || host === 'localhost' || /\.localhost$/i.test(host)) root.dataset.local = '1';
       var ua = navigator.userAgent || '';
       var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
       var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -44,12 +44,12 @@
   </div>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
-    <a class="brand" href="/" title="Home">PegLab</a>
+    <a class="brand" href="index.html" title="Home">PegLab</a>
     <nav>
       <a href="#best">Receipt</a>
       <a href="#classroom">Classroom</a>
-      <a href="/kachat.html">KaChat</a>
-      <a href="/doctrine.html">Doctrine</a>
+      <a href="kachat.html">KaChat</a>
+      <a href="doctrine.html">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -65,7 +65,7 @@
     <p class="eyebrow">PegLab · Kaspa Testnet-10 · doctrine</p>
     <h1>Three objects.<br>Never mix them.</h1>
     <p class="lead">Parker’s GitHub already has the <strong>unit</strong> (a KAS receipt: one sompi locked is one sompi claimed). This lab is the <strong>classroom</strong> that a 2 tKAS pool will depeg if you call it a dollar. The <strong>scene</strong> is KaChat on a phone. Circle is a company. PegLab is not a bank, not USDT, and not Parker’s receipt dressed up as tPEG.</p>
-    <p class="rung"><a class="primary" href="#best">Run the receipt PoC</a> <a class="quiet-link" href="/doctrine.html">Read the ruling</a></p>
+    <p class="rung"><a class="primary" href="#best">Run the receipt PoC</a> <a class="quiet-link" href="doctrine.html">Read the ruling</a></p>
   </div>
   <section class="objects" aria-label="Three objects">
     <a class="object" href="#best">
@@ -90,7 +90,7 @@
     <p class="note">KaChat does not support PC. Scan the QR to open the public lab on iOS or Android. Same URL as the public site, not localhost.</p>
     <figure class="phone-qr">
       <img src="media/phone-qr.svg" width="148" height="148" alt="QR code for the public PegLab page">
-      <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
+      <figcaption>Scan to open <a href="https://stp-kas.github.io/peglab-stp/">stp-kas.github.io/peglab-stp</a></figcaption>
     </figure>
   </section>
   <section class="best card" id="best">
@@ -102,7 +102,7 @@
       <button type="button" id="tab-depeg" role="tab" aria-selected="false" data-lab="depeg">Classroom</button>
     </div>
     <span id="classroom"></span>
-    <p><a class="quiet-link" href="/doctrine.html">Doctrine</a> · <a class="quiet-link" href="/best.html">Receipt spec</a> · <a class="quiet-link" href="/battle.html">Battle</a></p>
+    <p><a class="quiet-link" href="doctrine.html">Doctrine</a> · <a class="quiet-link" href="best.html">Receipt spec</a> · <a class="quiet-link" href="battle.html">Battle</a></p>
   </section>
   <section class="board lab-pane" id="lab-receipt">
     <article class="card">
@@ -167,7 +167,7 @@
       <div><dt>Is</dt><dd>A Testnet-10 classroom that a cheap pool is not a dollar</dd></div>
       <div><dt>Is not</dt><dd>USD, USDT, USDC, a bank, Parker’s live receipt, or a token sale</dd></div>
       <div><dt>tPEG</dt><dd>The depeg toy. Not KaChat money. Not the receipt.</dd></div>
-      <div><dt>Next</dt><dd>Live TN10 receipt txids, then KaChat signs — <a href="/doctrine.html">Doctrine</a></dd></div>
+      <div><dt>Next</dt><dd>Live TN10 receipt txids, then KaChat signs — <a href="doctrine.html">Doctrine</a></dd></div>
     </dl>
   </section>
   <section class="wallet-bar" id="wallet-bar">
@@ -253,12 +253,12 @@
           <img src="media/phone-qr.svg" width="128" height="128" alt="QR code for the public PegLab page">
           <figcaption>Scan to open this lab on your phone.</figcaption>
         </figure>
-        <p><a class="quiet-link" href="/kachat.html">Full brief</a></p>
+        <p><a class="quiet-link" href="kachat.html">Full brief</a></p>
       </aside>
       <div class="kachat-mobile" id="kachat-mobile">
         <div class="controls">
           <a class="primary" id="open-kachat" href="https://apps.apple.com/us/app/kachat/id6759102359">Open KaChat</a>
-          <a class="quiet-link" href="/kachat.html">Full brief</a>
+          <a class="quiet-link" href="kachat.html">Full brief</a>
         </div>
         <p class="note">This button opens the KaChat app if it is installed. Otherwise it goes to the App Store or Google Play.</p>
       </div>
@@ -274,16 +274,16 @@
       <h2>Parker has the unit. PegLab has the warning. KaChat has the pocket.</h2>
       <p class="note">Redemption is the product. A 2 tKAS pool is not a peg. Circle is a company. Terra is forbidden. Next empty box: live TN10 receipt txids, then KaChat signs them. Do not skip to a dollar glyph.</p>
       <div class="controls">
-        <a class="primary" href="/doctrine.html">Full ruling</a>
-        <a class="quiet-link" href="/battle.html">Battle</a>
-        <a class="quiet-link" href="/mainnet.html">Mainnet</a>
-        <a class="quiet-link" href="/STABLES-GUIDE.md">Capital</a>
+        <a class="primary" href="doctrine.html">Full ruling</a>
+        <a class="quiet-link" href="battle.html">Battle</a>
+        <a class="quiet-link" href="mainnet.html">Mainnet</a>
+        <a class="quiet-link" href="stables.html">Capital</a>
       </div>
     </section>
   </main>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Classroom redeem is tKAS at an admin price, not dollars. Receipt redeem is locked sompi. Pause is a brake, not a peg.</p>
-    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a></p>
+    <p class="note">Host Testnet-10 address: <code>kaspatest:qzpvdakagvwfm95g8pv9ndpupjtndgjfhmve08cg3tv5wgfytjzf7cudwwzv0</code>. Seed is not in git. <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
   <script type="module" src="./wallet.js?v=auth"></script>

@@ -91,6 +91,8 @@ const PAGE_ALIAS = {
   '/kachat': '/kachat.html',
   '/DOCTRINE.md': '/doctrine.html',
   '/doctrine': '/doctrine.html',
+  '/STABLES-GUIDE.md': '/stables.html',
+  '/stables': '/stables.html',
 };
 
 async function load(rel) {

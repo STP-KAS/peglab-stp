@@ -19,7 +19,7 @@
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
       var host = location.hostname;
-      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
+      if (host === '127.0.0.1' || host === 'localhost' || /.localhost$/i.test(host)) root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -28,12 +28,12 @@
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
-    <a class="brand" href="/" title="Home">PegLab</a>
+    <a class="brand" href="index.html" title="Home">PegLab</a>
     <nav>
-      <a href="/#best">Receipt</a>
-      <a href="/#classroom">Classroom</a>
-      <a href="/kachat.html">KaChat</a>
-      <a href="/doctrine.html" class="on">Doctrine</a>
+      <a href="index.html#best">Receipt</a>
+      <a href="index.html#classroom">Classroom</a>
+      <a href="kachat.html">KaChat</a>
+      <a href="doctrine.html" class="on">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -45,7 +45,7 @@
     <button class="btn ghost kasware-only" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
     <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
   </header>
-  <p class="rung doc-jump"><a class="primary" href="/#best">Run the receipt PoC on the home page</a></p>
+  <p class="rung doc-jump"><a class="primary" href="index.html#best">Run the receipt PoC on the home page</a></p>
   <article class="doc">
 <h1>Doctrine</h1>
 <p>This is the ruling. Other files are evidence. If they disagree with this page, this page wins.</p>
@@ -68,7 +68,7 @@
 <h2>3. What Parker already shipped (so we stop re-litigating)</h2>
 <p>From <a href="https://github.com/parker2017code/kaspa-explained">kaspa-explained</a> and <a href="https://github.com/parker2017code/tn12-covenant-vault-demo">tn12-covenant-vault-demo</a>:</p>
 <ul><li>Native receipt: quantity = locked sompi; transfer/split/merge conserve; redeem to holder P2PK; <strong>sponsor input pays fees</strong>; identity = genesis outpoint + covenant ID + template + series.</li><li>Wrap path: pUSD on Sepolia → Kaspa claim → burn/release. Trusted local oracle. Kaspa does not verify Ethereum. <strong>wTestUSD cannot buy crops.</strong></li><li>Sprout Harbor: real tKAS spends with rules; 21 accepted TN10 txs for one order (7 Sep 2026).</li><li>TN12: delayed vault, pledge release/refund, buyer escrow, batch-assurance, payload receipts, adversarial rejects. Vocabulary: <code>SCRIPT_ENFORCED</code> vs <code>PLANNER_ONLY</code> vs <code>INDEXER_DERIVED</code> vs <code>WALLET_POLICY</code>.</li><li>Honest gaps Parker already listed: no AMM, no lending, no production oracle, no user-wallet signing on those accepted proofs, no independent audit, mainnet out of scope.</li></ul>
-<p><strong>PegLab’s job is not to replace that unit.</strong> PegLab’s job is the public depeg classroom, the capital map, and the KaChat scene. Successor <strong>A</strong> in <a href="/mainnet.html">MAINNET.md</a> *is* Parker’s receipt. Copy the enforcement. Do not copy the town art.</p>
+<p><strong>PegLab’s job is not to replace that unit.</strong> PegLab’s job is the public depeg classroom, the capital map, and the KaChat scene. Successor <strong>A</strong> in <a href="mainnet.html">MAINNET.md</a> *is* Parker’s receipt. Copy the enforcement. Do not copy the town art.</p>
 <p>Claim labels on this site:</p>
 <div class="table-wrap"><table><thead><tr><th>Label</th><th>Meaning</th></tr></thead><tbody><tr><td><code>SCRIPT_ENFORCED</code></td><td>Node accepted the spend rule. Needs a txid.</td></tr><tr><td><code>ENGINE_SPEC</code></td><td>JS in this repo (<code>src/receipt.mjs</code>, <code>src/engine.mjs</code>). Demo.</td></tr><tr><td><code>COPY_ONLY</code></td><td>English on a page. Not funds.</td></tr><tr><td><code>INDEXER_DERIVED</code></td><td>A balance row. Lie if the indexer cannot see UNIT UTXOs.</td></tr></tbody></table></div>
 <p>The CONTROL genesis on this lab is <strong>SCRIPT_ENFORCED for the depeg toy</strong>. Mint/swap/redeem on the page are <strong>ENGINE_SPEC</strong>. The receipt tab is <strong>ENGINE_SPEC</strong>. Do not read “genesis on chain” as “the unit is live.”</p>
@@ -102,13 +102,13 @@
 <ul><li>List lab tPEG in KaChat as money</li><li>Call a receipt <code>$</code></li><li>Call this CONTROL genesis the receipt series</li><li>Use one admin oracle as a dollar</li><li>Ship a PC KaChat</li><li>Mainnet the 2 tKAS pool</li><li>Raise against tPEG</li><li>Invent a third timeout covenant when Parker already has escrow/vault on TN12</li></ul>
 <hr>
 <h2>8. How to use this file</h2>
-<ul><li>Building: next empty box in §6. Do not start mainnet while the receipt is ENGINE_SPEC.</li><li>Pitching: if the sentence needs this lab without WILL DEPEG, the sentence is wrong.</li><li>Arguing with Parker: you already lost the unit. Steal the rules. Keep the classroom.</li><li>Arguing for a Kaspa dollar: you are arguing for a company. Read <a href="STABLES-GUIDE.md">STABLES-GUIDE.md</a>.</li></ul>
-<p>Evidence: <a href="/battle.html">BATTLE.md</a>, <a href="/best.html">BEST.md</a>, <a href="/mainnet.html">MAINNET.md</a>, <a href="/vision.html">VISION.md</a>, <a href="/kachat.html">KACHAT.md</a>, Parker’s repos.</p>
+<ul><li>Building: next empty box in §6. Do not start mainnet while the receipt is ENGINE_SPEC.</li><li>Pitching: if the sentence needs this lab without WILL DEPEG, the sentence is wrong.</li><li>Arguing with Parker: you already lost the unit. Steal the rules. Keep the classroom.</li><li>Arguing for a Kaspa dollar: you are arguing for a company. Read <a href="stables.html">STABLES-GUIDE.md</a>.</li></ul>
+<p>Evidence: <a href="battle.html">BATTLE.md</a>, <a href="best.html">BEST.md</a>, <a href="mainnet.html">MAINNET.md</a>, <a href="vision.html">VISION.md</a>, <a href="kachat.html">KACHAT.md</a>, Parker’s repos.</p>
 <p><strong>Short version:</strong> Parker has the unit. PegLab has the warning. KaChat has the pocket. Circle has the dollar. Do not mix the four.</p>
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
+    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
 </body>

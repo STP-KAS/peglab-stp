@@ -233,11 +233,18 @@
       throw new Error("Kasware is not in this tab. Install it, unlock it, then Log in.");
     }
     const quiet = await kaswareAccountsQuiet();
-    if (quiet[0]) return { id: "kasware", address: quiet[0] };
+    if (quiet[0]) return { id: "kasware", address: requireTestnet(quiet[0]) };
     status("Kasware: approve Log in. If the window is black, close it, click the Kasware icon, unlock, try again.");
     const acc = await withTimeout(w.requestAccounts(), 45000, "Kasware Log in timed out (black window?). Close it and retry.");
     if (!acc || !acc[0]) throw new Error("Kasware returned no account.");
-    return { id: "kasware", address: acc[0] };
+    return { id: "kasware", address: requireTestnet(acc[0]) };
+  }
+
+  function requireTestnet(address) {
+    if (!address || String(address).indexOf("kaspatest:") !== 0) {
+      throw new Error("This lab is Testnet-10. Switch KasWare to testnet-10.");
+    }
+    return address;
   }
 
   async function connectKastle() {
@@ -344,7 +351,7 @@
       return;
     }
     const quiet = await kaswareAccountsQuiet();
-    if (quiet[0]) {
+    if (quiet[0] && quiet[0].indexOf("kaspatest:") === 0) {
       persist("kasware", quiet[0], current().name);
       paintButtons();
       loadIdentity(quiet[0]);
@@ -365,10 +372,9 @@
         '<div id="walletModal" class="wmodal" hidden><div class="wmodal-card">' +
         '<div class="wmodal-head"><strong>Log in with a Kaspa wallet</strong>' +
         '<button type="button" class="btn ghost" data-wallet-close>Close</button></div>' +
-        '<p class="tiny">Log in: Kasware or Kastle. Pay: any Kaspa wallet (QR / kaspa: URI on Fill). Never a seed.</p>' +
+        '<p class="tiny">KasWare on Testnet-10. Never a seed. Mainnet kaspa: is refused.</p>' +
         '<div class="row" style="margin-top:12px">' +
         '<button type="button" class="btn mint" data-wallet-id="kasware">Kasware</button>' +
-        '<button type="button" class="btn mint" data-wallet-id="kastle">Kastle</button>' +
         '<a class="btn ghost" href="https://www.kasware.xyz" target="_blank" rel="noopener">Install Kasware</a></div>' +
         "</div></div>";
       document.body.appendChild(wrap.firstElementChild);
@@ -395,9 +401,7 @@
         return;
       }
       if (e.target.closest("[data-wallet-change-name]") || e.target.closest("[data-change-name]")) {
-        loadIdentity(current().address).then(function (id) {
-          openNameModal(id || { names: [] });
-        });
+        status("No kasname shop on this lab. The address is the identity.");
         return;
       }
       var copyWho = e.target.closest("[data-copy-who]");

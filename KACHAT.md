@@ -27,11 +27,11 @@ The product freeze: people will chat, then refuse to **send** because KAS moved 
 
 Not as “USDT in the bubble.” As **chat actions that keep a number still**:
 
-1. **Quote in the unit, pay in the unit**  
-   “20 tPEG for the logo” stays 20 until paid or the timeout fires. The thread is the invoice.
+1. **Quote in the receipt, pay in the receipt**  
+   “20 000 000 sompi locked” stays that quantity until paid or the timeout fires. The thread is the invoice. Not tPEG. Not `$`.
 
 2. **Pay with timeout (compose, don’t rewrite chat)**  
-   Lock the unit in a covenant. Recipient claims. If they ghost, sender reclaims after timeout. That is `KaChatPayTimeout` with PegLab UNIT as the asset instead of raw KAS.
+   Lock the receipt in a covenant. Recipient claims. If they ghost, sender reclaims after timeout. That is `KaChatPayTimeout` with Parker’s receipt as the asset instead of raw KAS.
 
 3. **Group split / tip / chess stake**  
    Same covenant family: lock, split, release, or refund. Chat is coordination; L1 is the court.
@@ -75,7 +75,7 @@ Order matters. Skipping to mainnet chat-pay is how you mint a bridge IOU.
 
 KaChat is a Swift wallet (Secure Enclave, node pool, UTXO subscribe). KasWare-on-the-web is not enough.
 
-- Sign covenant spends (`act` / transfer / redeem) from the iOS/desktop wallet.
+- Sign receipt lock / transfer / redeem from the **iOS or Android** KaChat wallet. KasWare is desktop-only and is not enough. There is no PC KaChat.
 - Show UNIT balance next to KAS.
 - Refuse unknown series. A cloned ticker is not funds.
 
@@ -130,7 +130,7 @@ If KaChat ever shows **USD**, the issuer is named, freeze is disclosed, and PegL
 - Do not use an admin oracle as the dollar in production.
 - Do not wait for Circle before shipping timeout-KAS pay (`KaChatPayTimeout` can go live on **KAS** now).
 
-**Short version:** KaChat is the conversation. PegLab is the unit the conversation can settle in without USDT. Real means a receipt (or a hosted real USD), a KaChat signer for that covenant, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.
+**Short version:** KaChat is the conversation. The unit is a **KAS receipt** (Parker) or a **named USD** later. Lab tPEG cannot pay KaChat. Real means a receipt signer in the phone app, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.
 
 The rest of the product — phones vs PC, copy, support, agents, merchants, what never to do — is [VISION.md](VISION.md).
 

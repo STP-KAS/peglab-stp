@@ -1,7 +1,7 @@
 import {copyFile, mkdir, writeFile} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {PUBLIC_DOMAIN} from '../src/network.mjs';
+import {PUBLIC_SITE_URL} from '../src/network.mjs';
 import {PAGES, renderMdPage} from './html-page.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -45,5 +45,4 @@ await copyFile(resolve(ROOT, 'BATTLE.md'), resolve(DOCS, 'BATTLE.md'));
 await copyFile(resolve(ROOT, 'BEST.md'), resolve(DOCS, 'BEST.md'));
 await copyFile(resolve(ROOT, 'DOCTRINE.md'), resolve(DOCS, 'DOCTRINE.md'));
 await writeFile(resolve(DOCS, '.nojekyll'), '');
-await writeFile(resolve(DOCS, 'CNAME'), `${PUBLIC_DOMAIN}\n`);
-console.log(`docs/ ready for http://${PUBLIC_DOMAIN}`);
+console.log(`docs/ ready for ${PUBLIC_SITE_URL} (.club DNS is NXDOMAIN; no CNAME until it answers)`);

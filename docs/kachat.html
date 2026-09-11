@@ -19,7 +19,7 @@
         || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
       var root = document.documentElement;
       var host = location.hostname;
-      if (host === '127.0.0.1' || host === 'localhost') root.dataset.local = '1';
+      if (host === '127.0.0.1' || host === 'localhost' || /.localhost$/i.test(host)) root.dataset.local = '1';
       if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
       else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
     } catch (e) {}
@@ -28,12 +28,12 @@
 <body>
   <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
   <header class="nav">
-    <a class="brand" href="/" title="Home">PegLab</a>
+    <a class="brand" href="index.html" title="Home">PegLab</a>
     <nav>
-      <a href="/#best">Receipt</a>
-      <a href="/#classroom">Classroom</a>
-      <a href="/kachat.html" class="on">KaChat</a>
-      <a href="/doctrine.html">Doctrine</a>
+      <a href="index.html#best">Receipt</a>
+      <a href="index.html#classroom">Classroom</a>
+      <a href="kachat.html" class="on">KaChat</a>
+      <a href="doctrine.html">Doctrine</a>
     </nav>
     <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
       <span data-kas-balance>KAS 0.0</span>
@@ -51,14 +51,14 @@
     <p class="note">KaChat does not support PC. Scan to open the public lab on iOS or Android.</p>
     <figure class="phone-qr">
       <img src="media/phone-qr.svg" width="148" height="148" alt="QR code for the public PegLab page">
-      <figcaption>Scan to open <a href="http://peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club/">peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club</a></figcaption>
+      <figcaption>Scan to open <a href="https://stp-kas.github.io/peglab-stp/">stp-kas.github.io/peglab-stp</a></figcaption>
     </figure>
   </section>
   <article class="doc">
 <h1>How KaChat could use PegLab — and what “real” means</h1>
 <p>KaChat (<a href="https://www.kachat.org/">kachat.org</a>, <a href="https://github.com/vsmirn0v/KaChat">vsmirn0v/KaChat</a>) is encrypted chat <strong>plus native KAS payments</strong> on Kaspa (<code>kchat:1:pay</code> memos, timeout reclaim). It already runs. What it does not have is a unit that stays still while two people argue over a price in a thread.</p>
 <p>The unit is a <strong>KAS receipt</strong> (Parker) or a <strong>named USD</strong> later. Lab tPEG is not that unit.</p>
-<p><strong>PegLab today cannot sit in KaChat as money.</strong> This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. <strong>tPEG cannot pay KaChat</strong> — same rule as Parker’s wTestUSD cannot buy crops. Authority: <a href="/doctrine.html">DOCTRINE.md</a>.</p>
+<p><strong>PegLab today cannot sit in KaChat as money.</strong> This repo is Testnet-10, tiny pool, one admin price. If you treat tPEG as USD it depegs. <strong>tPEG cannot pay KaChat</strong> — same rule as Parker’s wTestUSD cannot buy crops. Authority: <a href="doctrine.html">DOCTRINE.md</a>.</p>
 <hr>
 <h2>What KaChat is today</h2>
 <div class="table-wrap"><table><thead><tr><th>Piece</th><th>Today</th></tr></thead><tbody><tr><td>Chat</td><td>E2E payloads on L1 (<code>kchat:1:comm</code>, groups, KaPosts)</td></tr><tr><td>Pay</td><td>Native <strong>KAS</strong> to a recipient, optional encrypted memo</td></tr><tr><td>Timeout pay</td><td>Sketch already exists: <code>KaChatPayTimeout.sil</code> — recipient claims now, sender reclaims after <code>tx.time</code></td></tr><tr><td>Identity</td><td>KNS names; aliases are not consensus uniqueness</td></tr><tr><td>Fees</td><td>Every message and pay still burns <strong>KAS mass</strong></td></tr><tr><td>FX</td><td>Portfolio uses CoinGecko; the payment itself is still sompi</td></tr></tbody></table></div>
@@ -66,10 +66,10 @@
 <hr>
 <h2>Where PegLab would show up in KaChat</h2>
 <p>Not as “USDT in the bubble.” As <strong>chat actions that keep a number still</strong>:</p>
-<ol><li><strong>Quote in the unit, pay in the unit</strong>  </li></ol>
-<p>“20 tPEG for the logo” stays 20 until paid or the timeout fires. The thread is the invoice.</p>
+<ol><li><strong>Quote in the receipt, pay in the receipt</strong>  </li></ol>
+<p>“20 000 000 sompi locked” stays that quantity until paid or the timeout fires. The thread is the invoice. Not tPEG. Not <code>$</code>.</p>
 <ol><li><strong>Pay with timeout (compose, don’t rewrite chat)</strong>  </li></ol>
-<p>Lock the unit in a covenant. Recipient claims. If they ghost, sender reclaims after timeout. That is <code>KaChatPayTimeout</code> with PegLab UNIT as the asset instead of raw KAS.</p>
+<p>Lock the receipt in a covenant. Recipient claims. If they ghost, sender reclaims after timeout. That is <code>KaChatPayTimeout</code> with Parker’s receipt as the asset instead of raw KAS.</p>
 <ol><li><strong>Group split / tip / chess stake</strong>  </li></ol>
 <p>Same covenant family: lock, split, release, or refund. Chat is coordination; L1 is the court.</p>
 <ol><li><strong>Bots and agents</strong>  </li></ol>
@@ -89,7 +89,7 @@
 <ul><li>Broadcast genesis, mint, transfer, redeem — not only the JS engine.</li><li>Pin series / genesis outpoint / template hash. Wallets verify those, not the word “tPEG”.</li><li>Kill the admin USD oracle for the KaChat asset. Receipts do not need a dollar feed.</li><li>Indexer (or KaChat’s Kasia indexer) must see UNIT UTXOs and balances by address.</li></ul>
 <h3>2. A wallet KaChat already is</h3>
 <p>KaChat is a Swift wallet (Secure Enclave, node pool, UTXO subscribe). KasWare-on-the-web is not enough.</p>
-<ul><li>Sign covenant spends (<code>act</code> / transfer / redeem) from the iOS/desktop wallet.</li><li>Show UNIT balance next to KAS.</li><li>Refuse unknown series. A cloned ticker is not funds.</li></ul>
+<ul><li>Sign receipt lock / transfer / redeem from the <strong>iOS or Android</strong> KaChat wallet. KasWare is desktop-only and is not enough. There is no PC KaChat.</li><li>Show UNIT balance next to KAS.</li><li>Refuse unknown series. A cloned ticker is not funds.</li></ul>
 <h3>3. Chat protocol</h3>
 <p>Extend pay, do not invent a second messenger:</p>
 <ul><li>Keep <code>kchat:1:pay</code> for KAS.</li><li>Add something like <code>kchat:1:payunit</code> (or a typed field): series id, covenant id, amount, timeout, memo ciphertext.</li><li>Handshake still E2E. Payment still a recipient-addressed (or covenant) tx the recipient’s watcher can see.</li><li>Timeout reclaim uses the same idea as <code>KaChatPayTimeout.sil</code>.</li></ul>
@@ -106,8 +106,8 @@
 <hr>
 <h2>What not to do</h2>
 <ul><li>Do not put current PegLab tPEG in KaChat 4.x as “stablechat”.</li><li>Do not raise money against a KaChat-PegLab token.</li><li>Do not use an admin oracle as the dollar in production.</li><li>Do not wait for Circle before shipping timeout-KAS pay (<code>KaChatPayTimeout</code> can go live on <strong>KAS</strong> now).</li></ul>
-<p><strong>Short version:</strong> KaChat is the conversation. PegLab is the unit the conversation can settle in without USDT. Real means a receipt (or a hosted real USD), a KaChat signer for that covenant, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.</p>
-<p>The rest of the product — phones vs PC, copy, support, agents, merchants, what never to do — is <a href="/vision.html">VISION.md</a>.</p>
+<p><strong>Short version:</strong> KaChat is the conversation. The unit is a <strong>KAS receipt</strong> (Parker) or a <strong>named USD</strong> later. Lab tPEG cannot pay KaChat. Real means a receipt signer in the phone app, a pay payload, and postage in KAS/grams — not a tiny pool that pretends to be $1.</p>
+<p>The rest of the product — phones vs PC, copy, support, agents, merchants, what never to do — is <a href="vision.html">VISION.md</a>.</p>
 <hr>
 <h2>Open KaChat from this site</h2>
 <p>KaChat is a mobile app. It does not support PC.</p>
@@ -116,7 +116,7 @@
   </article>
   <footer>
     <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
-    <p class="note"><a href="/">Home</a> · <a href="/doctrine.html">Doctrine</a> · <a href="/best.html">Receipt</a> · <a href="/kachat.html">KaChat</a> · <a href="/battle.html">Battle</a> · <a href="/mainnet.html">Mainnet</a> · <a href="/vision.html">Vision</a></p>
+    <p class="note"><a href="index.html">Home</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
   </footer>
   <script src="./wallets.js?v=auth"></script>
 </body>
