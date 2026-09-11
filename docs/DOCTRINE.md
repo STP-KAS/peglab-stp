@@ -1,6 +1,6 @@
 # Doctrine
 
-This is the ruling. Other files are evidence. If they disagree with this page, this page wins.
+This is the ruling for **PegLab’s objects**. The human job (invoice, EUR, timeout, rails that are not a token) is [WHOLE.md](WHOLE.md). If a coin page kidnaps the invoice, WHOLE wins. If a page calls tPEG money, this page wins.
 
 **TESTNET-10 LAB. NOT USD. DO NOT RAISE MONEY AGAINST tPEG.**
 
@@ -8,7 +8,7 @@ This is the ruling. Other files are evidence. If they disagree with this page, t
 
 ## 1. The ruling
 
-Kaspa does not need a fake dollar. It needs a **still number** for the length of a conversation, and a **court file** that can pay, claim, or reclaim.
+Kaspa does not need a fake dollar. People need a **quote in the unit they mean** (usually EUR/USD) and a **rail that can pay it**. A still number in sompi is not a still euro. Do not kidnap the invoice into a ticker.
 
 Three objects exist. They are not one ticker.
 

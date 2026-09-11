@@ -2,7 +2,7 @@
 
 Authority: [DOCTRINE.md](DOCTRINE.md). PegLab is not a dollar. KaChat is not a PC app. Kaspa is not a bank.
 
-The job is still real: **two people agree on a number, then one of them gets paid, without the number turning into an FX trade, and without sending anyone to Circle to finish a Kaspa chat.**
+The job is still real: **two people agree on a number, then one of them gets paid.** If they agreed EUR, a euro rail is the honest finish — not a Kaspa fake dollar. If they agreed KAS, timeout pay on KAS is enough. Do not kidnap an invoice into tPEG. The whole scheme: [WHOLE.md](WHOLE.md).
 
 This file is the product vision and the to-do for *everything around the chain*: phones, copy, postage, identity, law, ops, education, other apps. The chain is the court. It is not the product.
 

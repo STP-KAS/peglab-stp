@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The scheme — PegLab</title>
+  <meta name="description" content="Conversation, invoice, rail, timeout. Crypto is optional. tPEG is not money.">
+  <link rel="stylesheet" href="./styles.css?v=auth">
+  <script>
+    try {
+      var ua = navigator.userAgent || '';
+      var touch = (navigator.maxTouchPoints || 0) > 1 || 'ontouchstart' in window;
+      var coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      var mobileHint = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+      var phone = mobileHint
+        || coarse
+        || /Android|iPhone|iPad|iPod|Mobile|Tablet|CriOS|FxiOS|EdgiOS|webOS|Silk|Kindle|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+        || (/Macintosh|Mac OS X/i.test(ua) && touch)
+        || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+      var root = document.documentElement;
+      var host = location.hostname;
+      if (host === '127.0.0.1' || host === 'localhost' || /.localhost$/i.test(host)) root.dataset.local = '1';
+      if (phone) { root.dataset.phone = '1'; root.removeAttribute('data-pc'); }
+      else { root.dataset.pc = '1'; root.removeAttribute('data-phone'); }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="banner">TESTNET-10 LAB · NOT USD · NOT USDT/USDC · WILL DEPEG IF YOU TREAT IT AS A DOLLAR</div>
+  <header class="nav">
+    <a class="brand" href="index.html" title="Home">PegLab</a>
+    <nav>
+      <a href="index.html#best">Receipt</a>
+      <a href="index.html#classroom">Classroom</a>
+      <a href="kachat.html">KaChat</a>
+      <a href="doctrine.html">Doctrine</a>
+      <a href="whole.html" class="on">Scheme</a>
+    </nav>
+    <a class="bal" data-balances hidden title="This wallet's KAS or tKAS from KasWare.">
+      <span data-kas-balance>KAS 0.0</span>
+    </a>
+    <div class="who" data-who hidden>
+      <button type="button" class="who-name" data-copy-who="name" title="Copy kasname">—</button>
+      <button type="button" class="who-addr" data-copy-who="addr" title="Copy Kaspa address">—</button>
+    </div>
+    <button class="btn ghost kasware-only" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
+    <button class="btn ghost kasware-only" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+  <p class="rung doc-jump"><a class="primary" href="index.html#best">Run the receipt PoC on the home page</a></p>
+  <article class="doc">
+<h1>The whole scheme (keep it real)</h1>
+<p>This is the human job. Crypto is one rail. It is not the job.</p>
+<p>If this file disagrees with a coin page, this file wins on *what to build for people*. <a href="doctrine.html">DOCTRINE.md</a> still wins on PegLab’s three objects. <strong>TESTNET-10 LAB. NOT USD. DO NOT RAISE AGAINST tPEG.</strong></p>
+<hr>
+<h2>1. Pushback (the delusions)</h2>
+<div class="table-wrap"><table><thead><tr><th>Delusion</th><th>Reality</th></tr></thead><tbody><tr><td>People need a Kaspa stable so they can finish a chat</td><td>People need a <strong>quote that matches how they think</strong> (usually EUR/USD) and a <strong>rail that actually pays</strong>. Most already have that: bank, iDEAL, Tikkie, Wise, PayPal, cash.</td></tr><tr><td>Locking sompi freezes a $20 logo</td><td>It freezes <strong>sompi</strong>. If they quoted dollars, KAS still moved. A receipt is not a FX hedge.</td></tr><tr><td>PegLab / tPEG is the unit KaChat settles in</td><td>tPEG is a depeg toy. <strong>tPEG cannot pay KaChat.</strong> Parker’s receipt is sompi, not a dollar.</td></tr><tr><td>“Don’t send them to Circle to finish a Kaspa chat”</td><td>If the invoice is dollars, <strong>a dollar rail is the honest finish</strong>. Forcing Kaspa to be the dollar is how you mint a bridge IOU.</td></tr><tr><td>One ticker is chat + dollar + escrow + phone + raise</td><td>Those are different companies, laws, and failure modes. Mixing them is how Terra-shaped stories start.</td></tr><tr><td>Covenants replace courts and banks</td><td>Covenants are a <strong>court file for coins you already accept</strong>. They do not invoice a plumber in Eindhoven.</td></tr><tr><td>Build Circle from a 2 tKAS pool</td><td>Circle is equity, banks, exams, GENIUS. Budget is tens of millions and lawyers. This lab is a classroom.</td></tr></tbody></table></div>
+<p>The freeze “they won’t send because KAS moved” is real. The solution is <strong>not always a new asset</strong>. Often it is: stop quoting dollars in a KAS pay button.</p>
+<hr>
+<h2>2. The job (no chain required)</h2>
+<p>Two people already talking. One owes the other a still number. Ghosts exist. Dust-as-a-first-screen is rude. Kids should not see a casino.</p>
+<p>That job is invoicing + settlement + timeout. WhatsApp + Tikkie already does it for a lot of NL. iMessage + Apple Cash / bank transfer does it elsewhere. Email + SEPA does it for invoices. PayPal Goods &amp; Services does it with a dispute desk.</p>
+<p>KaChat is a <strong>messenger that can also move KAS</strong>. That is a niche. It is not a reason to reinvent the euro.</p>
+<hr>
+<h2>3. Split the objects (this is the scheme)</h2>
+<div class="table-wrap"><table><thead><tr><th>Layer</th><th>Question</th><th>Honest answers</th></tr></thead><tbody><tr><td><strong>1. Conversation</strong></td><td>Where do they talk?</td><td>KaChat, Signal, WhatsApp, email. Do not wait for one app to win.</td></tr><tr><td><strong>2. Unit of account</strong></td><td>What number did they agree?</td><td>EUR, USD, or <strong>KAS/sompi</strong>. Pick one per quote. Write it.</td></tr><tr><td><strong>3. Quote lifetime</strong></td><td>How long is that number good?</td><td>15 minutes / 48 hours / until delivered. Airline-style expiry. Not a peg.</td></tr><tr><td><strong>4. Settlement rail</strong></td><td>How does the money actually move?</td><td><strong>Fiat:</strong> iDEAL, Tikkie, SEPA, Wise, cash, card. <strong>Dollar-crypto:</strong> named USDC/USDT when it exists. <strong>KAS:</strong> native pay. <strong>Receipt:</strong> locked sompi, redeemable 1:1, still not USD.</td></tr><tr><td><strong>5. Ghosts / escrow</strong></td><td>What if they vanish?</td><td>Fiat: PayPal G&amp;S, notaries, just don’t prepay. KAS: timeout reclaim (Parker TN12 / <code>KaChatPayTimeout</code>). Receipt: same family.</td></tr><tr><td><strong>6. Postage</strong></td><td>Who pays the network?</td><td>Fiat: the bank. KAS: sponsor or grams so the receiver is not sent to buy dust first.</td></tr><tr><td><strong>7. Classroom</strong></td><td>What must never be listed as money?</td><td>PegLab tPEG. Any 2 tKAS pool. Any admin oracle as <code>$</code>.</td></tr></tbody></table></div>
+<p>If layer 2 is EUR and layer 4 is KAS, the UI must say <strong>“pay about N KAS (quote expires 21:14)”</strong>. That is an FX banner, not a stablecoin.</p>
+<p>If layer 2 is EUR and they need it still, layer 4 should be <strong>fiat or a named dollar</strong>. Do not invent tPEG.</p>
+<hr>
+<h2>4. Solutions that are not “another token”</h2>
+<p>Build these as product, not as SilverScript:</p>
+<ol><li><strong>Quote card in the thread</strong> — amount, unit (EUR or KAS), expiry, pay / decline / expired. No new asset.</li><li><strong>EUR invoice, KAS optional</strong> — default button is “I’ll pay in EUR” (copy IBAN / open Tikkie / open Wise). Secondary: “Pay in KAS at this quote.” Child Mode: EUR only, or no pay.</li><li><strong>Timeout on KAS pay</strong> — already the real crypto edge. They claim now or you reclaim. Ship that on <strong>KAS</strong>, not on tPEG.</li><li><strong>FX banner</strong> — CoinGecko (or any feed) is display. Stale feed → disable the KAS button. Do not mint.</li><li><strong>Don’t pay in chat at all</strong> — send an invoice link. Chat stays talk. Settlement is the bank. This is how most real work is paid.</li><li><strong>Named dollar later</strong> — if USDC/USDT is actually on Kaspa from an issuer you can name, list *that* asset id. Freeze is theirs. PegLab is not the issuer.</li><li><strong>Receipt only when the quote was sompi</strong> — “lock 0.5 KAS until Friday.” Parker’s object. Useful. Not a euro.</li></ol>
+<p>Do not: sister token, 20% yield, admin oracle, mainnet the pool, raise against tPEG, PC KaChat, <code>$</code> on a receipt.</p>
+<hr>
+<h2>5. What this repo is allowed to be in that scheme</h2>
+<div class="table-wrap"><table><thead><tr><th>Piece</th><th>Role</th></tr></thead><tbody><tr><td>PegLab classroom</td><td>Show why a cheap pool is not layer 4. Public lesson.</td></tr><tr><td>Receipt ENGINE_SPEC</td><td>Teach 1 sompi = 1 sompi. Next real crypto box: live TN10 txids, then KaChat signs <strong>that</strong>, not tPEG.</td></tr><tr><td>KaChat copy on this site</td><td>Phone only. Open app or store. Never imply a PC client.</td></tr><tr><td>Doctrine</td><td>Parker has the unit. PegLab has the warning. Circle has the dollar. This file has the <strong>job</strong>.</td></tr></tbody></table></div>
+<p>Done for a designer in a thread is: they got paid the number they agreed, in a rail they already trust, or they got their KAS back after a timeout. Done is <strong>not</strong> a new ticker.</p>
+<hr>
+<h2>6. Short version</h2>
+<p>Quote in the unit people mean (usually EUR). Settle on a rail that can pay that unit. Use KAS only when they agreed KAS. Use a receipt only when they agreed locked sompi. Use a named dollar only when a named issuer exists. Use PegLab only as the warning.</p>
+<p>The scheme is a <strong>conversation + an invoice + a rail + a timeout</strong>. Crypto can be the rail. It must not kidnap the invoice.</p>
+  </article>
+  <footer>
+    <p class="note">Anybody can compile a similarly named series. A name is not authenticity. Redeem is tKAS at an admin price, not dollars. Pause is a brake, not a peg.</p>
+    <p class="note"><a href="index.html">Home</a> · <a href="whole.html">Scheme</a> · <a href="doctrine.html">Doctrine</a> · <a href="best.html">Receipt</a> · <a href="kachat.html">KaChat</a> · <a href="battle.html">Battle</a> · <a href="mainnet.html">Mainnet</a> · <a href="vision.html">Vision</a> · <a href="stables.html">Capital</a></p>
+  </footer>
+  <script src="./wallets.js?v=auth"></script>
+</body>
+</html>
