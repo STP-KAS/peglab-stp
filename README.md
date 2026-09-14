@@ -105,7 +105,9 @@ Mint and redeem use the oracle. Swaps use constant-product on the tiny pool. Pau
 
 ## Compile
 
-Requires [silverc v1-rc1](https://github.com/kaspanet/silverscript/releases/tag/v1-rc1). On this machine the wrapper looks for `%USERPROFILE%\tools\silverc\silverc.exe`, or `$SILVERC`.
+Requires [silverc v1.0.0](https://github.com/kaspanet/silverscript/releases/tag/v1.0.0) (`3ed9733`). Master-file pin. Not v1-rc1. On this machine the wrapper looks for `%USERPROFILE%\tools\silverc\silverc.exe`, or `$SILVERC`.
+
+Genesis is this **PegLab sponsor**, not [groks-wallet](https://github.com/STP-KAS/groks-wallet). Do not mix the two TN10 whales. Hard-test: [STP-KAS/tn10-hard-test](https://github.com/STP-KAS/tn10-hard-test).
 
 ```bash
 npm run compile
