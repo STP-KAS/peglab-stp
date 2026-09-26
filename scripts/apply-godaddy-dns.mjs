@@ -2,7 +2,7 @@ import {createRequire} from 'node:module';
 import {join} from 'node:path';
 import {homedir} from 'node:os';
 
-const require = createRequire('C:/Users/<user>/kaspa-explained/package.json');
+const require = createRequire(`${homedir().replace(/\\/g, "/")}/kaspa-explained/package.json`);
 const {chromium} = require('playwright');
 
 const DOMAIN = 'peglabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.club';
